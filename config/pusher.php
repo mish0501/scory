@@ -38,9 +38,9 @@ return [
     'connections' => [
 
         'main' => [
-            'auth_key' => '95354f9a3f58ab943575',
-            'secret' => '95e934047bead6839e53',
-            'app_id' => '247810',
+            'auth_key' => env('PUSHER_KEY'),
+            'secret' => env('PUSHER_SECRET'),
+            'app_id' => env('PUSHER_APP_ID'),
             'options' => [
               'cluster' => 'eu'
             ],
