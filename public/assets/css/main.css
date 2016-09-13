@@ -1,0 +1,98 @@
+/*Menu*/
+#menu{
+  border: none;
+  background: transparent;
+}
+
+#menu.bg{
+  background: #222;
+}
+
+#menu a.scroll-effect {
+  cursor: pointer;
+  color: #fff;
+  font-weight: 600;
+}
+
+#menu a.login {
+  cursor: pointer;
+  color: #fff;
+  font-weight: 600;
+}
+
+.navbar-inverse .navbar-toggle{
+  border: none;
+}
+
+/*Top*/
+#top{
+  display: -webkit-box;  display: -webkit-flex;  display: -moz-flex;  display: -ms-flexbox;  display: flex;  -webkit-box-direction: normal;  -webkit-box-orient: vertical;  webkit-flex-direction: column;  -moz-flex-direction: column;  -ms-flex-direction: column;  flex-direction: column;  -webkit-box-pack: center;  -ms-flex-pack: center;  -webkit-justify-content: center;  -moz-justify-content: center;  justify-content: center;  -webkit-box-align: center;  -ms-flex-align: center;  -webkit-align-items: center;  -moz-align-items: center;  align-items: center;
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(/assets/images/top.jpg);
+  background-position: center center;
+  background-size: cover;
+  color: #fff;
+  text-align: center;
+  position: relative;
+}
+
+/*About*/
+
+#about p{
+  font-size: 14pt;
+}
+
+/*Student*/
+
+#student header > p{
+  font-size: 14pt;
+}
+
+/*Contact*/
+
+#contact{
+  height: 100vh;
+}
+
+#contact > .col-md-10{
+  margin-top: 25px;
+}
+
+/*
+#contact > .form-horizontal > .form-group:last-child{
+  margin-bottom: 0;
+}*/
+
+@media (min-width: 768px){
+  /*Menu*/
+
+  #menu a.scroll-effect{
+    text-transform: uppercase;
+  }
+
+  #menu a.login{
+    text-transform: uppercase;
+  }
+
+  #menu.bg{
+    background: rgba(255, 255, 255, 0.97);
+    border-bottom: 2px solid #f2f2f2;
+  }
+
+  #menu.bg a.scroll-effect{
+    color: #333;
+  }
+
+  #menu.bg a.login{
+    color: #333;
+  }
+
+  #menu.bg .navbar-brand:hover{
+    color: #bcbcbc;
+  }
+
+  #menu.bg #navbar > ul > li.active > a{
+    color: #27b6ff;
+    background: none;
+  }
+}
