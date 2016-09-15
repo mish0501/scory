@@ -7,7 +7,7 @@
 
 @section('content')
 @if(Entrust::can('delete-subject'))
-<div class='box bordered-box purple-border box-collapsed' style='margin-bottom:0;'>
+<div class='box bordered-box purple-border {{ ($subjects->isEmpty()) ? "box-collapsed" : "" }}' style='margin-bottom:0;'>
   <div class='box-header purple-background'>
     <div class='title'>
       <i class="icon-book"></i>
@@ -76,7 +76,7 @@
 @endif
 
 @if(Entrust::can('delete-partition'))
-<div class='box bordered-box blue-border box-collapsed' style='margin-bottom:0;'>
+<div class='box bordered-box blue-border {{ ($partitions->isEmpty()) ? "box-collapsed" : "" }}' style='margin-bottom:0;'>
   <div class='box-header blue-background'>
     <div class='title'>
       <i class="icon-folder-open"></i>
@@ -149,7 +149,7 @@
 @endif
 
 @if(Entrust::can('delete-question'))
-<div class='box bordered-box green-border box-collapsed' style='margin-bottom:0;'>
+<div class='box bordered-box green-border {{ ($questions->isEmpty()) ? "box-collapsed" : "" }}' style='margin-bottom:0;'>
   <div class='box-header green-background'>
     <div class='title'>
       <i class="icon-question"></i>
@@ -226,7 +226,7 @@
 @endif
 
 @if(Entrust::can('delete-testroom'))
-<div class='box bordered-box red-border box-collapsed' style='margin-bottom:0;'>
+<div class='box bordered-box red-border {{ ($testrooms->isEmpty()) ? "box-collapsed" : "" }}' style='margin-bottom:0;'>
   <div class='box-header red-background'>
     <div class='title'>
       <i class="icon-group"></i>
@@ -302,7 +302,7 @@
 @endif
 
 @if(Entrust::hasRole('admin'))
-<div class='box bordered-box orange-border box-collapsed' style='margin-bottom:0;'>
+<div class='box bordered-box orange-border {{ ($mail->isEmpty()) ? "box-collapsed" : "" }}' style='margin-bottom:0;'>
   <div class='box-header orange-background'>
     <div class='title'>
       <i class="icon-comments"></i>

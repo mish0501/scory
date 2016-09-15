@@ -8,7 +8,7 @@ class Question extends Model
 {
     protected $table = 'questions';
 
-    protected $fillable = ['name', 'subject_id', 'partition_id', 'class', 'trash', 'type'];
+    protected $fillable = ['name', 'subject_id', 'partition_id', 'class', 'trash', 'type', 'user_id'];
 
     public $timestamps = false;
 
@@ -25,5 +25,10 @@ class Question extends Model
     public function answers()
     {
         return $this->hasMany('App\Answer');
+    }
+
+    public function user()
+    {
+      return $this->belongsTo('App\User', 'user_id');
     }
 }

@@ -18,12 +18,16 @@
       <div class='box-content box-double-padding'>
         <div class='col-sm-12'>
           <div class='form-group'>
-            <label>Име</label><br>
+            <label>Име:</label><br>
             <span>{{ $name }}</span>
           </div>
           <div class='form-group'>
-            <label>E-mail</label><br>
+            <label>E-mail:</label><br>
             <span>{{ $email }}</span>
+          </div>
+          <div class='form-group'>
+            <label>Въпроси в системата:</label><br>
+            <span>{{ $questions }}</span>
           </div>
           @if($edit)
           <div class='form-actions form-actions-padding' style='margin-bottom: 0;'>

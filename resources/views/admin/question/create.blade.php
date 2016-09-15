@@ -15,8 +15,8 @@
   ]) !!}
     <div class='form-group'>
       <label class='col-md-2 control-label' for='name'>Името на въпроса</label>
-      <div class='col-md-10'>
-        <textarea class='form-control ckeditor' name='name' id="name" placeholder='Името на въпроса' type='text'>{{Request::old('name')}}</textarea>
+      <div class='col-md-5'>
+        <input class='form-control' name='name' id="name" placeholder='Името на въпроса' type='text' value="{{Request::old('name')}}">
       </div>
     </div>
     <div class='form-group'>
@@ -42,24 +42,16 @@
         <select class="form-control" name='partition_id' id="partition"></select>
       </div>
     </div>
-    <div class='form-group'>
-      <label class='col-md-2 control-label' for='name'>Тип въпрос</label>
-      <div class='col-md-5'>
-        <select class="form-control" name='type' id="type">
-          <option value="one">С един верен отговор</option>
-          <option value="multiple">С повече от един верен отговор</option>
-        </select>
-      </div>
-    </div>
+
     <div class='form-group'>
       <label class='col-md-2 control-label' for='class'>Отговори</label>
       <div class='col-md-5'>
         <input class='form-control' name='answers[0]' value="{{Request::old('answers.0')}}" id="answers" placeholder='Името на отговора' type='text'>
       </div>
       <div class='col-md-5'>
-        <div class="radio">
+        <div class="checkbox">
           <label>
-            <input type="radio" value="0" name='correct' {{ (Request::old('correct') == 0) ? 'checked="checked"' : null }}>
+            <input type="checkbox" value="0" name='correct[]' {{ (Request::old('correct') == 0) ? 'checked="checked"' : null }}>
             Верен отговор
           </label>
         </div>
@@ -70,9 +62,9 @@
         <input class='form-control' name='answers[1]' value="{{Request::old('answers.1')}}" id="answers" placeholder='Името на отговора' type='text'>
       </div>
       <div class='col-md-5'>
-        <div class="radio">
+        <div class="checkbox">
           <label>
-            <input type="radio" value="1" name='correct' {{ (Request::old('correct') == 1) ? 'checked="checked"' : null }}>
+            <input type="checkbox" value="1" name='correct[]' {{ (Request::old('correct') == 1) ? 'checked="checked"' : null }}>
             Верен отговор
           </label>
         </div>
@@ -83,9 +75,9 @@
         <input class='form-control' name='answers[2]' value="{{Request::old('answers.2')}}" id="answers" placeholder='Името на отговора' type='text'>
       </div>
       <div class='col-md-5'>
-        <div class="radio">
+        <div class="checkbox">
           <label>
-            <input type="radio" value="2" name='correct' {{ (Request::old('correct') == 2) ? 'checked="checked"' : null }}>
+            <input type="checkbox" value="2" name='correct[]' {{ (Request::old('correct') == 2) ? 'checked="checked"' : null }}>
             Верен отговор
           </label>
         </div>
@@ -96,9 +88,9 @@
         <input class='form-control' name='answers[3]' value="{{Request::old('answers.3')}}" id="answers" placeholder='Името на отговора' type='text'>
       </div>
       <div class='col-md-5'>
-        <div class="radio">
+        <div class="checkbox">
           <label>
-            <input type="radio" value="3" name='correct' {{ (Request::old('correct') == 3) ? 'checked="checked"' : null }}>
+            <input type="checkbox" value="3" name='correct[]' {{ (Request::old('correct') == 3) ? 'checked="checked"' : null }}>
             Верен отговор
           </label>
         </div>
@@ -147,7 +139,6 @@
       var selectClass = $('select#class'),
           selectSubject = $('select#subject'),
           selectPartition = $('select#partition'),
-          selectType = $('select#type'),
           addAnswer = $('button.add-answer'),
           removeAnswer = $('button.remove-answer'),
           token = $('input[name=_token]');
@@ -185,11 +176,7 @@
         var len = formGroup.length - 1;
         var beforeLast = formGroup[len - 1];
 
-        if(selectType.attr('value') === 'one'){
-          var number = beforeLast.querySelector('input[type=radio]').value;
-        }else if(selectType.attr('value') === 'multiple'){
-          var number = beforeLast.querySelector('input[type=checkbox]').value;
-        }
+        var number = beforeLast.querySelector('input[type=checkbox]').value;
 
         if (number == 4) {
           removeAnswer.attr('disabled', true);
@@ -208,79 +195,28 @@
         var len = formGroup.length - 1;
         var beforeLast = formGroup[len - 1];
 
-        if(selectType.attr('value') === 'one'){
-            var newRadioN = parseInt(beforeLast.querySelector('input[type=radio]').value) + 1;
-        }else if(selectType.attr('value') === 'multiple'){
-          var newRadioN = parseInt(beforeLast.querySelector('input[type=checkbox]').value) + 1;
-        }
+        var newRadioN = parseInt(beforeLast.querySelector('input[type=checkbox]').value) + 1;
 
         if (newRadioN == 7) {
           addAnswer.attr("disabled", true);
         }
 
-        if(selectType.attr('value') === 'one'){
-          var newFGroup = "<div class='form-group'>"
-            +"<div class='col-md-5 col-md-offset-2'>"
-              +"<input class='form-control' name='answers["+ newRadioN +"]' id='answers' placeholder='Името на отговора' type='text'>"
+        var newFGroup = "<div class='form-group'>"
+          +"<div class='col-md-5 col-md-offset-2'>"
+            +"<input class='form-control' name='answers["+ newRadioN +"]' id='answers' placeholder='Името на отговора' type='text'>"
+          +"</div>"
+          +"<div class='col-md-5'>"
+            +'<div class="checkbox">'
+              +"<label>"
+                +"<input type='checkbox' value="+ newRadioN +" name='correct[]'>"
+                +"Верен отговор"
+              +"</label>"
             +"</div>"
-            +"<div class='col-md-5'>"
-              +'<div class="radio">'
-                +"<label>"
-                  +"<input type='radio' value="+ newRadioN +" name='correct'>"
-                  +"Верен отговор"
-                +"</label>"
-              +"</div>"
-            +"</div>"
-          +"</div>";
-        }else if(selectType.attr('value') === 'multiple'){
-          var newFGroup = "<div class='form-group'>"
-            +"<div class='col-md-5 col-md-offset-2'>"
-              +"<input class='form-control' name='answers["+ newRadioN +"]' id='answers' placeholder='Името на отговора' type='text'>"
-            +"</div>"
-            +"<div class='col-md-5'>"
-              +'<div class="checkbox">'
-                +"<label>"
-                  +"<input type='checkbox' value="+ newRadioN +" name='correct[]'>"
-                  +"Верен отговор"
-                +"</label>"
-              +"</div>"
-            +"</div>"
-          +"</div>";
-        }
+          +"</div>"
+        +"</div>";
 
         $(newFGroup).insertAfter(beforeLast);
         removeAnswer.attr('disabled', false);
-      });
-
-      selectType.on('change', function() {
-        var val = this.value;
-        if(val == 'one'){
-          var checkboxContainer = $('div.checkbox'),
-              checkboxInput = $('input[type=checkbox]');
-
-          for (var i = 0; i < checkboxContainer.length; i+= 1) {
-            checkboxContainer.eq(i).addClass('radio').removeClass('radiocheckbox');
-          }
-
-          checkboxInput.each(function() {
-             $("<input type='radio' />").attr({ name: this.name, value: this.value }).insertBefore(this);
-          }).remove();
-
-          $('input[type=radio]').eq(0).prop("checked", true);
-        }else if(val == 'multiple'){
-          var radioContainer = $('div.radio'),
-              radioInput = $('input[type=radio]');
-
-          for (var i = 0; i < radioContainer.length; i+= 1) {
-            radioContainer.eq(i).addClass('checkbox').removeClass('radio');
-          }
-
-          radioInput.each(function() {
-             $("<input type='checkbox' />").attr({ name: this.name + '[]', value: this.value }).insertBefore(this);
-          }).remove();
-
-          $('input[type=checkbox]').eq(0).prop("checked", true);
-        }
       });
 
       selectClass.on('change', function() {

@@ -21,7 +21,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-      $questions = Question::where('trash', '=', false)->with('subject', 'partition')->get();
+      $questions = Question::where('trash', '=', false)->with('subject', 'partition', 'user')->get();
+
       return view('admin.question.index', ['questions' => $questions]);
 
     }
@@ -48,8 +49,7 @@ class QuestionController extends Controller
          'name' => 'required|min:5',
          'class' => 'required',
          'subject_id' => 'required',
-         'partition_id' => 'required',
-         'type' => 'required'
+         'partition_id' => 'required'
        ];
 
 
@@ -76,21 +76,30 @@ class QuestionController extends Controller
          return $validator->errors()->toJSON();
        }
 
+       $user_id = \Auth::user()->id;
+
        $input = $request->all();
+       $input['user_id'] = $user_id;
+
+       $reqCorrect = $request->get('correct');
+       if(sizeof($reqCorrect) > 1){
+         $input['type'] = 'multiple';
+       }else{
+         $input['type'] = 'one';
+       }
 
        $question = Question::create($input);
 
        foreach ($request->get('answers') as $key => $value) {
          $correct = false;
-         $reqCorrect = $request->get('correct');
-         if(is_array($reqCorrect)){
+         if(sizeof($reqCorrect) > 1){
            foreach ($reqCorrect as $k => $v) {
              if ($key == $reqCorrect[$k]) {
                $correct = true;
              }
            }
          }else{
-           if ($key == $reqCorrect) {
+           if ($key == $reqCorrect[0]) {
              $correct = true;
            }
          }
@@ -135,8 +144,7 @@ class QuestionController extends Controller
          'name' => 'required|min:5',
          'class' => 'required',
          'subject_id' => 'required',
-         'partition_id' => 'required',
-         'type' => 'required'
+         'partition_id' => 'required'
       ];
 
       $attrName = [
@@ -171,7 +179,13 @@ class QuestionController extends Controller
       $input['class'] = $request->get('class');
       $input['subject_id'] = $request->get('subject_id');
       $input['partition_id'] = $request->get('partition_id');
-      $input['type'] = $request->get('type');
+
+      $reqCorrect = $request->get('correct');
+      if(sizeof($reqCorrect) > 1){
+        $input['type'] = 'multiple';
+      }else{
+        $input['type'] = 'one';
+      }
 
       $question->fill($input)->save();
 
@@ -184,15 +198,14 @@ class QuestionController extends Controller
           $input['question_id'] = $id;
           $input['correct'] = false;
 
-          $reqCorrect = $request->get('correct');
-          if(is_array($reqCorrect)){
+          if(sizeof($reqCorrect) > 1){
             foreach ($reqCorrect as $k => $v) {
               if ($key == $reqCorrect[$k]) {
                 $input['correct'] = true;
               }
             }
           }else{
-            if ($key == $reqCorrect) {
+            if ($key == $reqCorrect[0]) {
               $input['correct'] = true;
             }
           }

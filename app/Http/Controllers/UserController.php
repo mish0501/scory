@@ -25,7 +25,9 @@ class UserController extends Controller
         $avatar = 'avatar.jpg';
       }
 
-      return view('admin.user.show', ['name' => $user->name, 'email' => $user->email, 'edit' => $editable, 'avatar' => $avatar]);
+      $questionCount = $user->questions->count();
+
+      return view('admin.user.show', ['name' => $user->name, 'email' => $user->email, 'edit' => $editable, 'avatar' => $avatar, 'questions' => $questionCount]);
     }
 
     public function edit()
@@ -107,7 +109,7 @@ class UserController extends Controller
         $user->save();
 
       }
-      
+
       \Session::flash('flash_message', 'Паролата беше успешно сменена!');
 
       return redirect()->route('admin.user.edit');

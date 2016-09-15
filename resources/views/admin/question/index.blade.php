@@ -38,6 +38,9 @@
           <th>
             Клас
           </th>
+          <th>
+            Създадено от:
+          </th>
           @if(Entrust::can('edit-question') || Entrust::can('delete-question'))
             <th>
               Опции
@@ -52,6 +55,7 @@
             <td>{{ $data->partition->name }}</td>
             <td>{{ $data->subject->name }}</td>
             <td>{{ $data->class }}. Клас</td>
+            <td><a href="{{ route('admin.user.show', $data->user->id) }}">{{ $data->user->name }}</a></td>
             @if(Entrust::can('edit-question') || Entrust::can('delete-question'))
               <td>
                 <div class='text-right'>

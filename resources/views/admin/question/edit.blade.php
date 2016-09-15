@@ -90,15 +90,6 @@
         </select>
       </div>
     </div>
-    <div class='form-group'>
-      <label class='col-md-2 control-label' for='name'>Тип въпрос</label>
-      <div class='col-md-5'>
-        <select class="form-control" name='type' id="type">
-          <option @if($question->type == 'one') selected=selected @endif value="one">С един верен отговор</option>
-          <option @if($question->type == 'multiple') selected=selected @endif value="multiple">С повече от един верен отговор</option>
-        </select>
-      </div>
-    </div>
     <?php $i = 0; ?>
     @foreach($answers as $answer)
       <?php
@@ -127,9 +118,9 @@
             <input class='form-control' name="answers[{{ $i }}][name]" id="answers" placeholder='Името на отговора' type='text' value="{{ (Request::old('answers.'.$i.'.name')) ? Request::old('answers.'.$i.'.name') : $answer->name }}">
           </div>
           <div class='col-md-5'>
-            <div class="radio">
+            <div class="checkbox">
               <label>
-                <input @if($question->type == 'one') type="radio" name='correct' @elseif($question->type = 'multiple') type="checkbox" name='correct[]' @endif value="{{ $i }}" {{ $checked }}>
+                <input type="checkbox" name='correct[]' value="{{ $i }}" {{ $checked }}>
                 Верен отговор
               </label>
             </div>
@@ -175,7 +166,6 @@
       var selectClass = $('select#class'),
           selectSubject = $('select#subject'),
           selectPartition = $('select#partition'),
-          selectType = $('select#type'),
           addAnswer = $('button.add-answer'),
           removeAnswer = $('button.remove-answer'),
           token = $('input[name=_token]'),
@@ -184,11 +174,7 @@
       var startFormGroup = document.querySelectorAll('div.form-group');
       var startBeforeLast = startFormGroup[startFormGroup.length - 2];
 
-      if(selectType.attr('value') === 'one'){
-        var startNumber = startBeforeLast.querySelector('input[type=radio]').value;
-      }else if(selectType.attr('value') === 'multiple'){
-        var startNumber = startBeforeLast.querySelector('input[type=checkbox]').value;
-      }
+      var startNumber = startBeforeLast.querySelector('input[type=checkbox]').value;
 
       if (startNumber >= 4) {
         removeAnswer.attr('disabled', false);
@@ -231,11 +217,7 @@
         var len = formGroup.length - 1;
         var beforeLast = formGroup[len - 1];
 
-        if(selectType.attr('value') === 'one'){
-          var number = beforeLast.querySelector('input[type=radio]').value;
-        }else if(selectType.attr('value') === 'multiple'){
-          var number = beforeLast.querySelector('input[type=checkbox]').value;
-        }
+        var number = beforeLast.querySelector('input[type=checkbox]').value;
 
         var answerId = beforeLast.querySelector('input[type=hidden]#answer_id');
 
@@ -265,81 +247,30 @@
         var len = formGroup.length - 1;
         var beforeLast = formGroup[len - 1];
 
-        if(selectType.attr('value') === 'one'){
-            var newRadioN = parseInt(beforeLast.querySelector('input[type=radio]').value) + 1;
-        }else if(selectType.attr('value') === 'multiple'){
-          var newRadioN = parseInt(beforeLast.querySelector('input[type=checkbox]').value) + 1;
-        }
+        var newRadioN = parseInt(beforeLast.querySelector('input[type=checkbox]').value) + 1;
 
         if (newRadioN == 7) {
           addAnswer.attr("disabled", true);
         }
 
-        if(selectType.attr('value') === 'one'){
-          var newFGroup = "<div class='form-group'>"
-            +"<div class='col-md-5 col-md-offset-2'>"
-              +"<input class='form-control' name='answers["+ newRadioN +"]' id='answers' placeholder='Името на отговора' type='text'>"
+        var newFGroup = "<div class='form-group'>"
+          +"<div class='col-md-5 col-md-offset-2'>"
+            +"<input class='form-control' name='answers["+ newRadioN +"]' id='answers' placeholder='Името на отговора' type='text'>"
+          +"</div>"
+          +"<div class='col-md-5'>"
+            +'<div class="checkbox">'
+              +"<label>"
+                +"<input type='checkbox' value="+ newRadioN +" name='correct[]'>"
+                +"Верен отговор"
+              +"</label>"
             +"</div>"
-            +"<div class='col-md-5'>"
-              +'<div class="radio">'
-                +"<label>"
-                  +"<input type='radio' value="+ newRadioN +" name='correct'>"
-                  +"Верен отговор"
-                +"</label>"
-              +"</div>"
-            +"</div>"
-          +"</div>";
-        }else if(selectType.attr('value') === 'multiple'){
-          var newFGroup = "<div class='form-group'>"
-            +"<div class='col-md-5 col-md-offset-2'>"
-              +"<input class='form-control' name='answers["+ newRadioN +"]' id='answers' placeholder='Името на отговора' type='text'>"
-            +"</div>"
-            +"<div class='col-md-5'>"
-              +'<div class="checkbox">'
-                +"<label>"
-                  +"<input type='checkbox' value="+ newRadioN +" name='correct[]'>"
-                  +"Верен отговор"
-                +"</label>"
-              +"</div>"
-            +"</div>"
-          +"</div>";
-        }
+          +"</div>"
+        +"</div>";
 
         $(newFGroup).insertAfter(beforeLast);
         removeAnswer.attr('disabled', false);
       });
-
-      selectType.on('change', function() {
-        var val = this.value;
-        if(val == 'one'){
-          var checkboxContainer = $('div.checkbox'),
-              checkboxInput = $('input[type=checkbox]');
-
-          for (var i = 0; i < checkboxContainer.length; i+= 1) {
-            checkboxContainer.eq(i).addClass('radio').removeClass('radiocheckbox');
-          }
-
-          checkboxInput.each(function() {
-             $("<input type='radio' />").attr({ name: this.name, value: this.value }).insertBefore(this);
-          }).remove();
-
-          $('input[type=radio]').eq(0).prop("checked", true);
-        }else if(val == 'multiple'){
-          var radioContainer = $('div.radio'),
-              radioInput = $('input[type=radio]');
-
-          for (var i = 0; i < radioContainer.length; i+= 1) {
-            radioContainer.eq(i).addClass('checkbox').removeClass('radio');
-          }
-
-          radioInput.each(function() {
-             $("<input type='checkbox' />").attr({ name: this.name + '[]', value: this.value }).insertBefore(this);
-          }).remove();
-
-          $('input[type=checkbox]').eq(0).prop("checked", true);
-        }
-      });
-
+      
       selectClass.on('change', function() {
         var getSubjects = $.ajax({
           method: 'POST',

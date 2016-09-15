@@ -2,7 +2,7 @@
 
 @section('title')
   <i class="icon-cogs"></i>
-  Всички права
+  Всички роли
 @endsection
 
 @if(Entrust::can('create-roles'))
