@@ -45,53 +45,54 @@
 
     <div class='form-group'>
       <label class='col-md-2 control-label' for='class'>Отговори</label>
-      <div class='col-md-5'>
-        <input class='form-control' name='answers[0]' value="{{Request::old('answers.0')}}" id="answers" placeholder='Името на отговора' type='text'>
+      <br class="hidden-md hidden-lg">
+      <div class='col-md-5 col-sm-11 col-xs-10'>
+        <input class='form-control' name='answers[0]' id="answers" placeholder='Името на отговора' type='text'>
       </div>
-      <div class='col-md-5'>
-        <div class="checkbox">
+      <div class='col-md-5 col-sm-1 col-xs-1'>
+        <div class="checkmark">
           <label>
-            <input type="checkbox" value="0" name='correct[]' {{ (Request::old('correct') == 0) ? 'checked="checked"' : null }}>
-            Верен отговор
+            <i class="icon-ok"></i>
+            <input type="checkbox" class="hide" value="0" name='correct[]'>
           </label>
         </div>
       </div>
     </div>
     <div class='form-group'>
-      <div class='col-md-5 col-md-offset-2'>
-        <input class='form-control' name='answers[1]' value="{{Request::old('answers.1')}}" id="answers" placeholder='Името на отговора' type='text'>
+      <div class='col-md-5 col-md-offset-2 col-sm-11 col-xs-10'>
+        <input class='form-control' name='answers[1]' id="answers" placeholder='Името на отговора' type='text'>
       </div>
-      <div class='col-md-5'>
-        <div class="checkbox">
+      <div class='col-md-5 col-sm-1 col-xs-1'>
+        <div class="checkmark">
           <label>
-            <input type="checkbox" value="1" name='correct[]' {{ (Request::old('correct') == 1) ? 'checked="checked"' : null }}>
-            Верен отговор
+            <i class="icon-ok"></i>
+            <input type="checkbox" class="hide" value="1" name='correct[]'>
           </label>
         </div>
       </div>
     </div>
     <div class='form-group'>
-      <div class='col-md-5 col-md-offset-2'>
-        <input class='form-control' name='answers[2]' value="{{Request::old('answers.2')}}" id="answers" placeholder='Името на отговора' type='text'>
+      <div class='col-md-5 col-md-offset-2 col-sm-11 col-xs-10'>
+        <input class='form-control' name='answers[2]' id="answers" placeholder='Името на отговора' type='text'>
       </div>
-      <div class='col-md-5'>
-        <div class="checkbox">
+      <div class='col-md-5 col-sm-1 col-xs-1'>
+        <div class="checkmark">
           <label>
-            <input type="checkbox" value="2" name='correct[]' {{ (Request::old('correct') == 2) ? 'checked="checked"' : null }}>
-            Верен отговор
+            <i class="icon-ok"></i>
+            <input type="checkbox" class="hide" value="2" name='correct[]'>
           </label>
         </div>
       </div>
     </div>
     <div class='form-group'>
-      <div class='col-md-5 col-md-offset-2'>
-        <input class='form-control' name='answers[3]' value="{{Request::old('answers.3')}}" id="answers" placeholder='Името на отговора' type='text'>
+      <div class='col-md-5 col-md-offset-2 col-sm-11 col-xs-10'>
+        <input class='form-control' name='answers[3]' id="answers" placeholder='Името на отговора' type='text'>
       </div>
-      <div class='col-md-5'>
-        <div class="checkbox">
+      <div class='col-md-5 col-sm-1 col-xs-1'>
+        <div class="checkmark">
           <label>
-            <input type="checkbox" value="3" name='correct[]' {{ (Request::old('correct') == 3) ? 'checked="checked"' : null }}>
-            Верен отговор
+            <i class="icon-ok"></i>
+            <input type="checkbox" class="hide" value="3" name='correct[]'>
           </label>
         </div>
       </div>
@@ -102,6 +103,8 @@
           <i class='icon-plus'></i>
           Добави още един отговор
         </button>
+        <br class="hidden-lg hidden-sm">
+        <br class="hidden-lg hidden-sm">
         <button class='btn btn-danger remove-answer' disabled>
           <i class='icon-remove'></i>
           Изтрий последния въпрос
@@ -122,8 +125,36 @@
 </div>
 @endsection
 
+
 @section('style')
   <link href="../assets/stylesheets/plugins/common/bootstrap-wysihtml5.css" media="all" rel="stylesheet" type="text/css" />
+  <style media="screen">
+    .checkmark{
+      color: #eee;
+      background-color: #ddd;
+      border-radius: 50%;
+      border: #ddd 5px solid;
+      width: 28px;
+      height: 28px;
+      position: absolute;
+      text-align: center;
+      line-height: 19px;
+      font-size: 14pt;
+      margin-left: -20px;
+      margin-top: 2px;
+      cursor: pointer;
+    }
+
+    .checkmark label{
+      cursor: pointer;
+    }
+
+    .checkmark.checked{
+      color: #fff;
+      background-color: #5daf2b;
+      border: #5daf2b 5px solid;
+    }
+  </style>
 @endsection
 
 @section('javascript')
@@ -141,6 +172,7 @@
           selectPartition = $('select#partition'),
           addAnswer = $('button.add-answer'),
           removeAnswer = $('button.remove-answer'),
+          checkbox = $('.checkmark'),
           token = $('input[name=_token]');
 
       $("form").submit(function(e) {
@@ -202,14 +234,14 @@
         }
 
         var newFGroup = "<div class='form-group'>"
-          +"<div class='col-md-5 col-md-offset-2'>"
+          +"<div class='col-md-5 col-md-offset-2 col-sm-11 col-xs-10'>"
             +"<input class='form-control' name='answers["+ newRadioN +"]' id='answers' placeholder='Името на отговора' type='text'>"
           +"</div>"
-          +"<div class='col-md-5'>"
-            +'<div class="checkbox">'
+          +"<div class='col-md-5 col-sm-1 col-xs-1'>"
+            +'<div class="checkmark">'
               +"<label>"
-                +"<input type='checkbox' value="+ newRadioN +" name='correct[]'>"
-                +"Верен отговор"
+                +"<i class='icon-ok'></i>"
+                +"<input type='checkbox' class='hide' value='"+ newRadioN +"' name='correct[]'>"
               +"</label>"
             +"</div>"
           +"</div>"
@@ -256,6 +288,10 @@
           selectPartition.parent().parent().removeClass('hide');
           token.attr('value', data[0].token);
         });
+      });
+
+      $('.checkmark input').live('change', function(){
+        $(this).parent().parent().toggleClass('checked');
       });
     });
   </script>
