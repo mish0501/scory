@@ -23,8 +23,8 @@ class TestController extends Controller
     }
     public function chooseSubject(Request $request)
     {
-      $subjects = Subject::where('class', '=', $request->get('class'))->get();
-      return view('test.choose', ['subjects' => $subjects, 'selectedClass' => $request->get('class')]);
+      $subjects = Subject::where('class', '=', $request->get('class'))->get(['id', 'name']);
+      return $subjects;
     }
 
     public function selectPartition(Request $request)
@@ -38,8 +38,8 @@ class TestController extends Controller
       $input['class'] = $request->class;
       $input['subject_id'] = $request->subject_id;
 
-      $partitions = Partition::where($input)->get();
-      return view('test.choose', ['partitions' => $partitions, 'selectedClass' => $input['class'], 'subject' => $input['subject_id']]);
+      $partitions = Partition::where($input)->get(['id', 'name']);
+      return $partitions;
     }
 
     public function selectQuestionPost(Request $request)
@@ -121,11 +121,11 @@ class TestController extends Controller
         if($code !== ''){
           return $this->checkTest(true, $code);
         }
-        return $this->checkTest(false, NULL);
+        return $this->checkTest(false);
       }
     }
 
-    public function checkTest($testroom, $code)
+    public function checkTest($testroom, $code = NULL)
     {
       $checked = [];
 

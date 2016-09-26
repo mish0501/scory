@@ -15,6 +15,14 @@ Route::get('/', function() {
     return view('index');
 });
 
+Route::get('/vue', function() {
+    return view('welcome');
+});
+
+Route::get('/vue/test', function() {
+    return view('test');
+});
+
 Route::post('/invite', ['as' => 'invite', 'uses' => 'InviteController@newUser']);
 
 Route::post('/contact', ['as' => 'contact', 'uses' => 'ContactController@sendMail']);

@@ -95,12 +95,12 @@ class TestRoomController extends Controller
          'roomcode' => 'required|digits:5|exists:testroom,code',
       ],[
         'roomcode.required' => 'Полето с кода на стаята е задължително.',
-        'roomcode.exists' => 'Стая с такъв код не съществува.'
+        'roomcode.exists' => 'Стая с такъв код не съществува.',
+        'roomcode.digits' => 'Полето c кода трябва да има 5 цифри.'
       ]);
 
       if ($validator->fails()) {
-        Session::flash('room_code_error', 'Възникна грешка с кода на стаята:');
-        return redirect(url('/'))->withErrors($validator);
+        return [$validator->errors(), 'room_code_error' => 'Възникна грешка с кода на стаята:'];
       }
 
       $code = $request->get('roomcode');
@@ -108,9 +108,7 @@ class TestRoomController extends Controller
       $testroom = TestRoom::where('code', '=', $code)->where('status', '=', 1)->orWhere('status', '=', 2)->count();
 
       if($testroom == 1){
-        return view('testroom.join', ['code' => $code]);
-      }elseif($testroom == 0){
-        return redirect(url('/'));
+        return ['redirect' => true];
       }
     }
 

@@ -25,8 +25,7 @@ class ContactController extends Controller
     ]);
 
     if ($validator->fails()) {
-      \Session::flash('error_mail_send', '');
-      return redirect()->back()->withErrors($validator)->withInput();
+      return [$validator->errors()->toJSON(), 'success' => false];
     }
 
     $message['name'] = $request->get('first_name').' '.$request->get('last_name');
@@ -37,13 +36,12 @@ class ContactController extends Controller
     $message['trash'] = false;
 
     MailStore::create($message);
-    
+
     $pusher = \App::make('pusher');
 
     $pusher->trigger('MailChanel', 'NewMail', array('new_mail' => true));
 
-    \Session::flash('mail_send', 'Съобщението изпратено успешно.');
-    return redirect()->back();
+    return ["mailSend" => 'Съобщението изпратено успешно.', 'success' => true];
   }
 
   public function index()

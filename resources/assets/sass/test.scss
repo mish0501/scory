@@ -1,0 +1,69 @@
+body{
+  background-color: #f7f7f7;
+}
+
+.title{
+  font-size: 24pt;
+  color:#337ab7;
+}
+
+.tabs{
+  background-color: #fff;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 16pt;
+  display: block;
+  color: #337ab7;
+}
+
+h1.tabs{
+  font-size: 2em;
+}
+
+label.tabs{
+  text-align: left;
+}
+
+.tabs .radio-input{
+  display: none;
+}
+
+.tabs .checkbox-input{
+  display: none;
+}
+
+.tabs.checked{
+  background-color: #337ab7;
+  color: #fff;
+}
+
+.tabs input[type="text"]{
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.true .name{
+  background-color: green;
+  color: #fff;
+}
+
+.true-answer{
+  background-color: green;
+  color: #fff;
+}
+
+.false .name{
+  background-color: red;
+  color: #fff;
+}
+
+.false-answer{
+  background-color: red;
+  color: #fff;
+}
+
+.submit{
+  margin-bottom: 10px;
+}
