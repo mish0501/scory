@@ -20,7 +20,7 @@ Route::get('/vue', function() {
 });
 
 Route::get('/vue/test', function() {
-    return view('test');
+    return view('select-test');
 });
 
 Route::post('/invite', ['as' => 'invite', 'uses' => 'InviteController@newUser']);
@@ -30,12 +30,10 @@ Route::post('/contact', ['as' => 'contact', 'uses' => 'ContactController@sendMai
 Route::get('/home', ['as' => 'admin.home', 'uses' => 'HomeController@index']);
 
 // Test routes
-Route::get('/chooseClass', ['as' => 'class', 'uses' => 'TestController@index']);
 Route::get('/endtest', ['as' => 'end', 'uses' => 'TestController@endTest']);
-Route::post('/chooseSubject', ['as' => 'subject', 'uses' => 'TestController@chooseSubject']);
+Route::post('/selectSubject', ['as' => 'subject', 'uses' => 'TestController@selectSubject']);
 Route::post('/choosePartition', ['as' => 'partition', 'uses' => 'TestController@selectPartition']);
-Route::post('/question', ['as' => 'selectQuestion', 'uses' => 'TestController@selectQuestionPost']);
-Route::post('/nextQuestion', ['uses' => 'TestController@nextQuestion']);
+Route::post('/questions', ['as' => 'selectQuestion', 'uses' => 'TestController@selectQuestions']);
 
 // TestRoom
 Route::post('/join' , ['as' => 'testroom.join', 'uses' => 'TestRoomController@join']);

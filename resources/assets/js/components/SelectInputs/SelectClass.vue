@@ -15,7 +15,7 @@ export default {
 
   methods: {
     ClassSelected: function() {
-      this.$http.post("/chooseSubject", { class: this.class}).then((response) => {
+      this.$http.post("/selectSubject", { class: this.class}).then((response) => {
         this.$dispatch('classSelected', { class: this.class, subjects: response.data })
       }, (err) => {
         console.log(err);

@@ -8,12 +8,14 @@ Vue.config.debug = true;
 const router = new VueRouter()
 
 import MainPage from './components/MainPage.vue'
+import SelectTestPage from './components/SelectTestPage.vue'
 import TestPage from './components/TestPage.vue'
 
 var App = new Vue({
   el: "#app",
   components: {
     'main-page': MainPage,
-    'test-page': TestPage
+    'test-page': TestPage,
+    'select-test-page': SelectTestPage
   }
 })

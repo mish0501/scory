@@ -21,7 +21,7 @@ class TestController extends Controller
     {
       return view('test.choose', ['class' => true]);
     }
-    public function chooseSubject(Request $request)
+    public function selectSubject(Request $request)
     {
       $subjects = Subject::where('class', '=', $request->get('class'))->get(['id', 'name']);
       return $subjects;
@@ -42,26 +42,24 @@ class TestController extends Controller
       return $partitions;
     }
 
-    public function selectQuestionPost(Request $request)
+    public function selectQuestions(Request $request)
     {
       $this->validate($request, [
          'subject_id' => 'required',
          'partition_id' => 'required',
-         'class' => 'required'
+         'class' => 'required',
+         'questionCount' => 'required'
       ]);
 
       $class = $request->class;
       $partition = $request->partition_id;
       $subject = $request->subject_id;
+      $questionCount = $request->questionCount;
 
-      return $this->selectQuestion($subject, $partition, $class, 20, false);
-    }
-
-    public function selectQuestion($subject, $partition, $class, $questionCount, $api)
-    {
-      if($questionCount < 5){
-        $questionCount = 5;
+      if($questionCount < 3){
+        $questionCount = 3;
       }
+
       $questions = Question::where('class', '=', $class)
                             ->where('partition_id', '=', $partition)
                             ->where('subject_id', '=', $subject)
@@ -69,26 +67,11 @@ class TestController extends Controller
                             ->limit($questionCount)
                             ->get();
 
-
-      if($api){
-        foreach ($questions as $key => $value) {
-          $questions[$key]['answers'] = Answer::where('question_id', '=', $value->id)->orderByRaw("RAND()")->get();
-        }
-
-        $questions->toJSON();
-
-        return $questions;
-      }else{
-        Session::put('questions', $questions);
-
-        foreach ($questions as $key => $value) {
-          $answers[$key] = Answer::where('question_id', '=', $value->id)->orderByRaw("RAND()")->get();
-        }
-
-        Session::put('answers', $answers);
-
-        return view('test.test', ['question' => $questions['0'], 'answers' => $answers['0'], 'type' => $questions[0]->type, 'key' => '0']);
+      foreach ($questions as $key => $value) {
+        $questions[$key]['answers'] = Answer::where('question_id', '=', $value->id)->orderByRaw("RAND()")->get();
       }
+
+      return view('test', ['questions' => $questions]);
     }
 
     public function nextQuestion(Request $request)
