@@ -71,7 +71,7 @@ class TestController extends Controller
         $questions[$key]['answers'] = Answer::where('question_id', '=', $value->id)->orderByRaw("RAND()")->get();
       }
 
-      return view('test', ['questions' => $questions]);
+      return $questions;
     }
 
     public function nextQuestion(Request $request)

@@ -51,7 +51,7 @@
         <div class="col-md-4 col-md-offset-1 text-center">
           <h2>Избери си тест</h2>
           <p class="text-justify">Избери класа си, предмета и раздела, който искаш да се упражняваш.</p>
-          <p><a class="btn btn-success btn-lg btn-block" href="/vue/test" role="button">Избери си тест</a></p>
+          <p><a class="btn btn-success btn-lg btn-block" href="/test/select" role="button">Избери си тест</a></p>
         </div>
         <div class="col-md-4 col-md-offset-2 text-center">
           <h2>Влез в стая за тестове</h2>

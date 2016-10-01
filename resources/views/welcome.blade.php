@@ -43,7 +43,7 @@
   <body>
 
     <div id="app">
-      <Main-Page />
+      <router-view></router-view>
     </div>
 
     <script src="/assets/js/app.js"></script>

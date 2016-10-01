@@ -12,15 +12,17 @@
 */
 
 Route::get('/', function() {
-    return view('index');
-});
-
-Route::get('/vue', function() {
     return view('welcome');
 });
 
-Route::get('/vue/test', function() {
-    return view('select-test');
+Route::group(['prefix' => 'test'],function() {
+  Route::get('/', function() {
+    return view('test');
+  });
+
+  Route::get('/select', function() {
+    return view('test');
+  });
 });
 
 Route::post('/invite', ['as' => 'invite', 'uses' => 'InviteController@newUser']);

@@ -44,9 +44,9 @@
   <body>
 
     <div id="app">
-      <test-page />
+      <router-view></router-view>
     </div>
-    
+
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/test.js"></script>
   </body>
