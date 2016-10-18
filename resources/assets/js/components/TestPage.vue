@@ -5,11 +5,16 @@
 </template>
 
 <script>
-  export default {
-    ready(){
-      this.on('questions', function(data){
-        console.log(data);
-      })
+import { Questions } from "../vuex/test/getters.js"
+export default {
+  vuex: {
+    getters: {
+      questions: Questions
     }
+  },
+
+  ready(){
+    console.log(this.questions);
   }
+}
 </script>

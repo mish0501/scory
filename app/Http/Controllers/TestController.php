@@ -63,13 +63,10 @@ class TestController extends Controller
       $questions = Question::where('class', '=', $class)
                             ->where('partition_id', '=', $partition)
                             ->where('subject_id', '=', $subject)
+                            ->with('answers')
                             ->orderByRaw("RAND()")
                             ->limit($questionCount)
                             ->get();
-
-      foreach ($questions as $key => $value) {
-        $questions[$key]['answers'] = Answer::where('question_id', '=', $value->id)->orderByRaw("RAND()")->get();
-      }
 
       return $questions;
     }

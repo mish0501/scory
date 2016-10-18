@@ -6,6 +6,11 @@
 </template>
 
 <script>
+import {
+  set_subjects,
+  set_class
+} from "../../vuex/test/actions.js"
+
 export default {
   data () {
     return {
@@ -13,10 +18,25 @@ export default {
     }
   },
 
+  vuex: {
+    actions: {
+      set_subjects,
+      set_class
+    }
+  },
+
   methods: {
     ClassSelected: function() {
       this.$http.post("/selectSubject", { class: this.class}).then((response) => {
-        this.$dispatch('classSelected', { class: this.class, subjects: response.data })
+        var data = {
+          class: this.class,
+          subjects: response.data
+        }
+
+        this.set_class(data);
+
+        this.$parent.subject = "default"
+        this.$parent.partition = null
       }, (err) => {
         console.log(err);
       })

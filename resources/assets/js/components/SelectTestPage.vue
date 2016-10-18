@@ -24,15 +24,15 @@
         </div>
 
         <div class="form-group">
-          <select-subject class="tabs input-lg" :subjects="subjects" :subject="subject" :class="class" v-if="subjects"></select-subject>
+          <select-subject class="tabs input-lg" :subject.sync="subject" v-if="subject"></select-subject>
         </div>
 
         <div class="form-group">
-          <select-partition class="tabs input-lg" :partitions="partitions" :partition="partition" v-if="partitions"></select-partition>
+          <select-partition class="tabs input-lg" :partition.sync="partition" v-if="partition"></select-partition>
         </div>
 
         <div class="form-group">
-          <select class="form-control tabs input-lg" name="questionCount" v-model="questionCount" v-if="partition != 'default'">
+          <select class="form-control tabs input-lg" name="questionCount" v-model="questionCount" v-if="partition != 'default' && partition != null ">
             <option selected disabled value="0">Избери си броя на въпросите</option>
             <option value="3">3 Въпроса</option>
             <option value="5">5 Въпроса</option>
@@ -53,15 +53,15 @@
   import SelectSubject from "./SelectInputs/SelectSubject.vue"
   import SelectPartition from "./SelectInputs/SelectPartition.vue"
 
+  import { set_questions } from "../vuex/test/actions.js"
+  import { Class } from "../vuex/test/getters.js"
+
   export default {
     data() {
       return {
-        class: null,
-        subject: "default",
-        subjects: null,
-        partition: "default",
-        partitions: null,
-        questionCount: "0"
+        subject: null,
+        partition: null,
+        questionCount: 0
       }
     },
 
@@ -69,26 +69,6 @@
       'select-class': SelectClass,
       'select-subject': SelectSubject,
       'select-partition': SelectPartition
-    },
-
-    ready(){
-      this.$on('classSelected', function (data) {
-        this.class = data.class
-        this.subjects = data.subjects
-        this.subject = "default"
-        this.partition = "default"
-        this.partitions = null
-      });
-
-      this.$on('subjectSelected', function (data) {
-        this.subject = data.subject
-        this.partitions = data.partitions
-        this.partition = "default"
-      });
-
-      this.$on('partitionSelected', function (data) {
-        this.partition = data.partition
-      });
     },
 
     computed:{
@@ -100,10 +80,18 @@
         }else if (this.partition === "default") {
           return "Избери си раздел"
         }else if(this.partition != "default"){
-          return "Избери си броя на въпросите"
-        }else if(this.questionCount){
-          return "Продължи напред"
+          return "Избери си броя на въпросите и продължи напред"
         }
+      }
+    },
+
+    vuex: {
+      actions: {
+        set_questions
+      },
+
+      getters: {
+        class: Class
       }
     },
 
@@ -117,8 +105,8 @@
         }
 
         this.$http.post("/questions", data).then((response) => {
-          this.emit('questions', response.data)
-          this.$router.go('/test');
+          this.set_questions(response.data)
+          this.$router.go({ name: 'TestPage'});
         }, (err) =>{
           console.log(err);
         })
