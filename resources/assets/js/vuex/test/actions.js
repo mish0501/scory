@@ -1,8 +1,5 @@
 import * as types from '../mutation-types'
 
-// The first argument is the vuex store, but we're using only the
-// dispatch function, which applies a mutation to the store,
-// and the current state of the store
 export const set_questions = ({ dispatch, state }, data) => {
   dispatch(types.SET_QUESTIONS, data)
 }

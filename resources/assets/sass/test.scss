@@ -7,6 +7,16 @@ body{
   color:#337ab7;
 }
 
+@media (max-width:768px) {
+  .title{
+    font-size: 20pt
+  }
+}
+
+.icon{
+  line-height: 51px
+}
+
 .tabs{
   background-color: #fff;
   padding: 10px;

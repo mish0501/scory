@@ -1,15 +1,18 @@
 <template>
   <div>
     <nav>
-      <div class="container">
+      <div class="container" >
         <div class="row">
-          <div class="col-md-10 col-md-offset-1 text-center">
-            <p class="title">
+          <div class="col-md-12 col-xs-12 text-center">
+            <p class="title col-md-10 col-md-offset-1 col-xs-10">
               {{ title }}
             </p>
-          </div>
-          <div class="pull-right text-center col-md-1">
-            <a href="/endtest"><i class="fa fa-times fa-3x"></i></a>
+
+            <div class="text-right col-md-1 col-xs-1">
+              <a href="/endtest">
+                <i class="fa fa-times fa-3x icon"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -106,6 +109,7 @@
 
         this.$http.post("/questions", data).then((response) => {
           this.set_questions(response.data)
+          localStorage.questions = JSON.stringify(response.data)
           this.$router.go({ name: 'TestPage'});
         }, (err) =>{
           console.log(err);
