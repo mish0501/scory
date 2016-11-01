@@ -25,7 +25,7 @@
         </div>
 
         <div class="col-md-6 col-sm-6 col-xs-6" v-if="activeQuestion == (questions.length - 1)">
-            <button class="btn btn-success btn-lg btn-block">Предай <span class="hidden-xs">теста</span></button>
+            <button class="btn btn-success btn-lg btn-block" v-on:click.prevent="postTest()">Предай <span class="hidden-xs">теста</span></button>
         </div>
       </div>
     </div>
@@ -84,6 +84,41 @@ export default {
       this.nextQuestion = this.activeQuestion
       this.activeQuestion = this.previousQuestion
       this.previousQuestion = this.activeQuestion - 1
+    },
+
+    postTest() {
+
+      let data = {}
+
+      if(typeof(Storage) !== "undefined") {
+          if (localStorage.questions) {
+            const questions = JSON.parse(localStorage.questions)
+            const answers = JSON.parse(localStorage.questionsAnswers)
+
+            data = {
+              questions: questions,
+              answers: answers
+            }
+
+          } else {
+            this.previousQuestion = -1
+            this.activeQuestion = 0
+            this.nextQuestion = 1
+
+            return;
+          }
+      } else {
+        alert("Съжаляваме, но браузърът ви не подържа уеб хранилище");
+      }
+
+      this.$http.post('/api/test/check', data).then(response => {
+        localStorage.questions = JSON.stringify(response.data)
+        localStorage.removeItem('questionsAnswers')
+
+        console.log(localStorage.questions);
+      }, error => {
+        console.log(error);
+      })
     }
   }
 }

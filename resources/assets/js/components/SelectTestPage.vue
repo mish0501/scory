@@ -110,6 +110,7 @@
         this.$http.post("/questions", data).then((response) => {
           this.set_questions(response.data)
           localStorage.questions = JSON.stringify(response.data)
+          localStorage.removeItem('questionsAnswers');
           this.$router.go({ name: 'TestPage'});
         }, (err) =>{
           console.log(err);

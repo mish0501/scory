@@ -105,78 +105,84 @@ class TestController extends Controller
       }
     }
 
-    public function checkTest($testroom, $code = NULL)
+    public function checkTest(Request $request)
     {
+      $this->validate($request, [
+       'questions' => 'required',
+       'answers' => 'required'
+      ]);
+
       $checked = [];
 
-      $questions = Session::get('questions');
-      $answers = Session::get('answers');
+      $questions = $request->get('questions');
 
       $userAnswers = '';
 
-      foreach ($questions as $k => $value) {
-        $session = Session::get('checked.'.$k);
+      foreach ($questions as $k => $question) {
+        $answers = $request->get('answers')[$question['id']];
 
-        if(is_array($session)){
+        if(is_array($answers)){
           $check = 0;
-          $userAnswers[$value->id] = $session;
-          foreach ($session as $key => $v) {
-            $checkAnswers[$k][$key] = Answer::where('question_id', '=', $value->id)->where('id', '=', $v)->get()[0];
+          $userAnswers[$question["id"]] = $answers;
 
-            foreach ($answers[$k] as $answer) {
+          foreach ($answers as $key => $v) {
+
+            foreach ($question["answers"] as $answerKey => $answer) {
               if($answer->id == $v){
-                $answer->checked = true;
+                $questions[$k]["answers"][$answerKey]["checked"] = true;
+
+                if($answer->correct == true){
+                  $check ++;
+                }else{
+                  $check --;
+                }
               }
             }
 
-            if($checkAnswers[$k][$key]->correct == true){
-              $check ++;
-            }else{
-              $check --;
-            }
-
             if($check >= 1){
-              $questions[$k]['correct'] = '1';
+              $questions[$k]["correct"] = true;
             }elseif($check < 0){
-              $questions[$k]['correct'] = '0';
+              $questions[$k]["correct"] = false;
             }
           }
         }else{
-          $userAnswers[$value->id] = $session;
+          $userAnswers[$question["id"]] = $answers;
 
-          $checkAnswers[$k] = Answer::where('question_id', '=', $value->id)->where('id', '=', $session)->get()[0];
+          foreach ($question["answers"] as $answerKey => $answer) {
+            if($answer["id"] == $answers){
+              $questions[$k]["answers"][$answerKey]["checked"] = true;
 
-          foreach ($answers[$k] as $answer) {
-            if($answer->id == $session){
-              $answer->checked = true;
+              if($answer["correct"] == true){
+                $questions[$k]["correct"] = true;
+              }else{
+                $questions[$k]["correct"] = false;
+              }
             }
           }
-
-          if($checkAnswers[$k]->correct == true){
-            $questions[$k]['correct'] = '1';
-          }else{
-            $questions[$k]['correct'] = '0';
-          }
         }
       }
 
-      if($testroom && $code !== NULL){
-        $correctAnswers = '';
-        $userAnswers = json_encode($userAnswers);
+      // if($testroom && $code !== NULL){
+      //   $correctAnswers = '';
+      //   $userAnswers = json_encode($userAnswers);
+      //
+      //   foreach ($questions as $key => $value) {
+      //     if($value->correct == 1){
+      //       $correctAnswers ++;
+      //     }
+      //   }
+      //
+      //   $name = Session::get('name');
+      //   $lastname = Session::get('lastname');
+      //
+      //   return app('App\Http\Controllers\TestRoomController')->finishTest($correctAnswers, $userAnswers, $code, $name, $lastname);
+      // }
 
-        foreach ($questions as $key => $value) {
-          if($value->correct == 1){
-            $correctAnswers ++;
-          }
-        }
+      // return view('test.check', ['questions' => $questions, 'answers' => $answers, 'checked' => $checked]);
 
-        $name = Session::get('name');
-        $lastname = Session::get('lastname');
-
-        return app('App\Http\Controllers\TestRoomController')->finishTest($correctAnswers, $userAnswers, $code, $name, $lastname);
-      }
-
-      return view('test.check', ['questions' => $questions, 'answers' => $answers, 'checked' => $checked]);
+      return response()->json([
+        $questions
+      ]);
     }
 
     public function endTest()
