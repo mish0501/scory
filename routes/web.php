@@ -23,6 +23,10 @@ Route::group(['prefix' => 'test'],function() {
   Route::get('/select', function() {
     return view('test');
   });
+
+  Route::get('/check', function() {
+    return view('test');
+  });
 });
 
 Route::post('/invite', ['as' => 'invite', 'uses' => 'InviteController@newUser']);

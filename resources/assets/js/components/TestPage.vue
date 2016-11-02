@@ -91,7 +91,8 @@ export default {
       let data = {}
 
       if(typeof(Storage) !== "undefined") {
-          if (localStorage.questions) {
+          if (localStorage.questions && localStorage.questionsAnswers) {
+
             const questions = JSON.parse(localStorage.questions)
             const answers = JSON.parse(localStorage.questionsAnswers)
 
@@ -105,17 +106,19 @@ export default {
             this.activeQuestion = 0
             this.nextQuestion = 1
 
+            alert("Трябва да отговориш на всички въпроси.");
             return;
           }
       } else {
         alert("Съжаляваме, но браузърът ви не подържа уеб хранилище");
+        return;
       }
 
       this.$http.post('/api/test/check', data).then(response => {
         localStorage.questions = JSON.stringify(response.data)
         localStorage.removeItem('questionsAnswers')
 
-        console.log(localStorage.questions);
+        this.$router.go('/test/check')
       }, error => {
         console.log(error);
       })

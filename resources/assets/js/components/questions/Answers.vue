@@ -1,21 +1,28 @@
 <template lang="html">
-<div class="row">
-  <div class="col-md-12" v-if="type == 'multiple'">
-    <div class='checkbox' v-for="answer in answers">
-      <label class="tabs" :class="[(curentChecked.includes(answer.id)) ? 'checked' : '']">
-        <input type='checkbox' class="checkbox-input" name="correct[]" value="{{ answer.id }}" v-on:change="checkboxChecked(answer.id)" > <h4>{{ answer.name }}</h4>
-      </label>
+  <div class="row">
+    <div class="col-md-12" v-if="type == 'multiple' && !checked">
+      <div class='checkbox' v-for="answer in answers">
+        <label class="tabs" :class="[(curentChecked.includes(answer.id)) ? 'checked' : '']">
+          <input type='checkbox' class="checkbox-input" name="correct[]" value="{{ answer.id }}" v-on:change="checkboxChecked(answer.id)" > <h4>{{ answer.name }}</h4>
+        </label>
+      </div>
     </div>
-  </div>
 
-  <div class="col-md-12" v-if="type == 'one'">
-    <div class="radio" v-for="answer in answers">
-      <label class="tabs" :class="[(curentChecked == answer.id) ? 'checked' : '']">
-        <input type="radio" class="radio-input" name="correct" value="{{ answer.id }}" v-on:click="radioChecked(answer.id)" > <h4>{{ answer.name }}</h4>
-      </label>
+    <div class="col-md-12" v-if="type == 'one' && !checked">
+      <div class="radio" v-for="answer in answers">
+        <label class="tabs" :class="[(curentChecked == answer.id) ? 'checked' : '']">
+          <input type="radio" class="radio-input" name="correct" value="{{ answer.id }}" v-on:click="radioChecked(answer.id)" > <h4>{{ answer.name }}</h4>
+        </label>
+      </div>
+    </div>
+
+    <div class="col-md-12" v-if="checked">
+      <div v-for="answer in answers">
+        <h4 :class="['tabs', answer.correct ? 'true-answer' : 'false-answer']" v-if="answer.checked">{{ answer.name }}</h4>
+        <h4 class="tabs" v-else>{{ answer.name }}</h4>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -118,6 +125,16 @@ export default {
         }
       }
 
+    },
+
+    checked() {
+      for (var i = 0, length = this.answers.length; i < length; i++) {
+        if (this.answers[i].checked === true){
+          return true
+        }
+      }
+
+      return false
     }
   }
 }
