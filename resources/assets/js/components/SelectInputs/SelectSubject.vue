@@ -1,7 +1,7 @@
 <template>
   <select class="form-control subject" v-model="subject" v-on:change="SubjectSelected">
-    <option selected="selected" disabled value="default">Избери си предмет</option>
-    <option value="{{ subject.id }}" v-for="subject in subjects">{{ subject.name }}</option>
+    <option disabled value="0">Избери си предмет</option>
+    <option v-bind:value="subject.id" v-for="subject in subjects">{{ subject.name }}</option>
   </select>
 </template>
 

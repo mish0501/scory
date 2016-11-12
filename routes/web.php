@@ -15,6 +15,10 @@ Route::get('/', function() {
     return view('welcome');
 });
 
+Route::get('/home', function() {
+    return redirect(url("/admin/home"));
+});
+
 Route::group(['prefix' => 'test'],function() {
   Route::get('/', function() {
     return view('test');
@@ -33,7 +37,6 @@ Route::post('/invite', ['as' => 'invite', 'uses' => 'InviteController@newUser'])
 
 Route::post('/contact', ['as' => 'contact', 'uses' => 'ContactController@sendMail']);
 
-Route::get('/home', ['as' => 'admin.home', 'uses' => 'HomeController@index']);
 
 // Test routes
 Route::get('/endtest', ['as' => 'end', 'uses' => 'TestController@endTest']);
@@ -56,7 +59,9 @@ Route::get('auth/register/{invite?}', 'Auth\RegisterController@showRegistrationF
 // Admin Routes
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin|teacher']], function () {
 
-  Route::get('/home', ['as' => 'admin.home', 'uses' => 'HomeController@index']);
+  Route::get('/home', function (){
+    return view('admin');
+  })->name('admin.home');
 
 
   Route::get('/profile', function() {

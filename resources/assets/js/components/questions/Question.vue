@@ -9,7 +9,7 @@
 
       <br>
 
-      <answers :type="question.type" :question_id="question.id" :clicks.sync="clicks" :answers="question.answers"></answers>
+      <answers :type="question.type" :question_id="question.id" :answers="question.answers"></answers>
 
       <br>
       <br>
@@ -24,7 +24,7 @@
 
       <br>
 
-      <answers :type="question.type" :question_id="question.id" :clicks.sync="clicks" :answers="question.answers"></answers>
+      <answers :type="question.type" :question_id="question.id" :answers="question.answers"></answers>
     </div>
   </div>
 </template>
@@ -34,8 +34,7 @@ import Answers from "./Answers.vue"
 
 export default {
   props:[
-    'question',
-    'clicks'
+    'question'
   ],
 
   components: {

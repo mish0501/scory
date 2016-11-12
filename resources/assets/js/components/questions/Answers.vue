@@ -3,7 +3,7 @@
     <div class="col-md-12" v-if="type == 'multiple' && !checked">
       <div class='checkbox' v-for="answer in answers">
         <label class="tabs" :class="[(curentChecked.includes(answer.id)) ? 'checked' : '']">
-          <input type='checkbox' class="checkbox-input" name="correct[]" value="{{ answer.id }}" v-on:change="checkboxChecked(answer.id)" > <h4>{{ answer.name }}</h4>
+          <input type='checkbox' class="checkbox-input" name="correct[]" v-bind:value="answer.id" v-on:change="checkboxChecked(answer.id)" > <h4>{{ answer.name }}</h4>
         </label>
       </div>
     </div>
@@ -11,7 +11,7 @@
     <div class="col-md-12" v-if="type == 'one' && !checked">
       <div class="radio" v-for="answer in answers">
         <label class="tabs" :class="[(curentChecked == answer.id) ? 'checked' : '']">
-          <input type="radio" class="radio-input" name="correct" value="{{ answer.id }}" v-on:click="radioChecked(answer.id)" > <h4>{{ answer.name }}</h4>
+          <input type="radio" class="radio-input" name="correct" v-bind:value="answer.id" v-on:click="radioChecked(answer.id)" > <h4>{{ answer.name }}</h4>
         </label>
       </div>
     </div>

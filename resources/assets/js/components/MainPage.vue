@@ -95,11 +95,15 @@
 </template>
 
 <script>
+  import JoinTestRoomForm from "./MainPage/JoinTestRoomForm.vue"
+  import InviteEmailForm from "./MainPage/InviteEmailForm.vue"
+  import ContactForm from "./MainPage/ContactForm.vue"
+
   export default {
     components: {
-      'test-room-form': require('./MainPage/JoinTestRoomForm.vue'),
-      'invite-email-form': require('./MainPage/InviteEmailForm.vue'),
-      'contact-form': require('./MainPage/ContactForm.vue')
+      'test-room-form': JoinTestRoomForm,
+      'invite-email-form': InviteEmailForm,
+      'contact-form': ContactForm
     }
   }
 </script>

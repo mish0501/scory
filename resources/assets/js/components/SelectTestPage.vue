@@ -35,8 +35,8 @@
         </div>
 
         <div class="form-group">
-          <select class="form-control tabs input-lg" name="questionCount" v-model="questionCount" v-if="partition != 'default' && partition != null ">
-            <option selected disabled value="0">Избери си броя на въпросите</option>
+          <select class="form-control tabs input-lg" name="questionCount" v-model="questionCount" v-if="partition != 0 ">
+            <option disabled value="0">Избери си броя на въпросите</option>
             <option value="3">3 Въпроса</option>
             <option value="5">5 Въпроса</option>
             <option value="10">10 Въпроса</option>
@@ -62,8 +62,8 @@
   export default {
     data() {
       return {
-        subject: null,
-        partition: null,
+        subject: 0,
+        partition: 0,
         questionCount: 0
       }
     },
@@ -82,7 +82,7 @@
           return "Избери си предмет"
         }else if (this.partition === "default") {
           return "Избери си раздел"
-        }else if(this.partition != "default"){
+        }else if(this.partition != 0){
           return "Избери си броя на въпросите и продължи напред"
         }
       }

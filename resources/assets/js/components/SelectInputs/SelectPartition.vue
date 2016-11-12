@@ -1,7 +1,7 @@
 <template>
   <select class="form-control" v-model="partition">
-    <option selected disabled value="default">Избери си раздел</option>
-    <option value="{{ partition.id }}" v-for="partition in partitions">{{ partition.name }}</option>
+    <option disabled value="0">Избери си раздел</option>
+    <option v-bind:value="partition.id" v-for="partition in partitions">{{ partition.name }}</option>
   </select>
 </template>
 

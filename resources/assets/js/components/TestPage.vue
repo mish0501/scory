@@ -13,7 +13,7 @@
     <br>
 
     <div class="container">
-      <question :question="questions[activeQuestion]" :clicks.sync="clicks"></question>
+      <question :question="questions[activeQuestion]"></question>
 
       <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-6">
@@ -52,8 +52,7 @@ export default {
     return{
       activeQuestion: 0,
       nextQuestion: 1,
-      previousQuestion: -1,
-      clicks: 0
+      previousQuestion: -1
     }
   },
 

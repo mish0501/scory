@@ -13,6 +13,8 @@ use App\TestRoom;
 use App\TestRoomStudents;
 use App\Answer;
 use App\MailStore;
+use App\Invite;
+use App\User;
 
 class APIController extends Controller
 {
@@ -95,5 +97,35 @@ class APIController extends Controller
     $message->toJSON();
 
     return $message;
+  }
+
+  public function getDashboardInfo()
+  {
+    $subjects = collect(Subject::where('trash', '=', false)->get()->toArray())->groupBy('name')->count();
+    $partitions = Partition::where('trash', '=', false)->count();
+    $questions = Question::where('trash', '=', false)->count();
+
+    $invites = null;
+    $users = null;
+    $trash = null;
+    $testrooms = null;
+
+    if(\Entrust::hasRole('admin')){
+      $invites = Invite::count();
+      $trash = Question::where('trash', '=', true)->count() + Subject::where('trash', '=', true)->count() + Partition::where('trash', '=', true)->count() + TestRoom::where('teacher_id', '=', \Auth::user()->id)->where('trash', '=', true)->count();
+      $users = User::count();
+    }elseif (\Entrust::hasRole('teacher')) {
+      $testrooms = TestRoom::where('teacher_id', '=', \Auth::user()->id)->count();
+    }
+
+   return [
+     "subjects" => $subjects,
+     "partitions" => $partitions,
+     "invites" => $invites,
+     "questions" => $questions,
+     "users" => $users,
+     "trash" => $trash,
+     "testrooms" => $testrooms
+   ];
   }
 }

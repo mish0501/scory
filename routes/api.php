@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::post('/questionGenerate', ['as' => 'questionGenerate', 'uses' => 'APIController@QuestionGenerate']);
   Route::post('/getAllMessages', ['as' => 'getAllMessages', 'uses' => 'APIController@getAllMessages']);
   Route::post('/getMessage', ['as' => 'getMessage', 'uses' => 'APIController@getMessage']);
+  Route::post('/getDashboardInfo', ['as' => 'getDashboardInfo', 'uses' => 'APIController@getDashboardInfo']);
 
   Route::post('/test/check', 'TestController@checkTest');
 });

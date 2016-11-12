@@ -347,7 +347,6 @@
       var channel = pusher.subscribe('MailChanel');
       channel.bind("NewMail", function(data) {
         if(data.new_mail){
-          console.log(data);
           loadMessages()
         }
       });

@@ -27,7 +27,8 @@ export default {
     return {
       inviteEmailErorrs: [],
       inviteEmailError: false,
-      inviteEmailSuccess: ''
+      inviteEmailSuccess: '',
+      inviteEmail: ''
     }
   },
 

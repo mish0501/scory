@@ -1,7 +1,7 @@
 <template lang="html">
-  <select class="form-control" name="class" v-model="class" v-on:change="ClassSelected">
-    <option selected disabled >Избери си клас</option>
-    <option name='class' value="{{ n + 5 }}" v-for="n in 8">{{n + 5}}. Клас</option>
+  <select class="form-control" name="class" v-model="classes" v-on:change="ClassSelected">
+    <option disabled value="0">Избери си клас</option>
+    <option name='class' v-bind:value="n + 5" v-for="n in 8">{{n + 5}}. Клас</option>
   </select>
 </template>
 
@@ -14,7 +14,7 @@ import {
 export default {
   data () {
     return {
-      class: null
+      classes: 0
     }
   },
 
@@ -27,7 +27,7 @@ export default {
 
   methods: {
     ClassSelected: function() {
-      this.$http.post("/selectSubject", { class: this.class}).then((response) => {
+      this.$http.post("/selectSubject", { class: this.classes }).then((response) => {
         var data = {
           class: this.class,
           subjects: response.data
