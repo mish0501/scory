@@ -21,3 +21,9 @@ export const Questions = state => {
 
   return getQuestions
 }
+
+export const User = state => {
+  var user = state.user
+
+  return user
+}
