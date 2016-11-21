@@ -13,9 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:api');
+Route::get('/user', function (Request $request) {
+    $user = $request->user();
+
+    if($user->hasRole('admin')){
+      $user->role='admin';
+    }elseif ($user->hasRole('teacher')) {
+      $user->role='teacher';
+    }
+
+    return $user;
+})->middleware('auth:api');
 
 Route::group(['middleware' => 'auth:api'], function () {
   Route::post('/getSubjects', ['as' => 'getSubjects', 'uses' => 'APIController@Subjects']);
@@ -29,5 +37,15 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::post('/getMessage', ['as' => 'getMessage', 'uses' => 'APIController@getMessage']);
   Route::post('/getDashboardInfo', ['as' => 'getDashboardInfo', 'uses' => 'APIController@getDashboardInfo']);
 
-  Route::post('/test/check', 'TestController@checkTest');
+  // Route::post('/subjects', ['as' => 'getAllSubjects', 'uses' => 'APIController@allSubjects']);
+  // Route::post('/subject', ['as' => 'getSubject', 'uses' => 'APIController@Subject']);
+  Route::resource('subject', 'SubjectController', ['except' => ['show', 'create']]);
+  Route::resource('partition', 'PartitionController', ['except' => ['show', 'create']]);
+  Route::resource('question', 'QuestionController', ['except' => ['show', 'create']]);
 });
+
+//Test routes
+Route::post('/selectSubjects', ['as' => 'subject', 'uses' => 'TestController@selectSubject']);
+Route::post('/selectPartitions', ['as' => 'partition', 'uses' => 'TestController@selectPartition']);
+Route::post('/selectQuestions', ['as' => 'selectQuestion', 'uses' => 'TestController@selectQuestions']);
+Route::post('/test/check', 'TestController@checkTest');

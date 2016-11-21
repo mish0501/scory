@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12" v-if="type == 'multiple' && !checked">
       <div class='checkbox' v-for="answer in answers">
-        <label class="tabs" :class="[(curentChecked.includes(answer.id)) ? 'checked' : '']">
+        <label class="tabs" :class="[(curentChecked(answer.id)) ? 'checked' : '']">
           <input type='checkbox' class="checkbox-input" name="correct[]" v-bind:value="answer.id" v-on:change="checkboxChecked(answer.id)" > <h4>{{ answer.name }}</h4>
         </label>
       </div>
@@ -10,7 +10,8 @@
 
     <div class="col-md-12" v-if="type == 'one' && !checked">
       <div class="radio" v-for="answer in answers">
-        <label class="tabs" :class="[(curentChecked == answer.id) ? 'checked' : '']">
+        <label :class="[{ 'checked': curentChecked(answer.id) }, 'tabs']">
+          {{ curentChecked(answer.id) }}
           <input type="radio" class="radio-input" name="correct" v-bind:value="answer.id" v-on:click="radioChecked(answer.id)" > <h4>{{ answer.name }}</h4>
         </label>
       </div>
@@ -30,8 +31,7 @@ export default {
   props: [
     'type',
     'answers',
-    'question_id',
-    'clicks'
+    'question_id'
   ],
 
   methods:{
@@ -63,8 +63,6 @@ export default {
             localStorage.questionsAnswers = JSON.stringify(data)
           }
       }
-
-      this.clicks ++
     },
 
     removeAnswer(arr) {
@@ -80,53 +78,44 @@ export default {
 
     radioChecked(id) {
       if(typeof(Storage) !== "undefined") {
-          if (localStorage.questionsAnswers) {
-            var questionsAnswers = JSON.parse(localStorage.questionsAnswers)
+        if (localStorage.questionsAnswers) {
+          var questionsAnswers = JSON.parse(localStorage.questionsAnswers)
 
-            questionsAnswers[this.question_id] = id
+          questionsAnswers[this.question_id] = id
 
-            localStorage.questionsAnswers = JSON.stringify(questionsAnswers)
-          } else {
-            var data = {}
+          localStorage.questionsAnswers = JSON.stringify(questionsAnswers)
+        } else {
+          var data = {}
 
-            data[this.question_id] = id
+          data[this.question_id] = id
 
-            localStorage.questionsAnswers = JSON.stringify(data)
-          }
+          localStorage.questionsAnswers = JSON.stringify(data)
+        }
       }
+    },
 
-      this.clicks ++
+    curentChecked(id) {
+      if(typeof(Storage) !== "undefined") {
+        if (localStorage.questionsAnswers) {
+          var questionsAnswers = JSON.parse(localStorage.questionsAnswers)
+
+          if (questionsAnswers[this.question_id]) {
+            if(this.type == 'one'){
+              return questionsAnswers[this.question_id] == id
+            }else if(this.type == 'multiple'){
+              return questionsAnswers[this.question_id].includes(id)
+            }
+          }else{
+            return false
+          }
+        } else {
+          return false
+        }
+      }
     }
   },
 
   computed: {
-    curentChecked() {
-
-      if (this.clicks || this.clicks == 0) {
-        if(typeof(Storage) !== "undefined") {
-            if (localStorage.questionsAnswers) {
-              var questionsAnswers = JSON.parse(localStorage.questionsAnswers)
-              if (questionsAnswers[this.question_id]) {
-                return questionsAnswers[this.question_id]
-              }else{
-                if(this.type == 'one'){
-                  return null
-                }else if (this.type == 'multiple') {
-                  return []
-                }
-              }
-            } else {
-              if(this.type == 'one'){
-                return null
-              }else if (this.type == 'multiple') {
-                return []
-              }
-            }
-        }
-      }
-
-    },
-
     checked() {
       for (var i = 0, length = this.answers.length; i < length; i++) {
         if (this.answers[i].checked === true){

@@ -40,9 +40,7 @@ Route::post('/contact', ['as' => 'contact', 'uses' => 'ContactController@sendMai
 
 // Test routes
 Route::get('/endtest', ['as' => 'end', 'uses' => 'TestController@endTest']);
-Route::post('/selectSubject', ['as' => 'subject', 'uses' => 'TestController@selectSubject']);
-Route::post('/choosePartition', ['as' => 'partition', 'uses' => 'TestController@selectPartition']);
-Route::post('/questions', ['as' => 'selectQuestion', 'uses' => 'TestController@selectQuestions']);
+
 
 // TestRoom
 Route::post('/join' , ['as' => 'testroom.join', 'uses' => 'TestRoomController@join']);
@@ -59,9 +57,9 @@ Route::get('auth/register/{invite?}', 'Auth\RegisterController@showRegistrationF
 // Admin Routes
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin|teacher']], function () {
 
-  Route::get('/home', function (){
-    return view('admin');
-  })->name('admin.home');
+  Route::get('/{vue_capture?}', function () {
+      return view('admin');
+  })->where('vue_capture', '[\/\w\.-]*');
 
 
   Route::get('/profile', function() {

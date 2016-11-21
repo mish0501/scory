@@ -6,8 +6,12 @@
 
 <script>
 export default {
-  data () {
-    return {}
+  beforeCreate () {
+    this.$http.get('/api/user').then((response) => {
+      this.$store.dispatch('set_user', response.data)
+    }, (error) => {
+      console.error(error);
+    })
   }
 }
 </script>

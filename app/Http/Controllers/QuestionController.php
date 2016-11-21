@@ -23,7 +23,7 @@ class QuestionController extends Controller
     {
       $questions = Question::where('trash', '=', false)->with('subject', 'partition', 'user')->get();
 
-      return view('admin.question.index', ['questions' => $questions]);
+      return $questions;
 
     }
 

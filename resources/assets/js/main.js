@@ -1,11 +1,12 @@
 require('./bootstrap');
 
 import router from './router'
-import store from './vuex/store' // vuex store instance
-import { sync } from 'vuex-router-sync'
+import store from './vuex/store'
 import MessegesWidget from './components/AdminPages/MessegesWidget.vue'
 
-// sync(store, router)
+import VueTruncate from 'vue-truncate-filter'
+
+Vue.use(VueTruncate)
 
 Vue.component('messeges-widget', MessegesWidget)
 

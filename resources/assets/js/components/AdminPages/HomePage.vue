@@ -2,6 +2,7 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
+        <i class="icon-dashboard"></i>
         <span>Начало</span>
       </h1>
     </div>
@@ -77,8 +78,6 @@ export default {
     this.$http.post('/api/getDashboardInfo').then(
       (response) => {
         const data = response.data
-
-        console.log(data);
 
         this.subjects = data.subjects
         this.partitions = data.partitions

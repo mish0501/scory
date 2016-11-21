@@ -27,15 +27,15 @@
         </div>
 
         <div class="form-group">
-          <select-subject class="tabs input-lg" :subject.sync="subject" v-if="subject"></select-subject>
+          <select-subject class="tabs input-lg" :subject-id="subject" v-if="subject != null"></select-subject>
         </div>
 
         <div class="form-group">
-          <select-partition class="tabs input-lg" :partition.sync="partition" v-if="partition"></select-partition>
+          <select-partition class="tabs input-lg" :partition-id="partition" v-if="partition != null"></select-partition>
         </div>
 
         <div class="form-group">
-          <select class="form-control tabs input-lg" name="questionCount" v-model="questionCount" v-if="partition != 0 ">
+          <select class="form-control tabs input-lg" name="questionCount" v-model="questionCount" v-if="partition > 0 " v-on:change="ChangeTitle">
             <option disabled value="0">Избери си броя на въпросите</option>
             <option value="3">3 Въпроса</option>
             <option value="5">5 Въпроса</option>
@@ -45,7 +45,7 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg btn-block" v-on:click.prevent="selectQuestions" v-if="questionCount != 0">Продължи напред</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" v-on:click.prevent="selectQuestions" v-if="questionCount > 0">Продължи напред</button>
       </form>
     </div>
   </div>
@@ -56,15 +56,13 @@
   import SelectSubject from "./SelectInputs/SelectSubject.vue"
   import SelectPartition from "./SelectInputs/SelectPartition.vue"
 
-  import { set_questions } from "../vuex/test/actions.js"
-  import { Class } from "../vuex/test/getters.js"
-
   export default {
     data() {
       return {
-        subject: 0,
-        partition: 0,
-        questionCount: 0
+        subject: null,
+        partition: null,
+        questionCount: null,
+        title: "Избери си клас"
       }
     },
 
@@ -75,30 +73,16 @@
     },
 
     computed:{
-      title: function() {
-        if(this.class === null){
-          return "Избери си клас"
-        }else if (this.subject === "default") {
-          return "Избери си предмет"
-        }else if (this.partition === "default") {
-          return "Избери си раздел"
-        }else if(this.partition != 0){
-          return "Избери си броя на въпросите и продължи напред"
-        }
-      }
-    },
-
-    vuex: {
-      actions: {
-        set_questions
-      },
-
-      getters: {
-        class: Class
+      class () {
+        return this.$store.getters.Class
       }
     },
 
     methods: {
+      ChangeTitle() {
+        this.title = "Продължи напред"
+      },
+
       selectQuestions: function () {
         var data = {
           'class': this.class,
@@ -107,11 +91,11 @@
           'questionCount': this.questionCount
         }
 
-        this.$http.post("/questions", data).then((response) => {
-          this.set_questions(response.data)
+        this.$http.post("/api/selectQuestions", data).then((response) => {
+          this.$store.dispatch('set_questions', response.data)
           localStorage.questions = JSON.stringify(response.data)
           localStorage.removeItem('questionsAnswers');
-          this.$router.go({ name: 'TestPage'});
+          this.$router.push({ name: 'TestPage'});
         }, (err) =>{
           console.log(err);
         })

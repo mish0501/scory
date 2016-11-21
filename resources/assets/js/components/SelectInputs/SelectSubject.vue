@@ -6,37 +6,50 @@
 </template>
 
 <script>
-import {
-  set_partitions
-} from "../../vuex/test/actions.js"
-
-import { Subjects, Class } from "../../vuex/test/getters.js"
 
 export default {
-
   props: {
-    subject: {
+    subjectId: {
       required: true
     }
   },
 
-  vuex: {
-    actions: {
-      set_partitions
+  computed: {
+    class () {
+      return this.$store.getters.Class
     },
-    getters: {
-      subjects: Subjects,
-      class: Class
+
+    subjects () {
+      return this.$store.getters.Subjects
+    }
+  },
+
+  data () {
+    return{
+      subject: this.subjectId
     }
   },
 
   methods: {
     SubjectSelected: function() {
-      this.$http.post("/choosePartition", { class: this.class, subject_id: this.subject }).then((response) => {
+      if (this.$parent.partition) {
+        this.$parent.partition = null
+      }
+      
+      this.$http.post("/api/selectPartitions", { class: this.class, subject_id: this.subject }).then((response) => {
 
-        this.set_partitions(response.data)
+        this.$store.dispatch('set_partitions', response.data)
 
-        this.$parent.partition = "default"
+        this.$parent.subject = this.subject
+
+        if(this.$parent.partition == null){
+          this.$parent.partition = 0
+        }
+
+        if(this.$parent.title){
+          this.$parent.title = "Избери си раздел"
+        }
+
       }, (err) => {
         console.log(err);
       })

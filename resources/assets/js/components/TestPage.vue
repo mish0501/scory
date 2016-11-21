@@ -33,20 +33,9 @@
 </template>
 
 <script>
-import { set_questions } from "../vuex/test/actions.js"
-import { Questions } from "../vuex/test/getters.js"
 import Question from "./questions/Question.vue"
 
 export default {
-  vuex: {
-    getters: {
-      questions: Questions
-    },
-
-    actions:{
-      set_questions
-    }
-  },
 
   data() {
     return{
@@ -63,12 +52,18 @@ export default {
   created(){
     if(typeof(Storage) !== "undefined") {
         if (localStorage.questions) {
-            this.set_questions(JSON.parse(localStorage.questions))
+            this.$store.dispatch('set_questions', JSON.parse(localStorage.questions))
         } else {
             localStorage.questions = JSON.stringify(this.questions)
         }
     } else {
         alert("Съжаляваме, но браузърът ви не подържа уеб хранилище");
+    }
+  },
+
+  computed: {
+    questions() {
+      return this.$store.getters.Questions
     }
   },
 

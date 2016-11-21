@@ -38,8 +38,8 @@
       <header>
         <nav class='navbar navbar-default'>
           <a class='navbar-brand' href='/admin/home'>
-            <img width="81" height="21" class="logo" alt="Flatty" src="/admin/assets/images/logo.svg" />
-            <img width="21" height="21" class="logo-xs" alt="Flatty" src="/admin/assets/images/logo_xs.svg" />
+            <img height="21" class="logo" alt="Flatty" src="/admin/assets/images/logo.svg" />
+            <img height="21" class="logo-xs" alt="Flatty" src="/admin/assets/images/logo_xs.svg" />
           </a>
           <a class='toggle-nav btn pull-left' href='#'>
             <i class='icon-reorder'></i>
@@ -186,7 +186,7 @@
         <section id='content'>
           <div class='container'>
             <router-view></router-view>
-            
+
             <footer id='footer'>
               <div class='footer-wrapper'>
                 <div class='row'>
