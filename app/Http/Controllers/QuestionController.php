@@ -127,12 +127,11 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-      $question = Question::find($id);
-      $subjects = Subject::where('class', '=', $question->class)->get();
-      $partitions = Partition::where('class', '=', $question->class)->get();
+      $question = Question::where('id', $id)->with('answers')->get()->toArray()[0];
+      $subjects = Subject::where('class', '=', $question['class'])->get();
+      $partitions = Partition::where('subject_id', '=', $question['subject_id'])->get();
 
-      $answers = Answer::where('question_id', '=', $id)->get();
-      return view('admin.question.edit', ['question' => $question, 'subjects' => $subjects, 'partitions' => $partitions, 'answers' => $answers]);
+      return ['question' => $question, 'subjects' => $subjects, 'partitions' => $partitions];
 
     }
 

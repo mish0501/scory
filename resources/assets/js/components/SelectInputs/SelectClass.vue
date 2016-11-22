@@ -28,6 +28,10 @@ export default {
         this.$parent.subject = null
       }
 
+      if(this.$parent.partition){
+        this.$parent.partition = null
+      }
+
       this.$http.post("/api/selectSubjects", { class: this.classes }).then((response) => {
         this.$store.dispatch('set_class', this.classes);
         this.$store.dispatch('set_subjects', response.data);

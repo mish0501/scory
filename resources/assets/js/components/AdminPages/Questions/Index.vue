@@ -46,18 +46,18 @@
           </thead>
           <tbody>
             <tr v-for="question in questions">
-              <td>{{ question.name | truncate }}</td>
+              <td>{{ question.short_name }}</td>
               <td>{{ question.subject.name }}</td>
               <td>{{ question.partition.name }}</td>
               <td>{{ question.user.name }}</td>
               <td class="class-col">{{ question.class }}. Клас</td>
               <td v-if="isAdmin">
                 <div class='text-right'>
-                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditSubject', params:{ id: question.id }}">
+                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditQuestion', params:{ id: question.id }}">
                       <i class="icon-edit"></i>
                       <span>Редактирай</span>
                     </router-link>
-                    <button class="btn btn-danger btn-xs" @click="DeleteSubject(question.id)">
+                    <button class="btn btn-danger btn-xs" @click="DeleteQuestion(question.id)">
                       <i class="icon-remove"></i>
                       <span>Изтрий</span>
                     </button>
@@ -80,7 +80,6 @@ export default {
       questionsIds: [],
       hasAlert: false,
       alert: {},
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     }
   },
 
@@ -108,7 +107,7 @@ export default {
   },
 
   methods: {
-    DeleteSubject(id) {
+    DeleteQuestion(id) {
       this.hasAlert = false
 
       this.$http.delete('/api/subject/' + id).then((response) => {
