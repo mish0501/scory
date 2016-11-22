@@ -49,7 +49,8 @@ class QuestionController extends Controller
          'name' => 'required|min:5',
          'class' => 'required',
          'subject_id' => 'required',
-         'partition_id' => 'required'
+         'partition_id' => 'required',
+         'type' => 'required'
        ];
 
 
@@ -65,15 +66,15 @@ class QuestionController extends Controller
        ];
 
        foreach ($request->get('answers') as $key => $value) {
-        $rules['answers.'.$key] = 'required|min:5';
-        $messages['answers.'.$key.'.required'] = 'Полето '.$attrName[$key].' е задължително.';
-        $messages['answers.'.$key.'.min'] = 'Полето '.$attrName[$key].' трябва да бъде минимум :min знака.';
+        $rules['answers.'.$key.'.name'] = 'required|min:5';
+        $messages['answers.'.$key.'.name.required'] = 'Полето '.$attrName[$key].' е задължително.';
+        $messages['answers.'.$key.'.name.min'] = 'Полето '.$attrName[$key].' трябва да бъде минимум :min знака.';
        }
 
        $validator = \Validator::make($request->all(), $rules, $messages);
 
        if($validator->fails()){
-         return $validator->errors()->toJSON();
+         return ['error' => $validator->errors()];
        }
 
        $user_id = \Auth::user()->id;
@@ -81,41 +82,18 @@ class QuestionController extends Controller
        $input = $request->all();
        $input['user_id'] = $user_id;
 
-       $reqCorrect = $request->get('correct');
-       if(sizeof($reqCorrect) > 1){
-         $input['type'] = 'multiple';
-       }else{
-         $input['type'] = 'one';
-       }
-
        $question = Question::create($input);
 
        foreach ($request->get('answers') as $key => $value) {
-         $correct = false;
-         if(sizeof($reqCorrect) > 1){
-           foreach ($reqCorrect as $k => $v) {
-             if ($key == $reqCorrect[$k]) {
-               $correct = true;
-             }
-           }
-         }else{
-           if ($key == $reqCorrect[0]) {
-             $correct = true;
-           }
-         }
-
          Answer::create([
-           'name' => $value,
+           'name' => $value['name'],
            'question_id' => $question->id,
-           'correct' => $correct
+           'correct' => $value['correct']
          ]);
        }
 
-       \Session::flash('flash_message', 'Въпросът беше успешно добавен!');
-
        return [
-         'type' => 'redirect',
-         'url' => url(route('admin.question.index'))
+         'success' => 'Въпросът беше успешно добавен!'
        ];
     }
 
@@ -143,7 +121,10 @@ class QuestionController extends Controller
          'name' => 'required|min:5',
          'class' => 'required',
          'subject_id' => 'required',
-         'partition_id' => 'required'
+         'partition_id' => 'required',
+         'answers' => 'required',
+         'type' => 'required',
+         'removedIds' => 'required'
       ];
 
       $attrName = [
@@ -171,20 +152,14 @@ class QuestionController extends Controller
       $validator = \Validator::make($request->all(), $rules, $messages);
 
       if($validator->fails()){
-        return $validator->errors()->toJSON();
+        return ['error' => $validator->errors()];
       }
 
       $input['name'] = $request->get('name');
       $input['class'] = $request->get('class');
       $input['subject_id'] = $request->get('subject_id');
       $input['partition_id'] = $request->get('partition_id');
-
-      $reqCorrect = $request->get('correct');
-      if(sizeof($reqCorrect) > 1){
-        $input['type'] = 'multiple';
-      }else{
-        $input['type'] = 'one';
-      }
+      $input['type'] = $request->get('type');
 
       $question->fill($input)->save();
 
@@ -195,46 +170,21 @@ class QuestionController extends Controller
 
           $input['name'] = $value['name'];
           $input['question_id'] = $id;
-          $input['correct'] = false;
-
-          if(sizeof($reqCorrect) > 1){
-            foreach ($reqCorrect as $k => $v) {
-              if ($key == $reqCorrect[$k]) {
-                $input['correct'] = true;
-              }
-            }
-          }else{
-            if ($key == $reqCorrect[0]) {
-              $input['correct'] = true;
-            }
-          }
+          $input['correct'] = $value['correct'];
 
           $answer->fill($input)->save();
         }else{
           // Creating answers if they don't exists
           $input['name'] = $value['name'];
           $input['question_id'] = $id;
-          $input['correct'] = false;
-
-          $reqCorrect = $request->get('correct');
-          if(is_array($reqCorrect)){
-            foreach ($reqCorrect as $k => $v) {
-              if ($key == $reqCorrect[$k]) {
-                $input['correct'] = true;
-              }
-            }
-          }else{
-            if ($key == $reqCorrect) {
-              $input['correct'] = true;
-            }
-          }
+          $input['correct'] = $value['correct'];
 
           $answer->create($input);
         }
       }
 
       // Deleting answers
-      $removedIds = explode(', ', $request->get('removedIds'));
+      $removedIds = $request->get('removedIds');
 
       foreach ($removedIds as $key => $value) {
         $remove_answer[$key] = Answer::where('id', '=', $value)->where('question_id', '=', $id)->delete();
@@ -243,8 +193,7 @@ class QuestionController extends Controller
       \Session::flash('flash_message', 'Въпросът беше успешно редактиран!');
 
       return [
-        'type' => 'redirect',
-        'url' => url(route('admin.question.index'))
+        'success' => 'Въпросът беше успешно редактиран!'
       ];
     }
 

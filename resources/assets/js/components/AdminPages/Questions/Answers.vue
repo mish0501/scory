@@ -7,10 +7,10 @@
           <input class='form-control' placeholder='Името на отговора' type='text' v-model="answer.name">
         </div>
         <div class='col-md-5 col-sm-1 col-xs-1'>
-          <div class="checkmark checked">
+          <div class="checkmark" :class="[(answer.correct) ? 'checked' : '']">
             <label>
               <i class="icon-ok"></i>
-              <input type="checkbox" class="hide" value="0" name='correct[]'>
+              <input type="checkbox" class="hide" @change="CheckAnswer(index)">
             </label>
           </div>
         </div>
@@ -20,10 +20,10 @@
           <input class='form-control' placeholder='Името на отговора' type='text' v-model="answer.name">
         </div>
         <div class='col-md-5 col-sm-1 col-xs-1'>
-          <div class="checkmark">
+          <div class="checkmark" :class="[(answer.correct == 1) ? 'checked' : '']">
             <label>
               <i class="icon-ok"></i>
-              <input type="checkbox" class="hide" value="0" name='correct[]'>
+              <input type="checkbox" class="hide" @change="CheckAnswer(index)">
             </label>
           </div>
         </div>
@@ -36,7 +36,39 @@
 export default {
   props: [
     'answers'
-  ]
+  ],
+
+  methods: {
+    CheckAnswer(index) {
+      const correct = this.answers[index].correct
+
+      let count = 0
+      for (var answer in this.answers) {
+        if (this.answers[answer].correct){
+          count++
+        }
+      }
+
+      if(correct == 1) {
+        if(count - 1 >= 1){
+          this.answers[index].correct = false
+        }
+      }else if(correct == 0) {
+        this.answers[index].correct = true
+      }
+
+
+      if(count > 1){
+        return this.$parent.type = 'multiple'
+      }
+
+      this.$parent.type = 'one'
+    }
+  },
+
+  mounted() {
+    this.$parent.answers = this.answers
+  }
 }
 </script>
 

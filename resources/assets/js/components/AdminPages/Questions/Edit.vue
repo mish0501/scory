@@ -36,6 +36,20 @@
           </div>
         </div>
         <answers :answers="answers"></answers>
+        <div class='form-group'>
+          <div class='col-md-5 col-md-offset-2'>
+            <button class='btn btn-success add-answer' :disabled="!canAdd" @click.prevent="AddAnswer()">
+              <i class='icon-plus'></i>
+              Добави още един отговор
+            </button>
+            <br class="hidden-lg hidden-sm">
+            <br class="hidden-lg hidden-sm">
+            <button class='btn btn-danger remove-answer' :disabled="!canRemove" @click.prevent="RemoveAnswer()">
+              <i class='icon-remove'></i>
+              Изтрий последния въпрос
+            </button>
+          </div>
+        </div>
         <div class='form-actions form-actions-padding-sm'>
           <div class='row'>
             <div class='col-md-10 col-md-offset-2'>
@@ -62,10 +76,12 @@ export default {
   data () {
     return {
       name: "",
+      type: 'one',
       alert: {},
       subject: null,
       partition: null,
       answers: [],
+      removedIds: [],
       hasAlert: false
     }
   },
@@ -77,6 +93,18 @@ export default {
 
     classes(){
       return this.$store.getters.Class
+    },
+
+    answerCount() {
+      return this.answers.length
+    },
+
+    canAdd(){
+      return (this.answerCount + 1) <= 8
+    },
+
+    canRemove(){
+      return this.answers.length - 1 >= 4
     }
   },
 
@@ -106,15 +134,42 @@ export default {
   },
 
   methods: {
+    AddAnswer(){
+      const newAnswer = {
+        name: "",
+        id: 1,
+        correct: false
+      }
+      this.answers.push(newAnswer)
+    },
+
+    RemoveAnswer(){
+      const index = this.answers.length -1
+
+      if(this.answers[index].id){
+        this.removedIds.push(this.answers[index].id)
+      }
+
+      this.answers.splice(index, 1)
+    },
+
     UpdateQuestion() {
       var data = {
         name: this.name,
-        class: this.classes
+        subject_id: this.subject,
+        partition_id: this.partition,
+        answers: this.answers,
+        type: this.type,
+        removedIds: this.removedIds
+      }
+
+      if(this.classes != 0){
+        data.class = this.classes
       }
 
       this.hasAlert=false
 
-      this.$http.put('/api/subject/'+this.id, data).then( (response) => {
+      this.$http.put('/api/question/'+this.id, data).then( (response) => {
         data = response.data
 
         if(data.success){
