@@ -15,6 +15,8 @@
         </div>
       </div>
     </div>
+    
+    <alert :alert="alert" v-if="hasAlert"></alert>
 
     <div class='box bordered-box' style='margin-bottom:0;'>
       <div class='box-content'>
@@ -46,7 +48,7 @@
                       <i class="icon-edit"></i>
                       <span>Редактирай</span>
                     </router-link>
-                    <button class="btn btn-danger btn-xs">
+                    <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)">
                       <i class="icon-remove"></i>
                       <span>Изтрий</span>
                     </button>
@@ -61,10 +63,14 @@
 </template>
 
 <script>
+import Alert from "../../Alert.vue"
 export default {
   data () {
     return {
-      partitions: {}
+      partitions: [],
+      partitionsIds: [],
+      hasAlert: false,
+      alert: {}
     }
   },
 
@@ -72,6 +78,7 @@ export default {
     this.$http.get('/api/partition').then(
       (response) => {
         this.partitions = response.data
+        this.subjectsIds = response.data.map(el => el.id)
       }, (error) => {
         console.log(error);
       }
@@ -80,13 +87,38 @@ export default {
     this.$store.dispatch('reset_test')
   },
 
+  components: {
+    "alert": Alert
+  },
+
   computed:{
     isAdmin(){
       return this.$store.getters.User.role == 'admin'
     }
   },
 
-  methods: {}
+  methods: {
+    DeletePartition(id) {
+      this.hasAlert = false
+
+      this.$http.delete('/api/partition/' + id).then((response) => {
+        this.hasAlert = true
+
+        console.log(response.data);
+
+        this.alert = {
+          type: 'alert-success',
+          messages: response.data.success
+        }
+
+        const index = this.partitionsIds.indexOf(id)
+        this.partitions.splice(index, 1)
+        this.partitionsIds.splice(index, 1)
+      }, (error) => {
+        console.error(error);
+      })
+    }
+  }
 }
 </script>
 

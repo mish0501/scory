@@ -190,8 +190,6 @@ class QuestionController extends Controller
         $remove_answer[$key] = Answer::where('id', '=', $value)->where('question_id', '=', $id)->delete();
       }
 
-      \Session::flash('flash_message', 'Въпросът беше успешно редактиран!');
-
       return [
         'success' => 'Въпросът беше успешно редактиран!'
       ];
@@ -214,8 +212,6 @@ class QuestionController extends Controller
 
       $question->update(['trash' => true]);
 
-      \Session::flash('flash_message', 'Въпросът беше успешно изтрит!');
-
-      return redirect()->route('admin.question.index');
+      return ['success' => 'Въпросът беше успешно преместен в кошчето!'];
     }
 }

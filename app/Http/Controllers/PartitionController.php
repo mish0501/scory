@@ -47,7 +47,7 @@ class PartitionController extends Controller
       $input = $request->all();
 
       Partition::create($input);
-      
+
       return response()->json([
         'success' => 'Разделът беше успешно добавен!',
       ]);
@@ -112,10 +112,8 @@ class PartitionController extends Controller
 
       $questions->update(['trash' => true]);
 
-      $partition->update(['trash' => true]);
+      // $partition->update(['trash' => true]);
 
-      \Session::flash('flash_message', 'Разделът беше успешно преместен в кошчето!');
-
-      return redirect()->route('admin.partition.index');
+      return ['success' => 'Разделът беше успешно преместен в кошчето!'];
     }
 }

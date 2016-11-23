@@ -110,7 +110,7 @@ export default {
     DeleteQuestion(id) {
       this.hasAlert = false
 
-      this.$http.delete('/api/subject/' + id).then((response) => {
+      this.$http.delete('/api/question/' + id).then((response) => {
         this.hasAlert = true
 
         this.alert = {
@@ -118,9 +118,9 @@ export default {
           messages: response.data.success
         }
 
-        const index = this.subjectsIds.indexOf(id)
-        this.subjects.splice(index, 1)
-        this.subjectsIds.splice(index, 1)
+        const index = this.questionsIds.indexOf(id)
+        this.questions.splice(index, 1)
+        this.questionsIds.splice(index, 1)
       }, (error) => {
         console.error(error);
       })
