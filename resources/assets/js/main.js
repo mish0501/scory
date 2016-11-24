@@ -8,5 +8,14 @@ Vue.component('messeges-widget', MessegesWidget)
 
 var App = new Vue({
   store,
-  router
+  router,
+  methods:{
+    Logout() {
+      this.$http.post('/logout').then((response) => {
+        this.router.push('/')
+      }, (error) => {
+        console.error(error);
+      })
+    }
+  }
 }).$mount('#app')

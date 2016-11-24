@@ -32,7 +32,7 @@ class TrashController extends Controller
       $mail = MailStore::where('trash', '=', true)->get();
 
 
-      return view('admin.trash', ['subjects' => $subjects, 'partitions' => $partitions, 'questions' => $questions, 'testrooms' => $testrooms, 'mail' => $mail]);
+      return ['subjects' => $subjects, 'partitions' => $partitions, 'questions' => $questions, 'testrooms' => $testrooms, 'mail' => $mail];
     }
 
     public function renewSubject(Request $request)
@@ -88,17 +88,17 @@ class TrashController extends Controller
 
     public function deleteSubject($id)
     {
-      $subject = Subject::where('id', '=', $id)->where('trash', '=', true)->delete();
-      $partitions = Partition::where('subject_id', '=', $id)->where('trash', '=', true)->delete();
-      $questions = Question::where('subject_id', '=', $id)->where('trash', '=', true);
+      // $subject = Subject::where('id', '=', $id)->where('trash', '=', true)->delete();
+      // $partitions = Partition::where('subject_id', '=', $id)->where('trash', '=', true)->delete();
+      // $questions = Question::where('subject_id', '=', $id)->where('trash', '=', true);
+      //
+      // foreach ($questions->get() as $value) {
+      //   $answers = Answer::where('question_id', '=', $value->id)->where('trash', '=', true)->delete();
+      // }
+      //
+      // $questions->delete();
 
-      foreach ($questions->get() as $value) {
-        $answers = Answer::where('question_id', '=', $value->id)->where('trash', '=', true)->delete();
-      }
-
-      $questions->delete();
-
-      return back();
+      return true;
     }
 
     public function deletePartition($id)

@@ -4,6 +4,7 @@ import TestPage from './components/TestPage.vue'
 import CheckTestPage from './components/CheckTestPage.vue'
 import AdminPage from './components/AdminPage.vue'
 import AdminHomePage from './components/AdminPages/HomePage.vue'
+import AdminTrashPage from './components/AdminPages/TrashPage.vue'
 
 import AdminSubjectsPage from './components/AdminPages/Subjects/Index.vue'
 import AdminCreateSubjectsPage from './components/AdminPages/Subjects/Create.vue'
@@ -34,6 +35,7 @@ const routes = [
   { path: '/admin', component: AdminPage,
     children: [
       { path: 'home', component: AdminHomePage },
+      { path: 'trash', component: AdminTrashPage },
 
       // Subjects
       { path: 'subject', component: AdminSubjectsPage },

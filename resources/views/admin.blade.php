@@ -65,12 +65,7 @@
                 </li>
                 <li class='divider'></li>
                 <li>
-                  {!! Form::open([
-                    'url' => ['/logout'],
-                    'id' => 'logout-form',
-                  ]) !!}
-                {{Form::close()}}
-                  <a href="#" onclick="document.getElementById('logout-form').submit();">
+                  <a href="#" @click="Logout">
                     <i class='icon-signout'></i>
                     Изход
                   </a>
