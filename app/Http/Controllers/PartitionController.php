@@ -112,7 +112,7 @@ class PartitionController extends Controller
 
       $questions->update(['trash' => true]);
 
-      // $partition->update(['trash' => true]);
+      $partition->update(['trash' => true]);
 
       return ['success' => 'Разделът беше успешно преместен в кошчето!'];
     }

@@ -47,7 +47,7 @@ class TrashController extends Controller
 
       $questions->update(['trash' => false]);
 
-      return back();
+      return response()->json(['done' => true]);
     }
 
     public function renewPartition(Request $request)
@@ -60,7 +60,8 @@ class TrashController extends Controller
       }
 
       $questions->update(['trash' => false]);
-      return back();
+
+      return response()->json(['done' => true]);
     }
 
     public function renewQuestion(Request $request)
@@ -68,7 +69,8 @@ class TrashController extends Controller
       $question = Question::where('id', '=', $request->id)->where('trash', '=', true)->update(['trash' => false]);
 
       $answers = Answer::where('id', '=', $request->id)->where('trash', '=', true)->update(['trash' => false]);
-      return back();
+
+      return response()->json(['done' => true]);
     }
 
     public function renewTestRoom(Request $request)
@@ -76,29 +78,30 @@ class TrashController extends Controller
       $testroom = TestRoom::where('code', '=', $request->code)->where('trash', '=', true)->update(['trash' => false]);
 
       $testroom_students = TestRoomStudents::where('code', '=', $request->code)->where('trash', '=', true)->update(['trash' => false]);
-      return back();
+
+      return response()->json(['done' => true]);
     }
 
     public function renewMail(Request $request)
     {
       $mail = MailStore::where('id', '=', $request->id)->where('trash', '=', true)->update(['trash' => false]);
 
-      return back();
+      return response()->json(['done' => true]);
     }
 
     public function deleteSubject($id)
     {
-      // $subject = Subject::where('id', '=', $id)->where('trash', '=', true)->delete();
-      // $partitions = Partition::where('subject_id', '=', $id)->where('trash', '=', true)->delete();
-      // $questions = Question::where('subject_id', '=', $id)->where('trash', '=', true);
-      //
-      // foreach ($questions->get() as $value) {
-      //   $answers = Answer::where('question_id', '=', $value->id)->where('trash', '=', true)->delete();
-      // }
-      //
-      // $questions->delete();
+      $subject = Subject::where('id', '=', $id)->where('trash', '=', true)->delete();
+      $partitions = Partition::where('subject_id', '=', $id)->where('trash', '=', true)->delete();
+      $questions = Question::where('subject_id', '=', $id)->where('trash', '=', true);
 
-      return true;
+      foreach ($questions->get() as $value) {
+        $answers = Answer::where('question_id', '=', $value->id)->where('trash', '=', true)->delete();
+      }
+
+      $questions->delete();
+
+      return response()->json(['done' => true]);
     }
 
     public function deletePartition($id)
@@ -112,7 +115,7 @@ class TrashController extends Controller
 
       $questions->delete();
 
-      return back();
+      return response()->json(['done' => true]);
     }
 
     public function deleteQuestion($id)
@@ -120,7 +123,7 @@ class TrashController extends Controller
       $questions = Question::where('id', '=', $id)->where('trash', '=', true)->delete();
       $answers = Answer::where('question_id', '=', $id)->where('trash', '=', true)->delete();
 
-      return back();
+      return response()->json(['done' => true]);
     }
 
     public function deleteTestRoom($code)
@@ -128,13 +131,13 @@ class TrashController extends Controller
       $testroom = TestRoom::where('code', '=', $code)->where('trash', '=', true)->delete();
       $testroom_students = TestRoomStudents::where('code', '=', $code)->where('trash', '=', true)->delete();
 
-      return back();
+      return response()->json(['done' => true]);
     }
 
     public function deleteMail($id)
     {
       $mail = MailStore::where('id', '=', $id)->where('trash', '=', true)->delete();
 
-      return back();
+      return response()->json(['done' => true]);
     }
 }
