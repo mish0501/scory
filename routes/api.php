@@ -44,28 +44,40 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::resource('question', 'QuestionController', ['except' => ['show', 'create']]);
 
   Route::group(['prefix' => 'trash'], function () {
-    Route::get('/', ['as' => 'admin.trash', 'uses' => 'TrashController@index']);
+    Route::get('/', 'TrashController@index');
 
     Route::group(['prefix' => 'renew'], function () {
-      Route::post('/subject' , ['as' => 'trash.renew.subject', 'uses' => 'TrashController@renewSubject']);
-      Route::post('/partition' , ['as' => 'trash.renew.partition', 'uses' => 'TrashController@renewPartition']);
-      Route::post('/question' , ['as' => 'trash.renew.question', 'uses' => 'TrashController@renewQuestion']);
-      Route::post('/testroom' , ['as' => 'trash.renew.testroom', 'uses' => 'TrashController@renewTestRoom']);
-      Route::post('/mail' , ['as' => 'trash.renew.mail', 'uses' => 'TrashController@renewMail']);
+      Route::post('/subject' , 'TrashController@renewSubject');
+      Route::post('/partition' , 'TrashController@renewPartition');
+      Route::post('/question' , 'TrashController@renewQuestion');
+      Route::post('/testroom' , 'TrashController@renewTestRoom');
+      Route::post('/mail' , 'TrashController@renewMail');
     });
 
     Route::group(['prefix' => 'delete'], function () {
-      Route::delete('/subject/{subject}' , ['as' => 'trash.delete.subject', 'uses' => 'TrashController@deleteSubject']);
-      Route::delete('/partition/{partition}' , ['as' => 'trash.delete.partition', 'uses' => 'TrashController@deletePartition']);
-      Route::delete('/question/{question}' , ['as' => 'trash.delete.question', 'uses' => 'TrashController@deleteQuestion']);
-      Route::delete('/testroom/{question}' , ['as' => 'trash.delete.testroom', 'uses' => 'TrashController@deleteTestRoom']);
-      Route::delete('/mail/{question}' , ['as' => 'trash.delete.mail', 'uses' => 'TrashController@deleteMail']);
+      Route::delete('/subject/{subject}' , 'TrashController@deleteSubject');
+      Route::delete('/partition/{partition}' , 'TrashController@deletePartition');
+      Route::delete('/question/{question}' , 'TrashController@deleteQuestion');
+      Route::delete('/testroom/{question}' , 'TrashController@deleteTestRoom');
+      Route::delete('/mail/{question}' , 'TrashController@deleteMail');
     });
+  });
+
+  // Testroom
+  Route::group(['prefix' => 'testroom'], function () {
+    Route::get('/{userId}', 'TestRoomController@index');
+    Route::post('/', 'TestRoomController@store');
+
+    Route::post('/active' , 'TestRoomController@activate');
+    Route::get('/{code}/start' , 'TestRoomController@startTest');
+    Route::get('/{code}/end' , 'TestRoomController@endTest');
+    Route::get('/{code}/results' , 'TestRoomController@getResults');
+    Route::get('/{code}/student/{user}' , 'TestRoomController@getStudentResults');
   });
 });
 
 //Test routes
-Route::post('/selectSubjects', ['as' => 'subject', 'uses' => 'TestController@selectSubject']);
-Route::post('/selectPartitions', ['as' => 'partition', 'uses' => 'TestController@selectPartition']);
-Route::post('/selectQuestions', ['as' => 'selectQuestion', 'uses' => 'TestController@selectQuestions']);
+Route::post('/selectSubjects', 'TestController@selectSubject');
+Route::post('/selectPartitions', 'TestController@selectPartition');
+Route::post('/selectQuestions', 'TestController@selectQuestions');
 Route::post('/test/check', 'TestController@checkTest');

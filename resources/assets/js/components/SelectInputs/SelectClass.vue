@@ -23,26 +23,15 @@ export default {
 
   methods: {
     ClassSelected: function() {
-
-      if(this.$parent.subject){
-        this.$parent.subject = null
-      }
-
-      if(this.$parent.partition){
-        this.$parent.partition = null
-      }
-
       this.$http.post("/api/selectSubjects", { class: this.classes }).then((response) => {
         this.$store.dispatch('set_class', this.classes);
         this.$store.dispatch('set_subjects', response.data);
 
-        if(this.$parent.subject == null){
-          this.$parent.subject = 0
-        }
-
-        if(this.$parent.title){
-          this.$parent.title = "Избери си предмет"
-        }
+        this.$emit('classSelected', {
+          subject: 0,
+          partition: null,
+          title: "Избери си предмет"
+        })
 
       }, (err) => {
         console.log(err);

@@ -18,6 +18,10 @@ import AdminQuestionsPage from './components/AdminPages/Questions/Index.vue'
 import AdminCreateQuestionsPage from './components/AdminPages/Questions/Create.vue'
 import AdminEditQuestionsPage from './components/AdminPages/Questions/Edit.vue'
 
+import AdminTestroomsPage from './components/AdminPages/Testrooms/Index.vue'
+import AdminTestroomCreatePage from './components/AdminPages/Testrooms/Create.vue'
+import AdminTestroomActivatePage from './components/AdminPages/Testrooms/Activate.vue'
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -50,7 +54,12 @@ const routes = [
       // Questions
       { path: 'question', component: AdminQuestionsPage },
       { path: 'question/create', component: AdminCreateQuestionsPage },
-      { path: 'question/:id/edit', component: AdminEditQuestionsPage, name:'EditQuestion' }
+      { path: 'question/:id/edit', component: AdminEditQuestionsPage, name:'EditQuestion' },
+
+      // Testroom
+      { path: 'testroom', component: AdminTestroomsPage },
+      { path: 'testroom/create', component: AdminTestroomCreatePage },
+      { path: 'testroom/:code', component: AdminTestroomActivatePage, name:'ActivateTestroom' }
     ]
   }
 ]

@@ -9,10 +9,9 @@
     </div>
 
     <div class="col-md-12" v-if="type == 'one' && !checked">
-      <div class="radio" v-for="answer in answers">
-        <label :class="[{ 'checked': curentChecked(answer.id) }, 'tabs']">
-          {{ curentChecked(answer.id) }}
-          <input type="radio" class="radio-input" name="correct" v-bind:value="answer.id" v-on:click="radioChecked(answer.id)" > <h4>{{ answer.name }}</h4>
+      <div class="radio" v-for="answer, index in answers">
+        <label :class="[answer.checked ? 'checked' : '', 'tabs']">
+          <input type="radio" class="radio-input" :name="question_id" :value="answer.id" @click="radioChecked(index)" > <h4>{{ answer.name }}</h4>
         </label>
       </div>
     </div>
@@ -76,40 +75,22 @@ export default {
       return arr;
     },
 
-    radioChecked(id) {
-      if(typeof(Storage) !== "undefined") {
-        if (localStorage.questionsAnswers) {
-          var questionsAnswers = JSON.parse(localStorage.questionsAnswers)
-
-          questionsAnswers[this.question_id] = id
-
-          localStorage.questionsAnswers = JSON.stringify(questionsAnswers)
-        } else {
-          var data = {}
-
-          data[this.question_id] = id
-
-          localStorage.questionsAnswers = JSON.stringify(data)
-        }
-      }
+    radioChecked(index) {
+      console.log(index);
     },
 
-    curentChecked(id) {
+    curentChecked() {
       if(typeof(Storage) !== "undefined") {
         if (localStorage.questionsAnswers) {
           var questionsAnswers = JSON.parse(localStorage.questionsAnswers)
 
           if (questionsAnswers[this.question_id]) {
-            if(this.type == 'one'){
-              return questionsAnswers[this.question_id] == id
-            }else if(this.type == 'multiple'){
-              return questionsAnswers[this.question_id].includes(id)
-            }
+            return questionsAnswers[this.question_id]
           }else{
-            return false
+            return null
           }
         } else {
-          return false
+          return null
         }
       }
     }

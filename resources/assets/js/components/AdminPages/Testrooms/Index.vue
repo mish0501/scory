@@ -1,0 +1,168 @@
+<template lang="html">
+  <div class='col-xs-12'>
+    <div class='page-header page-header-with-buttons'>
+      <h1 class='pull-left'>
+        <i class="icon-book"></i>
+        Всички стаи
+      </h1>
+
+      <div class='pull-right'>
+        <div class='btn-group'>
+          <router-link class="btn btn-success" :to="{ path: 'testroom/create' }">
+            <i class='icon-plus'></i>
+            Нова стая
+          </router-link>
+        </div>
+      </div>
+    </div>
+
+    <alert :alert="alert" v-if="hasAlert"></alert>
+
+    <div class='box bordered-box' style='margin-bottom:0;'>
+      <div class='box-content'>
+        <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+          <thead>
+            <tr>
+              <th>
+                Код на стаята
+              </th>
+              <th>
+                Предмет
+              </th>
+              <th>
+                Раздел
+              </th>
+              <th>
+                Клас
+              </th>
+              <th>
+                Статус
+              </th>
+              <th>
+                Опции
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="testroom in testrooms">
+              <td>{{ testroom.code }}</td>
+              <td>{{ testroom.subject.name }}</td>
+              <td>{{ testroom.partition.name }}</td>
+              <td>{{ testroom.class }}</td>
+              <td>{{ status(testroom.status) }}</td>
+              <td>
+                <div class='text-right'>
+                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ActivateTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 0">
+                      <i class="icon-edit"></i>
+                      <span>Активирай стаята</span>
+                    </router-link>
+
+                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StartTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 1">
+                      <i class="icon-edit"></i>
+                      <span>Стартирай тест</span>
+                    </router-link>
+                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ActivateTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 1">
+                      <i class="icon-edit"></i>
+                      <span>Покажи учениците в стаята</span>
+                    </router-link>
+
+                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StopTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 2">
+                      <i class="icon-edit"></i>
+                      <span>Спри теста</span>
+                    </router-link>
+                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StartTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 2">
+                      <i class="icon-edit"></i>
+                      <span>Покажи резултатите на учениците</span>
+                    </router-link>
+
+                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ResultsTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 3">
+                      <i class="icon-edit"></i>
+                      <span>Покажи резултатите на учениците</span>
+                    </router-link>
+
+                    <button class="btn btn-danger btn-xs" @click="DeleteTestroom(testroom.id)">
+                      <i class="icon-remove"></i>
+                      <span>Изтрий</span>
+                    </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Alert from "../../Alert.vue"
+export default {
+  data () {
+    return {
+      testrooms: [],
+      testroomsIds: [],
+      hasAlert: false,
+      alert: {}
+    }
+  },
+
+  components: {
+    "alert": Alert
+  },
+
+  mounted() {
+    const user = this.user
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.$http.get('/api/testroom/' + user.id).then(
+          (response) => {
+            this.testrooms = response.data
+            this.testroomsIds = response.data.map(el => el.id)
+          }, (error) => {
+            console.log(error);
+          }
+        )
+      }, 200)
+    })
+  },
+
+  computed:{
+    user() {
+      return this.$store.getters.User
+    }
+  },
+
+  methods: {
+    status(status) {
+      if (status == 0) {
+        return "Деактивирана"
+      }else if (status == 1) {
+        return "Активна"
+      }else if (status == 2) {
+        return "В процес на решаване на тест"
+      }else if (status == 3) {
+        return "Решена"
+      }
+    },
+
+    DeleteTestroom(id) {
+      this.hasAlert = false
+
+      this.$http.delete('/api/testroom/' + id).then((response) => {
+        this.hasAlert = true
+
+        this.alert = {
+          type: 'alert-success',
+          messages: response.data.success
+        }
+
+        const index = this.testroomsIds.indexOf(id)
+        this.testrooms.splice(index, 1)
+        this.testroomsIds.splice(index, 1)
+      }, (error) => {
+        console.error(error);
+      })
+    }
+  }
+}
+</script>

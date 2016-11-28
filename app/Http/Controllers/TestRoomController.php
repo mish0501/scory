@@ -16,6 +16,8 @@ use App\Answer;
 use Session;
 use File;
 
+use App\Events\StudentConnected;
+
 class TestRoomController extends Controller
 {
     /**
@@ -23,11 +25,10 @@ class TestRoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
-      $user_id = \Auth::user()->id;
-      $testrooms = TestRoom::where('teacher_id', '=', $user_id)->where('trash', '=', false)->get();
-      return view('admin.testroom.index', ['testrooms' => $testrooms]);
+      $testrooms = TestRoom::where('teacher_id', '=', $user_id)->where('trash', '=', false)->with('subject', 'partition')->get();
+      return $testrooms;
     }
 
     public function create()
@@ -53,40 +54,46 @@ class TestRoomController extends Controller
 
     public function store(Request $request)
     {
-      $this->validate($request, [
+      $validator = \Validator::make($request->all(), [
+         'code' => 'required|digits:5|unique:testroom',
+         'class' => 'required',
          'subject_id' => 'required',
          'partition_id' => 'required',
-         'class' => 'required',
-         'code' => 'required|digits:5|unique:testroom',
-         'questions' => 'required'
+         'questions' => 'required',
+         'teacher_id' => 'required'
+      ], [
+        'questions.required' => 'Трабва да изберете въпроси.'
       ]);
+
+      if ($validator->fails()) {
+        return ['error' => $validator->errors()];
+      }
 
       $questions = '';
 
       foreach ($request->get('questions') as $key => $value) {
-        $questions .= $value. ', ';
+        $questions .= $value['id']. ', ';
       }
 
       $questions = rtrim($questions, ", ");
 
       $input = $request->all();
       $input['questions_id'] = $questions;
-      $input['teacher_id'] = \Auth::user()->id;
 
       TestRoom::create($input);
 
-      \Session::flash('flash_message', 'Стаята беше успешно създадена!');
-
-      return redirect()->route('admin.testroom.index');
+      return response()->json(['success' => 'Стаята беше успешно създадена!']);
     }
 
-    public function activate($code)
+    public function activate(Request $request)
     {
+      $code = $request->get('code');
+
       $testroom = TestRoom::where('code', '=', $code)->update(['status' => true]);
 
       $students = TestRoomStudents::where('code', '=', $code)->get();
 
-      return view('admin.testroom.active', ['code' => $code, 'students' => $students]);
+      return ['students' => $students];
     }
 
     public function join(Request $request)
@@ -114,47 +121,46 @@ class TestRoomController extends Controller
 
     public function connect(Request $request)
     {
-      $this->validate($request, [
-         'code' => 'required|digits:5|exists:testroom,code',
-         'name' => 'required',
-         'lastname' => 'required'
-      ]);
+      // $this->validate($request, [
+      //    'code' => 'required|digits:5|exists:testroom,code',
+      //    'name' => 'required',
+      //    'lastname' => 'required'
+      // ]);
 
-      $code = $request->get('code');
-      $name = $request->get('name');
-      $lastname = $request->get('lastname');
+      // $code = $request->get('code');
+      // $name = $request->get('name');
+      // $lastname = $request->get('lastname');
 
-      $students = TestRoomStudents::where('code', '=', $code);
+      // $students = TestRoomStudents::where('code', '=', $code);
+      //
+      // $testroom = TestRoom::where('code', '=', $code)->get()[0];
+      //
+      // if ($students->count() >= 1) {
+      //   if($students->where('name', '=', $name)->where('lastname', '=', $lastname)->count() != 0){
+      //     if($testroom->status == 2){
+      //       return redirect()->route('testroom.start', ['code' => $code]);
+      //     }elseif($testroom->status == 1){
+      //       return view('testroom.connected', ['code' => $code]);
+      //     }
+      //   }else{
+      //     $number = TestRoomStudents::where('code', '=', $code)->orderBy('id', 'desc')->first()->number + 1;
+      //   }
+      // }else{
+      //   $number = 1;
+      // }
+      //
+      // $newStudent = new TestRoomStudents;
+      // $newStudent->name = $name;
+      // $newStudent->lastname = $lastname;
+      // $newStudent->code = $code;
+      // $newStudent->number = $number;
+      //
+      // $newStudent->save();
 
-      Session::put('name', $name);
-      Session::put('lastname', $lastname);
+      $data = array('code' => '58142', 'name' => 'Михаил', 'lastname' => 'Георгиев', 'number' => 1);
+      event(new StudentConnected($data));
 
-      $testroom = TestRoom::where('code', '=', $code)->get()[0];
-
-      if ($students->count() >= 1) {
-        if($students->where('name', '=', $name)->where('lastname', '=', $lastname)->count() != 0){
-          if($testroom->status == 2){
-            return redirect()->route('testroom.start', ['code' => $code]);
-          }elseif($testroom->status == 1){
-            return view('testroom.connected', ['code' => $code]);
-          }
-        }else{
-          $number = TestRoomStudents::where('code', '=', $code)->orderBy('id', 'desc')->first()->number + 1;
-        }
-      }else{
-        $number = 1;
-      }
-
-      $newStudent = new TestRoomStudents;
-      $newStudent->name = $name;
-      $newStudent->lastname = $lastname;
-      $newStudent->code = $code;
-      $newStudent->number = $number;
-
-      $newStudent->save();
-
-      $pusher = App::make('pusher');
-      $pusher->trigger( 'TestRoomChanel', 'StudentConnected', array('code' => $code, 'name' => $name, 'lastname' => $lastname, 'number' => $number));
+      return 'true';
 
       if($testroom->status == 2){
         return redirect()->route('testroom.start', ['code' => $code]);

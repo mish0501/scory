@@ -47,9 +47,8 @@ class APIController extends Controller
   }
 
   public function CodeGenerate(Request $request){
-    $code['code'] = app('App\Http\Controllers\TestRoomController')->generateCode();
+    $code = app('App\Http\Controllers\TestRoomController')->generateCode();
 
-    $code['token'] = $request->get("_token");
 
     return $code;
   }
@@ -60,9 +59,7 @@ class APIController extends Controller
     $subject = $request->get('subject');
     $partition = $request->get('partition');
 
-    $questions = Question::where('class', '=', $class)->where('subject_id', '=', $subject)->where('partition_id', '=', $partition)->get();
-
-    $questions[0]['token'] = $request->get("_token");
+    $questions = Question::where('class', '=', $class)->where('subject_id', '=', $subject)->where('partition_id', '=', $partition)->where('trash', false)->get();
 
     return $questions;
   }

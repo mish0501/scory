@@ -20,19 +20,19 @@
         <div class='form-group'>
           <label class='col-md-2 control-label' for='class'>Клас</label>
           <div class='col-md-5'>
-            <select-class></select-class>
+            <select-class @classSelected="classSelected"></select-class>
           </div>
         </div>
         <div class='form-group' v-if="subject != null">
           <label class='col-md-2 control-label'>Предмет</label>
           <div class='col-md-5'>
-            <select-subject :subject-id="subject"></select-subject>
+            <select-subject :subject-id="subject" @subjectSelected="subjectSelected"></select-subject>
           </div>
         </div>
         <div class='form-group' v-if="partition != null">
           <label class='col-md-2 control-label'>Раздел</label>
           <div class='col-md-5'>
-            <select-partition :partition-id="partition"></select-partition>
+            <select-partition :partition-id="partition" @partitionSelected="partitionSelected"></select-partition>
           </div>
         </div>
         <answers :answers="answers"></answers>
@@ -134,6 +134,20 @@ export default {
   },
 
   methods: {
+    classSelected(data){
+      this.subject = data.subject
+      this.partition = data.partition
+    },
+
+    subjectSelected(data){
+      this.subject = data.subject
+      this.partition = data.partition
+    },
+
+    partitionSelected(data){
+      this.partition = data.partition
+    },
+    
     AddAnswer(){
       const newAnswer = {
         name: "",

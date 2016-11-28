@@ -20,13 +20,13 @@
         <div class='form-group'>
           <label class='col-md-2 control-label' for='class'>Клас</label>
           <div class='col-md-5'>
-            <select-class></select-class>
+            <select-class @classSelected="classSelected"></select-class>
           </div>
         </div>
         <div class='form-group' v-if="subject != null">
-          <label class='col-md-2 control-label' for='class'>Предмет</label>
+          <label class='col-md-2 control-label'>Предмет</label>
           <div class='col-md-5'>
-            <select-subject :subject-id="subject"></select-subject>
+            <select-subject :subject-id="subject" @subjectSelected="subjectSelected"></select-subject>
           </div>
         </div>
         <div class='form-actions form-actions-padding-sm'>
@@ -89,6 +89,14 @@ export default {
   },
 
   methods: {
+    classSelected(data){
+      this.subject = data.subject
+    },
+
+    subjectSelected(data){
+      this.subject = data.subject
+    },
+
     UpdateSubject() {
       var data = {
         name: this.name,

@@ -3,6 +3,7 @@
     <option disabled value="0">Избери си предмет</option>
     <option v-bind:value="subject.id" v-for="subject in subjects">{{ subject.name }}</option>
   </select>
+  {{ getSubject }}
 </template>
 
 <script>
@@ -24,6 +25,12 @@ export default {
     }
   },
 
+  watch: {
+    subjectId (newSubjectId) {
+      this.subject = newSubjectId
+    }
+  },
+
   data () {
     return{
       subject: this.subjectId
@@ -32,24 +39,16 @@ export default {
 
   methods: {
     SubjectSelected: function() {
-      if (this.$parent.partition) {
-        this.$parent.partition = null
-      }
-      
       this.$http.post("/api/selectPartitions", { class: this.class, subject_id: this.subject }).then((response) => {
 
         this.$store.dispatch('set_partitions', response.data)
 
-        this.$parent.subject = this.subject
 
-        if(this.$parent.partition == null){
-          this.$parent.partition = 0
-        }
-
-        if(this.$parent.title){
-          this.$parent.title = "Избери си раздел"
-        }
-
+        this.$emit('subjectSelected', {
+          subject: this.subject,
+          partition: 0,
+          title: "Избери си раздел"
+        })
       }, (err) => {
         console.log(err);
       })

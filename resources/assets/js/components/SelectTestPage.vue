@@ -23,15 +23,15 @@
     <div class="container">
       <form class="form" autocomplete="off" v-on:submit.prevent="selectQuestions">
         <div class="form-group">
-          <select-class class="tabs input-lg"></select-class>
+          <select-class class="tabs input-lg" @classSelected="classSelected"></select-class>
         </div>
 
         <div class="form-group">
-          <select-subject class="tabs input-lg" :subject-id="subject" v-if="subject != null"></select-subject>
+          <select-subject class="tabs input-lg" :subject-id="subject" v-if="subject != null" @subjectSelected="subjectSelected"></select-subject>
         </div>
 
         <div class="form-group">
-          <select-partition class="tabs input-lg" :partition-id="partition" v-if="partition != null"></select-partition>
+          <select-partition class="tabs input-lg" :partition-id="partition" v-if="partition != null" @partitionSelected="partitionSelected"></select-partition>
         </div>
 
         <div class="form-group">
@@ -79,6 +79,27 @@
     },
 
     methods: {
+      classSelected(data){
+        this.subject = null
+        this.partition = data.partition
+        this.title = data.title
+        this.questionCount = null
+        this.subject = data.subject
+      },
+
+      subjectSelected(data){
+        this.subject = data.subject
+        this.partition = data.partition
+        this.title = data.title
+        this.questionCount = null
+      },
+
+      partitionSelected(data){
+        this.partition = data.partition
+        this.title = data.title
+        this.questionCount = data.questionCount
+      },
+
       ChangeTitle() {
         this.title = "Продължи напред"
       },

@@ -21,6 +21,12 @@ export default {
     }
   },
 
+  watch: {
+    partitionId (newPartitionId) {
+      this.partition = newPartitionId
+    }
+  },
+
   computed: {
     partitions() {
       return this.$store.getters.Partitions
@@ -29,12 +35,11 @@ export default {
 
   methods: {
     PartitionSelected() {
-      this.$parent.partition = this.partition
-      this.$parent.questionCount = 0
-
-      if(this.$parent.title){
-        this.$parent.title = "Избери си броя на въпросите"
-      }
+      this.$emit('partitionSelected', {
+        partition: this.partition,
+        questionCount: 0,
+        title: "Избери си броя на въпросите"
+      })
     }
   }
 }
