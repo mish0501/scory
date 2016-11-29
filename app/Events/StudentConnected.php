@@ -38,6 +38,6 @@ class StudentConnected implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['testroom.'.$this->code];
+        return new PrivateChannel('testroom.'.$this->code);
     }
 }

@@ -49,14 +49,17 @@
 export default {
   data(){
     return{
-      code:null,
       students: []
     }
   },
 
-  mounted(){
-    this.code = this.$route.params.code
+  computed: {
+    code() {
+      return this.$route.params.code
+    }
+  },
 
+  mounted(){
     this.$http.post('/api/testroom/active', {code: this.code}).then(
       (response) => {
         this.students = response.data.students
@@ -64,6 +67,17 @@ export default {
         console.error(error);
       }
     )
+
+    Echo.private('testroom.'+this.code)
+      .listen('StudentConnected', (e) => {
+        const student = {
+          name: e.name,
+          lastname: e.lastname,
+          number: e.number
+        }
+
+        this.students.push(student)
+      })
   }
 }
 </script>

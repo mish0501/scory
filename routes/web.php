@@ -48,7 +48,7 @@ Route::get('/endtest', ['as' => 'end', 'uses' => 'TestController@endTest']);
 
 // TestRoom
 Route::post('/join' , ['as' => 'testroom.join', 'uses' => 'TestRoomController@join']);
-Route::get('/connect' , ['as' => 'testroom.connect', 'uses' => 'TestRoomController@connect']);
+Route::post('/connect' , ['as' => 'testroom.connect', 'uses' => 'TestRoomController@connect']);
 Route::get('/{code}/start' , ['as' => 'testroom.start', 'uses' => 'TestController@startTestRoomTest']);
 Route::get('/finish' , ['as' => 'testroom.finish', function() {
     return view('testroom.finish');

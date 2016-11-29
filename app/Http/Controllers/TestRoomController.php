@@ -115,57 +115,64 @@ class TestRoomController extends Controller
       $testroom = TestRoom::where('code', '=', $code)->where('status', '=', 1)->orWhere('status', '=', 2)->count();
 
       if($testroom == 1){
-        return ['redirect' => true];
+        $url = url('testroom/'.$code.'/join');
+        return ['redirect' => true, 'url' => $url];
       }
     }
 
     public function connect(Request $request)
     {
-      // $this->validate($request, [
-      //    'code' => 'required|digits:5|exists:testroom,code',
-      //    'name' => 'required',
-      //    'lastname' => 'required'
-      // ]);
+      $this->validate($request, [
+         'code' => 'required|digits:5|exists:testroom,code',
+         'name' => 'required',
+         'lastname' => 'required'
+      ]);
 
-      // $code = $request->get('code');
-      // $name = $request->get('name');
-      // $lastname = $request->get('lastname');
+      $code = $request->get('code');
+      $name = $request->get('name');
+      $lastname = $request->get('lastname');
 
-      // $students = TestRoomStudents::where('code', '=', $code);
-      //
-      // $testroom = TestRoom::where('code', '=', $code)->get()[0];
-      //
-      // if ($students->count() >= 1) {
-      //   if($students->where('name', '=', $name)->where('lastname', '=', $lastname)->count() != 0){
-      //     if($testroom->status == 2){
-      //       return redirect()->route('testroom.start', ['code' => $code]);
-      //     }elseif($testroom->status == 1){
-      //       return view('testroom.connected', ['code' => $code]);
-      //     }
-      //   }else{
-      //     $number = TestRoomStudents::where('code', '=', $code)->orderBy('id', 'desc')->first()->number + 1;
-      //   }
-      // }else{
-      //   $number = 1;
-      // }
-      //
-      // $newStudent = new TestRoomStudents;
-      // $newStudent->name = $name;
-      // $newStudent->lastname = $lastname;
-      // $newStudent->code = $code;
-      // $newStudent->number = $number;
-      //
-      // $newStudent->save();
+      $students = TestRoomStudents::where('code', '=', $code);
 
-      $data = array('code' => '45491', 'name' => 'Михаил', 'lastname' => 'Георгиев', 'number' => 1);
+      $testroom = TestRoom::where('code', '=', $code)->get()[0];
+
+      if ($students->count() >= 1) {
+        if($students->where('name', '=', $name)->where('lastname', '=', $lastname)->count() != 0){
+          if($testroom->status == 2){
+            return response()->json([
+              'testStarted' => true
+            ]);
+          }elseif($testroom->status == 1){
+            return response()->json([
+              'testStarted' => false
+            ]);
+          }
+        }else{
+          $number = TestRoomStudents::where('code', '=', $code)->orderBy('id', 'desc')->first()->number + 1;
+        }
+      }else{
+        $number = 1;
+      }
+
+      $newStudent = new TestRoomStudents;
+      $newStudent->name = $name;
+      $newStudent->lastname = $lastname;
+      $newStudent->code = $code;
+      $newStudent->number = $number;
+
+      $newStudent->save();
+
+      $data = array('code' => $code, 'name' => $name, 'lastname' => $lastname, 'number' => $number);
       event(new StudentConnected($data));
 
-      return 'true';
-
       if($testroom->status == 2){
-        return redirect()->route('testroom.start', ['code' => $code]);
+        return response()->json([
+          'testStarted' => true
+        ]);
       }elseif($testroom->status == 1){
-        return view('testroom.connected', ['code' => $code]);
+        return response()->json([
+          'testStarted' => false
+        ]);
       }
     }
 

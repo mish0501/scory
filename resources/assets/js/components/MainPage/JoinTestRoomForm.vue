@@ -39,7 +39,8 @@ export default {
         }
 
         console.log('here');
-        this.$router.push({name: 'JoinTestroom', params:{ code: this.roomcode}});
+        console.log(response.data);
+        window.location.replace(response.data.url)
       }, (err) => {
         console.log(err);
       });

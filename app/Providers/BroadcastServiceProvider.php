@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Broadcast;
+use App\TestRoom;
 
 class BroadcastServiceProvider extends ServiceProvider
 {
@@ -24,7 +25,7 @@ class BroadcastServiceProvider extends ServiceProvider
         });
 
         Broadcast::channel('testroom.*', function ($user, $code) {
-            return $user->id === TestRoom::where('code', $code)->teacher_id;
+            return (int) $user->id === (int) TestRoom::where('code', $code)->get()[0]->teacher_id;
         });
     }
 }

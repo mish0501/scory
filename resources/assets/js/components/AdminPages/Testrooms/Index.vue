@@ -112,7 +112,7 @@ export default {
 
   mounted() {
     const user = this.user
-    
+
     this.$nextTick(() => {
       setTimeout(() => {
         this.$http.get('/api/testroom/' + user.id).then(

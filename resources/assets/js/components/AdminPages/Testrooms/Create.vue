@@ -217,14 +217,10 @@ export default {
         data.questions = this.selectedQuestions
       }
 
-      console.log(data);
-
       this.hasAlert = false
 
       this.$http.post('/api/testroom', data).then( (response) => {
         data = response.data
-
-        console.log(data);
 
         if(data.success){
           this.hasAlert = true

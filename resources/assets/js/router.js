@@ -63,7 +63,10 @@ const routes = [
       // Testroom
       { path: 'testroom', component: AdminTestroomsPage },
       { path: 'testroom/create', component: AdminTestroomCreatePage },
-      { path: 'testroom/:code/active', component: AdminTestroomActivatePage, name:'ActivateTestroom' }
+      { path: 'testroom/:code/active', component: AdminTestroomActivatePage, name:'ActivateTestroom' },
+      { path: 'testroom/:code/start', component: AdminTestroomActivatePage, name:'StartTestroom' },
+      { path: 'testroom/:code/stop', component: AdminTestroomActivatePage, name:'StopTestroom' },
+      { path: 'testroom/:code/results', component: AdminTestroomActivatePage, name:'ResultsTestroom' }
     ]
   }
 ]
