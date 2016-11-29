@@ -18,5 +18,9 @@
     "vuex": "^2.0.0",
     "vuex-router-sync": "^2.1.1",
     "vue-truncate-filter": "^1.1.5"
+  },
+  "dependencies": {
+    "laravel-echo": "^1.1.3",
+    "pusher-js": "^3.2.3"
   }
 }

@@ -157,7 +157,7 @@ class TestRoomController extends Controller
       //
       // $newStudent->save();
 
-      $data = array('code' => '58142', 'name' => 'Михаил', 'lastname' => 'Георгиев', 'number' => 1);
+      $data = array('code' => '45491', 'name' => 'Михаил', 'lastname' => 'Георгиев', 'number' => 1);
       event(new StudentConnected($data));
 
       return 'true';

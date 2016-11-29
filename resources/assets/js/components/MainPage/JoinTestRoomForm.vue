@@ -33,11 +33,13 @@ export default {
         this.RCErrors = [];
         this.roomCodeError = '';
 
-        if(response.data.redirect){
-          return this.$route.router.go('/testroom');
+        if(!response.data.redirect){
+          this.RCErrors.push(response.data[0].roomcode[0]);
+          this.roomCodeError = response.data['room_code_error'];
         }
-        this.RCErrors.push(response.data[0].roomcode[0]);
-        this.roomCodeError = response.data['room_code_error'];
+
+        console.log('here');
+        this.$router.push({name: 'JoinTestroom', params:{ code: this.roomcode}});
       }, (err) => {
         console.log(err);
       });

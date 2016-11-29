@@ -7866,7 +7866,7 @@ label.tabs {
 .tabs .checkbox-input {
   display: none; }
 
-.tabs.checked {
+.tabs.check {
   background-color: #337ab7;
   color: #fff; }
 

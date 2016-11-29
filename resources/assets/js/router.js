@@ -2,6 +2,8 @@ import MainPage from './components/MainPage.vue'
 import SelectTestPage from './components/SelectTestPage.vue'
 import TestPage from './components/TestPage.vue'
 import CheckTestPage from './components/CheckTestPage.vue'
+import JoinTestroomPage from './components/Testroom/Join.vue'
+
 import AdminPage from './components/AdminPage.vue'
 import AdminHomePage from './components/AdminPages/HomePage.vue'
 import AdminTrashPage from './components/AdminPages/TrashPage.vue'
@@ -36,6 +38,8 @@ const routes = [
 
   { path: '/test/check', component: CheckTestPage },
 
+  {path: '/testroom/:code/join', component:JoinTestroomPage, name:"JoinTestroom" },
+
   { path: '/admin', component: AdminPage,
     children: [
       { path: 'home', component: AdminHomePage },
@@ -59,7 +63,7 @@ const routes = [
       // Testroom
       { path: 'testroom', component: AdminTestroomsPage },
       { path: 'testroom/create', component: AdminTestroomCreatePage },
-      { path: 'testroom/:code', component: AdminTestroomActivatePage, name:'ActivateTestroom' }
+      { path: 'testroom/:code/active', component: AdminTestroomActivatePage, name:'ActivateTestroom' }
     ]
   }
 ]

@@ -9,7 +9,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class StudentConnected
+class StudentConnected implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
@@ -38,6 +38,6 @@ class StudentConnected
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('testroom.' + $this->code);
+        return ['testroom.'.$this->code];
     }
 }
