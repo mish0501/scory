@@ -132,20 +132,14 @@ export default {
             var questionsAnswers = JSON.parse(localStorage.questionsAnswers)
             if (questionsAnswers[this.question_id]) {
                 return  questionsAnswers[this.question_id]
-            }else{
-              if(this.type == 'one'){
-                return null
-              }else if (this.type == 'multiple') {
-                return []
-              }
-            }
-          } else {
-            if(this.type == 'one'){
-              return null
-            }else if (this.type == 'multiple') {
-              return []
             }
           }
+        }
+
+        if(this.type == 'one'){
+          return null
+        }else if (this.type == 'multiple') {
+          return []
         }
       }
     }
