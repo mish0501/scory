@@ -22,26 +22,8 @@ class PartitionController extends Controller
     public function index()
     {
       $partitions = Partition::where('trash', '=', false)->with('subject')->get();
-      return view('admin.partition.index', ['partitions' => $partitions]);
+      return $partitions;
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-      for ($i=5; $i < 13; $i++) {
-        $subjects = Subject::where('class', '=', $i)->get();
-
-        foreach ($subjects as $key => $value) {
-          $subjectsData[$i.' Клас'][$value->id] = $value->name;
-        }
-      }
-
-      return view('admin.partition.create', ['subjects' => $subjectsData]);
     }
 
     /**
@@ -52,21 +34,23 @@ class PartitionController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
-         'name' => 'required|min:5',
-         'subject_id' => 'required',
-         'class' => 'required'
+      $validator = \Validator::make($request->all(), [
+        'name' => 'required|min:5',
+        'subject_id' => 'required',
+        'class' => 'required'
       ]);
 
-      $subject = Subject::findOrFail($request->get('subject_id'));
+      if ($validator->fails()) {
+        return ['error' => $validator->errors()];
+      }
 
       $input = $request->all();
 
       Partition::create($input);
 
-      \Session::flash('flash_message', 'Разделът беше успешно добавен!');
-
-      return redirect()->route('admin.partition.index');
+      return response()->json([
+        'success' => 'Разделът беше успешно добавен!',
+      ]);
     }
 
     /**
@@ -80,7 +64,7 @@ class PartitionController extends Controller
       $partition = Partition::find($id);
       $subjects = Subject::where('class', '=', $partition->class)->get();
 
-      return view('admin.partition.edit', ['partition' => $partition, 'subjects' => $subjects]);
+      return ['partition' => $partition, 'subjects' => $subjects];
 
     }
 
@@ -88,18 +72,23 @@ class PartitionController extends Controller
     {
       $partition = Partition::findOrFail($id);
 
-      $this->validate($request, [
-         'name' => 'required|min:5',
-         'subject_id' => 'required'
+      $validator = \Validator::make($request->all(), [
+        'name' => 'required|min:5',
+        'subject_id' => 'required',
+        'class' => 'required'
       ]);
+
+      if ($validator->fails()) {
+        return ['error' => $validator->errors()];
+      }
 
       $input = $request->all();
 
       $partition->fill($input)->save();
 
-      \Session::flash('flash_message', 'Разделът беше успешно редактиран!');
-
-       return redirect()->route('admin.partition.index');
+      return response()->json([
+        'success' => 'Разделът беше успешно редактиран!',
+      ]);
     }
 
 
@@ -125,8 +114,6 @@ class PartitionController extends Controller
 
       $partition->update(['trash' => true]);
 
-      \Session::flash('flash_message', 'Разделът беше успешно преместен в кошчето!');
-
-      return redirect()->route('admin.partition.index');
+      return ['success' => 'Разделът беше успешно преместен в кошчето!'];
     }
 }

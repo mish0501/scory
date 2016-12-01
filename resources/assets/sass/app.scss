@@ -7,3 +7,12 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+// FontAwesome
+@import "font-awesome.min";
+
+// Index page styles
+@import "main.scss";
+
+// Test styles
+@import "test.scss"

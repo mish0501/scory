@@ -12,22 +12,50 @@
 */
 
 Route::get('/', function() {
-    return view('index');
+    return view('welcome');
+});
+
+Route::get('/home', function() {
+    return redirect(url("/admin/home"));
+});
+
+Route::group(['prefix' => 'test'],function() {
+  Route::get('/', function() {
+    return view('test');
+  });
+
+  Route::get('/select', function() {
+    return view('test');
+  });
+
+  Route::get('/check', function() {
+    return view('test');
+  });
+});
+
+
+Route::group(['prefix' => 'testroom'],function() {
+  Route::get('/{code}/join', function (){
+    return view('testroom');
+  });
+
+  Route::get('/finish', function (){
+    return view('testroom');
+  });
+
+  Route::get('/{code}', function (){
+    return view('testroom');
+  });
 });
 
 Route::post('/invite', ['as' => 'invite', 'uses' => 'InviteController@newUser']);
 
 Route::post('/contact', ['as' => 'contact', 'uses' => 'ContactController@sendMail']);
 
-Route::get('/home', ['as' => 'admin.home', 'uses' => 'HomeController@index']);
 
 // Test routes
-Route::get('/chooseClass', ['as' => 'class', 'uses' => 'TestController@index']);
 Route::get('/endtest', ['as' => 'end', 'uses' => 'TestController@endTest']);
-Route::post('/chooseSubject', ['as' => 'subject', 'uses' => 'TestController@chooseSubject']);
-Route::post('/choosePartition', ['as' => 'partition', 'uses' => 'TestController@selectPartition']);
-Route::post('/question', ['as' => 'selectQuestion', 'uses' => 'TestController@selectQuestionPost']);
-Route::post('/nextQuestion', ['uses' => 'TestController@nextQuestion']);
+
 
 // TestRoom
 Route::post('/join' , ['as' => 'testroom.join', 'uses' => 'TestRoomController@join']);
@@ -44,7 +72,9 @@ Route::get('auth/register/{invite?}', 'Auth\RegisterController@showRegistrationF
 // Admin Routes
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin|teacher']], function () {
 
-  Route::get('/home', ['as' => 'admin.home', 'uses' => 'HomeController@index']);
+  Route::get('/{vue_capture?}', function () {
+      return view('admin');
+  })->where('vue_capture', '[\/\w\.-]*');
 
 
   Route::get('/profile', function() {

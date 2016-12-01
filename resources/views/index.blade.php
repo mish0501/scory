@@ -26,12 +26,7 @@
     <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-16x16.png" sizes="16x16">
     <!-- /Favicons -->
 
-    <!-- Bootstrap core CSS -->
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/assets/css/normalize.css" rel="stylesheet">
-    <link href="/assets/css/main.css" rel="stylesheet">
+    <link href="/assets/css/app.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -228,11 +223,10 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-	   <script src="/assets/js/scroll.js"></script>
-	   <script src="/assets/js/header.js"></script>
-	   <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/scroll.js"></script>
+    <script src="/assets/js/header.js"></script>
+    <script src="/assets/js/main.js"></script>
      @if(Session::has('mail_send') || Session::has('error_mail_send'))
        <script type="text/javascript">
          scroll.toID('contact');

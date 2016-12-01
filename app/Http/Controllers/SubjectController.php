@@ -22,18 +22,8 @@ class SubjectController extends Controller
     public function index()
     {
       $data = Subject::where('trash', '=', false)->get();
-      return view('admin.subject.index', ['subjects' => $data]);
+      return $data;
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('admin.subject.create');
     }
 
     /**
@@ -44,17 +34,22 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
-         'name' => 'required|min:5'
-      ]);
+       $validator = \Validator::make($request->all(), [
+         'name' => 'required|min:5',
+         'class' => 'required'
+       ]);
+
+       if ($validator->fails()) {
+         return ['error' => $validator->errors()];
+       }
 
        $input = $request->all();
 
        Subject::create($input);
 
-       \Session::flash('flash_message', 'Предметът беше успешно добавен!');
-
-       return redirect()->route('admin.subject.index');
+       return response()->json([
+         'success' => 'Предметът беше успешно добавен!',
+       ]);
     }
 
     /**
@@ -66,25 +61,29 @@ class SubjectController extends Controller
     public function edit($id)
     {
       $data = Subject::find($id);
-      return view('admin.subject.edit', ['data' => $data]);
-
+      return $data;
     }
 
     public function update(Request $request, $id)
     {
       $subject = Subject::findOrFail($id);
 
-      $this->validate($request, [
-         'name' => 'required|min:5'
+      $validator = \Validator::make($request->all(), [
+        'name' => 'required|min:5',
+        'class' => 'required'
       ]);
+
+      if ($validator->fails()) {
+        return ['error' => $validator->errors()];
+      }
 
       $input = $request->all();
 
       $subject->fill($input)->save();
 
-      \Session::flash('flash_message', 'Предметът беше успешно редактиран!');
-
-       return redirect()->route('admin.subject.index');
+      return response()->json([
+        'success' => 'Предметът беше успешно редактиран!',
+      ]);
     }
 
 
@@ -117,8 +116,8 @@ class SubjectController extends Controller
 
       $subject->update(['trash' => true]);
 
-      \Session::flash('flash_message', 'Предметът беше успешно преместено в кошчето!');
-
-      return redirect()->route('admin.subject.index');
+      return response()->json([
+        'success' => 'Предметът беше успешно преместено в кошчето!',
+      ]);
     }
 }

@@ -10,8 +10,7 @@
     <meta name="author" content="Михаил Георгиев">
     <link rel="icon" href="/favicon.ico">
 
-    <!-- Bootstrap core CSS -->
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/app.css" rel="stylesheet">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicons/apple-touch-icon-57x57.png">
@@ -29,11 +28,6 @@
     <link rel="icon" type="image/png" href="/assets/images/favicons/android-chrome-192x192.png" sizes="192x192">
     <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-16x16.png" sizes="16x16">
     <!-- /Favicons -->
-
-    <!-- Custom styles for this template -->
-    <link href="/assets/css/normalize.css" rel="stylesheet">
-    <link href="/assets/css/test.css" rel="stylesheet">
-    <link href="/assets/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -67,8 +61,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/app.js"></script>
     <script src="/assets/js/test.js"></script>
   </body>
 </html>

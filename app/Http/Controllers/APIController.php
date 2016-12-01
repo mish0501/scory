@@ -13,6 +13,8 @@ use App\TestRoom;
 use App\TestRoomStudents;
 use App\Answer;
 use App\MailStore;
+use App\Invite;
+use App\User;
 
 class APIController extends Controller
 {
@@ -45,9 +47,8 @@ class APIController extends Controller
   }
 
   public function CodeGenerate(Request $request){
-    $code['code'] = app('App\Http\Controllers\TestRoomController')->generateCode();
+    $code = app('App\Http\Controllers\TestRoomController')->generateCode();
 
-    $code['token'] = $request->get("_token");
 
     return $code;
   }
@@ -58,9 +59,7 @@ class APIController extends Controller
     $subject = $request->get('subject');
     $partition = $request->get('partition');
 
-    $questions = Question::where('class', '=', $class)->where('subject_id', '=', $subject)->where('partition_id', '=', $partition)->get();
-
-    $questions[0]['token'] = $request->get("_token");
+    $questions = Question::where('class', '=', $class)->where('subject_id', '=', $subject)->where('partition_id', '=', $partition)->where('trash', false)->get();
 
     return $questions;
   }
@@ -95,5 +94,35 @@ class APIController extends Controller
     $message->toJSON();
 
     return $message;
+  }
+
+  public function getDashboardInfo()
+  {
+    $subjects = collect(Subject::where('trash', '=', false)->get()->toArray())->groupBy('name')->count();
+    $partitions = Partition::where('trash', '=', false)->count();
+    $questions = Question::where('trash', '=', false)->count();
+
+    $invites = null;
+    $users = null;
+    $trash = null;
+    $testrooms = null;
+
+    if(\Entrust::hasRole('admin')){
+      $invites = Invite::count();
+      $trash = Question::where('trash', '=', true)->count() + Subject::where('trash', '=', true)->count() + Partition::where('trash', '=', true)->count() + TestRoom::where('teacher_id', '=', \Auth::user()->id)->where('trash', '=', true)->count();
+      $users = User::count();
+    }elseif (\Entrust::hasRole('teacher')) {
+      $testrooms = TestRoom::where('teacher_id', '=', \Auth::user()->id)->count();
+    }
+
+   return [
+     "subjects" => $subjects,
+     "partitions" => $partitions,
+     "invites" => $invites,
+     "questions" => $questions,
+     "users" => $users,
+     "trash" => $trash,
+     "testrooms" => $testrooms
+   ];
   }
 }

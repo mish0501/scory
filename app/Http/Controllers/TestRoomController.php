@@ -16,6 +16,10 @@ use App\Answer;
 use Session;
 use File;
 
+use App\Events\StudentConnected;
+use App\Events\TestStart;
+use App\Events\FinishTest;
+
 class TestRoomController extends Controller
 {
     /**
@@ -23,11 +27,10 @@ class TestRoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
-      $user_id = \Auth::user()->id;
-      $testrooms = TestRoom::where('teacher_id', '=', $user_id)->where('trash', '=', false)->get();
-      return view('admin.testroom.index', ['testrooms' => $testrooms]);
+      $testrooms = TestRoom::where('teacher_id', '=', $user_id)->where('trash', '=', false)->with('subject', 'partition')->get();
+      return $testrooms;
     }
 
     public function create()
@@ -53,40 +56,46 @@ class TestRoomController extends Controller
 
     public function store(Request $request)
     {
-      $this->validate($request, [
+      $validator = \Validator::make($request->all(), [
+         'code' => 'required|digits:5|unique:testroom',
+         'class' => 'required',
          'subject_id' => 'required',
          'partition_id' => 'required',
-         'class' => 'required',
-         'code' => 'required|digits:5|unique:testroom',
-         'questions' => 'required'
+         'questions' => 'required',
+         'teacher_id' => 'required'
+      ], [
+        'questions.required' => 'Трабва да изберете въпроси.'
       ]);
+
+      if ($validator->fails()) {
+        return ['error' => $validator->errors()];
+      }
 
       $questions = '';
 
       foreach ($request->get('questions') as $key => $value) {
-        $questions .= $value. ', ';
+        $questions .= $value['id']. ', ';
       }
 
       $questions = rtrim($questions, ", ");
 
       $input = $request->all();
       $input['questions_id'] = $questions;
-      $input['teacher_id'] = \Auth::user()->id;
 
       TestRoom::create($input);
 
-      \Session::flash('flash_message', 'Стаята беше успешно създадена!');
-
-      return redirect()->route('admin.testroom.index');
+      return response()->json(['success' => 'Стаята беше успешно създадена!']);
     }
 
-    public function activate($code)
+    public function activate(Request $request)
     {
+      $code = $request->get('code');
+
       $testroom = TestRoom::where('code', '=', $code)->update(['status' => true]);
 
       $students = TestRoomStudents::where('code', '=', $code)->get();
 
-      return view('admin.testroom.active', ['code' => $code, 'students' => $students]);
+      return ['students' => $students];
     }
 
     public function join(Request $request)
@@ -95,12 +104,12 @@ class TestRoomController extends Controller
          'roomcode' => 'required|digits:5|exists:testroom,code',
       ],[
         'roomcode.required' => 'Полето с кода на стаята е задължително.',
-        'roomcode.exists' => 'Стая с такъв код не съществува.'
+        'roomcode.exists' => 'Стая с такъв код не съществува.',
+        'roomcode.digits' => 'Полето c кода трябва да има 5 цифри.'
       ]);
 
       if ($validator->fails()) {
-        Session::flash('room_code_error', 'Възникна грешка с кода на стаята:');
-        return redirect(url('/'))->withErrors($validator);
+        return [$validator->errors(), 'room_code_error' => 'Възникна грешка с кода на стаята:'];
       }
 
       $code = $request->get('roomcode');
@@ -108,9 +117,8 @@ class TestRoomController extends Controller
       $testroom = TestRoom::where('code', '=', $code)->where('status', '=', 1)->orWhere('status', '=', 2)->count();
 
       if($testroom == 1){
-        return view('testroom.join', ['code' => $code]);
-      }elseif($testroom == 0){
-        return redirect(url('/'));
+        $url = url('testroom/'.$code.'/join');
+        return ['redirect' => true, 'url' => $url];
       }
     }
 
@@ -128,17 +136,18 @@ class TestRoomController extends Controller
 
       $students = TestRoomStudents::where('code', '=', $code);
 
-      Session::put('name', $name);
-      Session::put('lastname', $lastname);
-
       $testroom = TestRoom::where('code', '=', $code)->get()[0];
 
       if ($students->count() >= 1) {
         if($students->where('name', '=', $name)->where('lastname', '=', $lastname)->count() != 0){
           if($testroom->status == 2){
-            return redirect()->route('testroom.start', ['code' => $code]);
+            return response()->json([
+              'testStarted' => true
+            ]);
           }elseif($testroom->status == 1){
-            return view('testroom.connected', ['code' => $code]);
+            return response()->json([
+              'testStarted' => false
+            ]);
           }
         }else{
           $number = TestRoomStudents::where('code', '=', $code)->orderBy('id', 'desc')->first()->number + 1;
@@ -155,26 +164,50 @@ class TestRoomController extends Controller
 
       $newStudent->save();
 
-      $pusher = App::make('pusher');
-      $pusher->trigger( 'TestRoomChanel', 'StudentConnected', array('code' => $code, 'name' => $name, 'lastname' => $lastname, 'number' => $number));
+      $data = array('code' => $code, 'name' => $name, 'lastname' => $lastname, 'number' => $number);
+      event(new StudentConnected($data));
 
       if($testroom->status == 2){
-        return redirect()->route('testroom.start', ['code' => $code]);
+        return response()->json([
+          'testStarted' => true
+        ]);
       }elseif($testroom->status == 1){
-        return view('testroom.connected', ['code' => $code]);
+        return response()->json([
+          'testStarted' => false
+        ]);
       }
     }
 
-    public function startTest($code)
+    public function startTest(Request $request)
     {
+      $code = $request->get('code');
+
       $testroom = TestRoom::where('code', '=', $code)->update(['status' => 2]);
 
-      $pusher = App::make('pusher');
-      $pusher->trigger( 'TestRoomChanel', 'TestStart', array('code' => $code));
+      $data = array('code' => $code);
+
+      event(new TestStart($data));
 
       $students = TestRoomStudents::where('code', '=', $code)->where('correct', '>', '0')->get();
 
-      return view('admin.testroom.start', ['code' => $code, 'students' => $students]);
+      return ['code' => $code, 'students' => $students];
+    }
+
+    public function getQuestions(Request $request)
+    {
+      $code = $request->get('code');
+
+      $testroom = TestRoom::where('code', '=', $code)->get()[0];
+
+      $questions_id = explode(', ', $testroom->questions_id);
+
+      foreach ($questions_id as $key => $value) {
+        $questions[$key] = Question::where('id', $value)->with('answers')->get()[0];
+      }
+
+      shuffle($questions);
+
+      return ['questions' => $questions];
     }
 
     public function finishTest($correctAnswers, $userAnswers, $code, $name, $lastname)
@@ -187,29 +220,28 @@ class TestRoomController extends Controller
 
       $number = $student->get()[0]->number;
 
-      Session::forget('questions');
-      Session::forget('answers');
-      Session::forget('checked');
-      Session::forget('name');
-      Session::forget('lastname');
+      event(new FinishTest(array('name' => $name, 'lastname' => $lastname, 'code' => $code, 'number' => $number, 'correct' => $correctAnswers)));
 
-      $pusher = App::make('pusher');
-      $pusher->trigger( 'TestRoomChanel', 'FinishTest', array('name' => $name, 'lastname' => $lastname, 'code' => $code, 'number' => $number, 'correct' => $correctAnswers));
-
-      return redirect()->route('testroom.finish');
+      return response()->json([
+        'success' => true
+      ]);
     }
 
     public function endTest($code)
     {
       $testroom = TestRoom::where('code', '=', $code)->where('status', '=', 2)->update(['status' => 3]);
 
-      return redirect()->route('admin.testroom.index');
+      return response()->json([
+        'success' => true
+      ]);
     }
 
-    public function getResults($code)
+    public function getResults(Request $request)
     {
+      $code = $request->get('code');
+
       $students = TestRoomStudents::where('code', '=', $code)->get();
-      return view('admin.testroom.results', ['students' => $students, 'code' => $code]);
+      return ['students' => $students];
     }
 
     public function getStudentResults($code, $user)
@@ -242,7 +274,7 @@ class TestRoomController extends Controller
         }
       }
 
-      return view('admin.testroom.user', ['student' => $student, 'questions' => $questions]);
+      return ['student' => $student, 'questions' => $questions];
     }
 
     public function destroy($code)

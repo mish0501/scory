@@ -79,23 +79,22 @@ class InviteController extends Controller
     public function newUser(Request $request)
     {
       $validator = \Validator::make($request->all(), [
-        'invite-email' => 'required|unique:invite,email|email'
+        'inviteEmail' => 'required|unique:invite,email|email'
       ],[
-        'invite-email.required' => 'Полето с E-mail Ви, е задължително',
-        'invite-email.unique' => 'E-mail Ви е добавен към списъка за проверка, в скоро време ще получите поканата си.'
+        'inviteEmail.required' => 'Полето с E-mail Ви, е задължително',
+        'inviteEmail.unique' => 'E-mail Ви е добавен към списъка за проверка, в скоро време ще получите поканата си.',
+        'inviteEmail.email' => 'Полето с E-mail Ви, е в невалиден формат.',
       ]);
 
       if ($validator->fails()) {
-        \Session::flash('error_invite_mail', '');
-        return redirect()->back()->withErrors($validator)->withInput();
+        return [$validator->errors(), "success" => false];
       }
 
-      $input['email'] = $request->get('invite-email');
+      $input['email'] = $request->get('inviteEmail');
 
       Invite::create($input);
 
-      \Session::flash('invite_email', 'След проверка на вашият E-mail, ще получите поканата си.');
-      return redirect(url('/'));
+      return ['invite_email' => 'След проверка на вашият E-mail, ще получите поканата си.', 'success' => true];
     }
 
     public function sendInvite($email)
