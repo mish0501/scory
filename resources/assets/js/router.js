@@ -27,6 +27,8 @@ import AdminTestroomsPage from './components/AdminPages/Testrooms/Index.vue'
 import AdminTestroomCreatePage from './components/AdminPages/Testrooms/Create.vue'
 import AdminTestroomActivatePage from './components/AdminPages/Testrooms/Activate.vue'
 import AdminTestroomStartPage from './components/AdminPages/Testrooms/Start.vue'
+import AdminTestroomResultsPage from './components/AdminPages/Testrooms/Results.vue'
+import AdminTestroomStudentResultsPage from './components/AdminPages/Testrooms/StudentResults.vue'
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -71,8 +73,8 @@ const routes = [
       { path: 'testroom/create', component: AdminTestroomCreatePage },
       { path: 'testroom/:code/active', component: AdminTestroomActivatePage, name:'ActivateTestroom' },
       { path: 'testroom/:code/start', component: AdminTestroomStartPage, name:'StartTestroom' },
-      { path: 'testroom/:code/stop', component: AdminTestroomActivatePage, name:'StopTestroom' },
-      { path: 'testroom/:code/results', component: AdminTestroomActivatePage, name:'ResultsTestroom' }
+      { path: 'testroom/:code/student/:number', component: AdminTestroomStudentResultsPage, name:'StudentResultsTestroom' },
+      { path: 'testroom/:code/results', component: AdminTestroomResultsPage, name:'ResultsTestroom' }
     ]
   }
 ]

@@ -231,13 +231,17 @@ class TestRoomController extends Controller
     {
       $testroom = TestRoom::where('code', '=', $code)->where('status', '=', 2)->update(['status' => 3]);
 
-      return redirect()->route('admin.testroom.index');
+      return response()->json([
+        'success' => true
+      ]);
     }
 
-    public function getResults($code)
+    public function getResults(Request $request)
     {
+      $code = $request->get('code');
+
       $students = TestRoomStudents::where('code', '=', $code)->get();
-      return view('admin.testroom.results', ['students' => $students, 'code' => $code]);
+      return ['students' => $students];
     }
 
     public function getStudentResults($code, $user)
@@ -270,7 +274,7 @@ class TestRoomController extends Controller
         }
       }
 
-      return view('admin.testroom.user', ['student' => $student, 'questions' => $questions]);
+      return ['student' => $student, 'questions' => $questions];
     }
 
     public function destroy($code)

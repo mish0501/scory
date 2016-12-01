@@ -66,10 +66,10 @@
                       <span>Покажи учениците в стаята</span>
                     </router-link>
 
-                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StopTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 2">
+                    <a class="btn btn-success btn-xs" @click="StopTest(testroom.code)" v-if="testroom.status == 2">
                       <i class="icon-edit"></i>
                       <span>Спри теста</span>
-                    </router-link>
+                    </a>
                     <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StartTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 2">
                       <i class="icon-edit"></i>
                       <span>Покажи резултатите на учениците</span>
@@ -144,6 +144,25 @@ export default {
       }else if (status == 3) {
         return "Решена"
       }
+    },
+
+    StopTest(code){
+      this.$http.get('/api/testroom/'+code+'/end').then(
+        (response) => {
+          if(response.data.success){
+            this.$http.get('/api/testroom/' + this.user.id).then(
+              (response) => {
+                this.testrooms = response.data
+                this.testroomsIds = response.data.map(el => el.id)
+              }, (error) => {
+                console.log(error);
+              }
+            )
+          }
+        },(error) => {
+          console.error(error);
+        }
+      )
     },
 
     DeleteTestroom(id) {

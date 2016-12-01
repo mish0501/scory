@@ -37,8 +37,6 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::post('/getMessage', ['as' => 'getMessage', 'uses' => 'APIController@getMessage']);
   Route::post('/getDashboardInfo', ['as' => 'getDashboardInfo', 'uses' => 'APIController@getDashboardInfo']);
 
-  // Route::post('/subjects', ['as' => 'getAllSubjects', 'uses' => 'APIController@allSubjects']);
-  // Route::post('/subject', ['as' => 'getSubject', 'uses' => 'APIController@Subject']);
   Route::resource('subject', 'SubjectController', ['except' => ['show', 'create']]);
   Route::resource('partition', 'PartitionController', ['except' => ['show', 'create']]);
   Route::resource('question', 'QuestionController', ['except' => ['show', 'create']]);
@@ -72,7 +70,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/start' , 'TestRoomController@startTest');
     Route::post('/getQuestions' , 'TestRoomController@getQuestions');
     Route::get('/{code}/end' , 'TestRoomController@endTest');
-    Route::get('/{code}/results' , 'TestRoomController@getResults');
+    Route::post('/results' , 'TestRoomController@getResults');
     Route::get('/{code}/student/{user}' , 'TestRoomController@getStudentResults');
 
 
