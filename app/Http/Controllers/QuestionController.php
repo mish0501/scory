@@ -21,7 +21,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-      $questions = Question::where('trash', '=', false)->with('subject', 'partition', 'user')->get();
+      $questions = Question::where('trash', '=', false)->with('subject', 'partition', 'user')->get()->toArray();
 
       return $questions;
 

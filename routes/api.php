@@ -68,7 +68,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('/active' , 'TestRoomController@activate');
     Route::post('/start' , 'TestRoomController@startTest');
-    Route::post('/getQuestions' , 'TestRoomController@getQuestions');
     Route::get('/{code}/end' , 'TestRoomController@endTest');
     Route::post('/results' , 'TestRoomController@getResults');
     Route::get('/{code}/student/{user}' , 'TestRoomController@getStudentResults');
@@ -86,3 +85,4 @@ Route::post('/test/check', 'TestController@checkTest');
 // Testroom
 Route::post('/join' , ['as' => 'testroom.join', 'uses' => 'TestRoomController@join']);
 Route::post('/connect' , ['as' => 'testroom.connect', 'uses' => 'TestRoomController@connect']);
+Route::post('/testroom/getQuestions' , 'TestRoomController@getQuestions');
