@@ -2,7 +2,10 @@ import MainPage from './components/MainPage.vue'
 import SelectTestPage from './components/SelectTestPage.vue'
 import TestPage from './components/TestPage.vue'
 import CheckTestPage from './components/CheckTestPage.vue'
+
 import JoinTestroomPage from './components/Testroom/Join.vue'
+import TestroomPage from './components/Testroom/Index.vue'
+import TestroomFinishPage from './components/Testroom/Finish.vue'
 
 import AdminPage from './components/AdminPage.vue'
 import AdminHomePage from './components/AdminPages/HomePage.vue'
@@ -23,6 +26,7 @@ import AdminEditQuestionsPage from './components/AdminPages/Questions/Edit.vue'
 import AdminTestroomsPage from './components/AdminPages/Testrooms/Index.vue'
 import AdminTestroomCreatePage from './components/AdminPages/Testrooms/Create.vue'
 import AdminTestroomActivatePage from './components/AdminPages/Testrooms/Activate.vue'
+import AdminTestroomStartPage from './components/AdminPages/Testrooms/Start.vue'
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -38,7 +42,9 @@ const routes = [
 
   { path: '/test/check', component: CheckTestPage },
 
+  {path: '/testroom/finish', component:TestroomFinishPage },
   {path: '/testroom/:code/join', component:JoinTestroomPage, name:"JoinTestroom" },
+  {path: '/testroom/:code', component:TestroomPage, name:"Testroom" },
 
   { path: '/admin', component: AdminPage,
     children: [
@@ -64,7 +70,7 @@ const routes = [
       { path: 'testroom', component: AdminTestroomsPage },
       { path: 'testroom/create', component: AdminTestroomCreatePage },
       { path: 'testroom/:code/active', component: AdminTestroomActivatePage, name:'ActivateTestroom' },
-      { path: 'testroom/:code/start', component: AdminTestroomActivatePage, name:'StartTestroom' },
+      { path: 'testroom/:code/start', component: AdminTestroomStartPage, name:'StartTestroom' },
       { path: 'testroom/:code/stop', component: AdminTestroomActivatePage, name:'StopTestroom' },
       { path: 'testroom/:code/results', component: AdminTestroomActivatePage, name:'ResultsTestroom' }
     ]

@@ -3,7 +3,7 @@
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
         <i class="icon-group"></i>
-        Всички стаи
+        Всички ученици в стая {{ code }}
       </h1>
 
       <div class='pull-right'>

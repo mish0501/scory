@@ -71,40 +71,6 @@ class TestController extends Controller
       return $questions;
     }
 
-    public function nextQuestion(Request $request)
-    {
-      $this->validate($request, [
-       'key' => 'required',
-       'correct' => 'required'
-      ]);
-
-      $key = $request->key;
-      $correct = $request->correct;
-      $newKey = $key + 1;
-
-
-      if($request->get('code') !== NULL){
-        $code = $request->get('code');
-      }else{
-        $code = '';
-      }
-
-      $questions = Session::get('questions');
-      $answers = Session::get('answers');
-
-      $request->session()->put('checked.'.$key, $correct);
-
-      if(isset($questions[$newKey])){
-        return view('test.test', ['question' => $questions[$newKey], 'answers' => $answers[$newKey], 'type' => $questions[$newKey]->type, 'key' => $newKey, 'testroomcode' => $code]);
-      }
-      else{
-        if($code !== ''){
-          return $this->checkTest(true, $code);
-        }
-        return $this->checkTest(false);
-      }
-    }
-
     public function checkTest(Request $request)
     {
       $this->validate($request, [
@@ -112,18 +78,13 @@ class TestController extends Controller
        'answers' => 'required'
       ]);
 
-      $checked = [];
-
       $questions = $request->get('questions');
-
-      $userAnswers = '';
 
       foreach ($questions as $k => $question) {
         $answers = $request->get('answers')[$question['id']];
 
         if(is_array($answers)){
           $check = 0;
-          $userAnswers[$question["id"]] = $answers;
 
           foreach ($answers as $key => $v) {
 
@@ -146,8 +107,6 @@ class TestController extends Controller
             }
           }
         }else{
-          $userAnswers[$question["id"]] = $answers;
-
           foreach ($question["answers"] as $answerKey => $answer) {
             if($answer["id"] == $answers){
               $questions[$k]["answers"][$answerKey]["checked"] = true;
@@ -162,23 +121,22 @@ class TestController extends Controller
         }
       }
 
-      // if($testroom && $code !== NULL){
-      //   $correctAnswers = '';
-      //   $userAnswers = json_encode($userAnswers);
-      //
-      //   foreach ($questions as $key => $value) {
-      //     if($value->correct == 1){
-      //       $correctAnswers ++;
-      //     }
-      //   }
-      //
-      //   $name = Session::get('name');
-      //   $lastname = Session::get('lastname');
-      //
-      //   return app('App\Http\Controllers\TestRoomController')->finishTest($correctAnswers, $userAnswers, $code, $name, $lastname);
-      // }
+      if($request->get('testroom') && $request->get('code') !== NULL){
+        $code = $request->get('code');
+        $name = $request->get('name');
+        $lastname = $request->get('lastname');
 
-      // return view('test.check', ['questions' => $questions, 'answers' => $answers, 'checked' => $checked]);
+        $correctAnswers = 0;
+        $userAnswers = json_encode($request->get('answers'));
+
+        foreach ($questions as $key => $value) {
+          if($value['correct'] == 1){
+            $correctAnswers ++;
+          }
+        }
+
+        return app('App\Http\Controllers\TestRoomController')->finishTest($correctAnswers, $userAnswers, $code, $name, $lastname);
+      }
 
       return response()->json([
         $questions
@@ -187,33 +145,6 @@ class TestController extends Controller
 
     public function endTest()
     {
-      Session::forget('questions');
-      Session::forget('answers');
-      Session::forget('checked');
-
       return redirect(url('/'));
-    }
-
-    public function startTestRoomTest($code)
-    {
-      $testroom = TestRoom::where('code', '=', $code)->get()[0];
-
-      $questions_id = explode(', ', $testroom->questions_id);
-
-      foreach ($questions_id as $key => $value) {
-        $questions[$key] = Question::find($value);
-      }
-
-      shuffle($questions);
-
-      Session::put('questions', $questions);
-
-      foreach ($questions as $key => $value) {
-        $answers[$key] = Answer::where('question_id', '=', $value->id)->orderByRaw("RAND()")->get();
-      }
-
-      Session::put('answers', $answers);
-
-      return view('test.test', ['question' => $questions['0'], 'answers' => $answers['0'], 'type' => $questions[0]->type, 'key' => '0', 'testroomcode' => $code]);
     }
 }

@@ -60,10 +60,35 @@
       }
     },
 
+    computed: {
+      code(){
+        return this.$route.params.code
+      }
+    },
+
+    mounted() {
+      Echo.channel('testroom.'+this.code)
+        .listen('TestStart', (e) => {
+          this.$router.push({ name:'Testroom', params: { code: this.code }})
+        })
+
+      if(typeof(Storage) !== "undefined") {
+          if (localStorage.testroom) {
+            const testroom = JSON.parse(localStorage.testroom)
+            if(testroom.code == this.code){
+              this.name = testroom.name
+              this.lastname = testroom.lastname
+            }
+          }
+      } else {
+          alert("Съжаляваме, но браузърът ви не подържа уеб хранилище");
+      }
+    },
+
     methods: {
       JoinStudent(){
         const data = {
-          code: this.$route.params.code
+          code: this.code
         }
 
         if(this.name !== ""){
@@ -80,6 +105,17 @@
               this.wait = true
               this.waitMsg = "Моля изчакайте, докато всички влязат в стаята и учителят пусне теста!"
               this.title = "Моля изчакайте"
+
+              if(typeof(Storage) !== "undefined") {
+                  if (!localStorage.testroom) {
+                    let data = { name: this.name, lastname: this.lastname, code: this.code }
+                    localStorage.testroom = JSON.stringify(data)
+                  }
+              } else {
+                  alert("Съжаляваме, но браузърът ви не подържа уеб хранилище");
+              }
+            }else {
+              this.$router.push({ name:'Testroom', params: { code: this.code }})
             }
           },(error) => {
             console.error(error);

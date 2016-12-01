@@ -33,8 +33,19 @@ Route::group(['prefix' => 'test'],function() {
   });
 });
 
-Route::get('/testroom/{code}/join', function (){
-  return view('testroom');
+
+Route::group(['prefix' => 'testroom'],function() {
+  Route::get('/{code}/join', function (){
+    return view('testroom');
+  });
+
+  Route::get('/finish', function (){
+    return view('testroom');
+  });
+
+  Route::get('/{code}', function (){
+    return view('testroom');
+  });
 });
 
 Route::post('/invite', ['as' => 'invite', 'uses' => 'InviteController@newUser']);

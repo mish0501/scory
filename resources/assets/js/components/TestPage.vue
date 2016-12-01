@@ -112,7 +112,7 @@ export default {
         localStorage.questions = JSON.stringify(response.data)
         localStorage.removeItem('questionsAnswers')
 
-        this.$router.go('/test/check')
+        this.$router.push('/test/check')
       }, error => {
         console.log(error);
       })

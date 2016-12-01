@@ -17,6 +17,8 @@ use Session;
 use File;
 
 use App\Events\StudentConnected;
+use App\Events\TestStart;
+use App\Events\FinishTest;
 
 class TestRoomController extends Controller
 {
@@ -176,16 +178,36 @@ class TestRoomController extends Controller
       }
     }
 
-    public function startTest($code)
+    public function startTest(Request $request)
     {
+      $code = $request->get('code');
+
       $testroom = TestRoom::where('code', '=', $code)->update(['status' => 2]);
 
-      $pusher = App::make('pusher');
-      $pusher->trigger( 'TestRoomChanel', 'TestStart', array('code' => $code));
+      $data = array('code' => $code);
+
+      event(new TestStart($data));
 
       $students = TestRoomStudents::where('code', '=', $code)->where('correct', '>', '0')->get();
 
-      return view('admin.testroom.start', ['code' => $code, 'students' => $students]);
+      return ['code' => $code, 'students' => $students];
+    }
+
+    public function getQuestions(Request $request)
+    {
+      $code = $request->get('code');
+
+      $testroom = TestRoom::where('code', '=', $code)->get()[0];
+
+      $questions_id = explode(', ', $testroom->questions_id);
+
+      foreach ($questions_id as $key => $value) {
+        $questions[$key] = Question::where('id', $value)->with('answers')->get()[0];
+      }
+
+      shuffle($questions);
+
+      return ['questions' => $questions];
     }
 
     public function finishTest($correctAnswers, $userAnswers, $code, $name, $lastname)
@@ -198,16 +220,11 @@ class TestRoomController extends Controller
 
       $number = $student->get()[0]->number;
 
-      Session::forget('questions');
-      Session::forget('answers');
-      Session::forget('checked');
-      Session::forget('name');
-      Session::forget('lastname');
+      event(new FinishTest(array('name' => $name, 'lastname' => $lastname, 'code' => $code, 'number' => $number, 'correct' => $correctAnswers)));
 
-      $pusher = App::make('pusher');
-      $pusher->trigger( 'TestRoomChanel', 'FinishTest', array('name' => $name, 'lastname' => $lastname, 'code' => $code, 'number' => $number, 'correct' => $correctAnswers));
-
-      return redirect()->route('testroom.finish');
+      return response()->json([
+        'success' => true
+      ]);
     }
 
     public function endTest($code)

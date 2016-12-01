@@ -69,7 +69,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/', 'TestRoomController@store');
 
     Route::post('/active' , 'TestRoomController@activate');
-    Route::get('/{code}/start' , 'TestRoomController@startTest');
+    Route::post('/start' , 'TestRoomController@startTest');
+    Route::post('/getQuestions' , 'TestRoomController@getQuestions');
     Route::get('/{code}/end' , 'TestRoomController@endTest');
     Route::get('/{code}/results' , 'TestRoomController@getResults');
     Route::get('/{code}/student/{user}' , 'TestRoomController@getStudentResults');

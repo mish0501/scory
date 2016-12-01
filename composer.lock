@@ -522,16 +522,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.3.24",
+            "version": "v5.3.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "b603b7cf77ff083c2248f7baa23f3add34c3ff84"
+                "reference": "90791f6a9eceebb1731ff7191141083ebb127c31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b603b7cf77ff083c2248f7baa23f3add34c3ff84",
-                "reference": "b603b7cf77ff083c2248f7baa23f3add34c3ff84",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/90791f6a9eceebb1731ff7191141083ebb127c31",
+                "reference": "90791f6a9eceebb1731ff7191141083ebb127c31",
                 "shasum": ""
             },
             "require": {
@@ -646,20 +646,20 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-11-21 14:14:16"
+            "time": "2016-11-29 14:42:22"
         },
         {
             "name": "laravel/passport",
-            "version": "v1.0.14",
+            "version": "v1.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "0e8fe951996ed2a60b0b9a4012e21601a284f035"
+                "reference": "18a3c7f56cf1fb9fac93e5d721516e6055dcb3db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/0e8fe951996ed2a60b0b9a4012e21601a284f035",
-                "reference": "0e8fe951996ed2a60b0b9a4012e21601a284f035",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/18a3c7f56cf1fb9fac93e5d721516e6055dcb3db",
+                "reference": "18a3c7f56cf1fb9fac93e5d721516e6055dcb3db",
                 "shasum": ""
             },
             "require": {
@@ -710,7 +710,7 @@
                 "oauth",
                 "passport"
             ],
-            "time": "2016-11-18 17:58:03"
+            "time": "2016-11-29 14:36:12"
         },
         {
             "name": "laravelcollective/html",
