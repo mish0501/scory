@@ -221,8 +221,6 @@
     <script src="/admin/assets/javascripts/bootstrap/bootstrap.js" type="text/javascript"></script>
     <!-- / modernizr -->
     <script src="/admin/assets/javascripts/plugins/modernizr/modernizr.min.js" type="text/javascript"></script>
-    <!-- / retina -->
-    <script src="/admin/assets/javascripts/plugins/retina/retina.js" type="text/javascript"></script>
     <!-- / theme file [required] -->
     <script src="/admin/assets/javascripts/theme.js" type="text/javascript"></script>
 

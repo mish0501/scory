@@ -53,31 +53,31 @@
               <td>
                 <div class='text-right'>
                     <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ActivateTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 0">
-                      <i class="icon-edit"></i>
-                      <span>Активирай стаята</span>
+                      <i class="icon-ok"></i>
+                      <span>Активирай</span>
                     </router-link>
 
                     <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StartTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 1">
-                      <i class="icon-edit"></i>
-                      <span>Стартирай тест</span>
+                      <i class="icon-play"></i>
+                      <span>Старт</span>
                     </router-link>
                     <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ActivateTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 1">
-                      <i class="icon-edit"></i>
-                      <span>Покажи учениците в стаята</span>
+                      <i class="icon-group"></i>
+                      <span>Ученици</span>
                     </router-link>
 
                     <a class="btn btn-success btn-xs" @click="StopTest(testroom.code)" v-if="testroom.status == 2">
-                      <i class="icon-edit"></i>
-                      <span>Спри теста</span>
+                      <i class="icon-stop"></i>
+                      <span>Стоп</span>
                     </a>
                     <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StartTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 2">
-                      <i class="icon-edit"></i>
-                      <span>Покажи резултатите на учениците</span>
+                      <i class="icon-group"></i>
+                      <span>Резултати</span>
                     </router-link>
 
                     <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ResultsTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 3">
-                      <i class="icon-edit"></i>
-                      <span>Покажи резултатите на учениците</span>
+                      <i class="icon-group"></i>
+                      <span>Резултати</span>
                     </router-link>
 
                     <button class="btn btn-danger btn-xs" @click="DeleteTestroom(testroom.id)">
