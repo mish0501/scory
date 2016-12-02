@@ -111,25 +111,22 @@ export default {
   },
 
   mounted() {
-    const user = this.user
-
-    this.$nextTick(() => {
-      setTimeout(() => {
-        this.$http.get('/api/testroom/' + user.id).then(
-          (response) => {
-            this.testrooms = response.data
-            this.testroomsIds = response.data.map(el => el.id)
-          }, (error) => {
-            console.log(error);
-          }
-        )
-      }, 200)
-    })
+    if(this.userId){
+      this.getTestrooms()
+    }
   },
 
-  computed:{
-    user() {
-      return this.$store.getters.User
+  computed: {
+    userId () {
+      return this.$store.getters.User.id
+    }
+  },
+
+  watch: {
+    userId (newUserId) {
+      if(newUserId){
+        this.getTestrooms()
+      }
     }
   },
 
@@ -144,6 +141,18 @@ export default {
       }else if (status == 3) {
         return "Решена"
       }
+    },
+
+    getTestrooms(){
+      const userId = this.userId
+      this.$http.get('/api/testroom/' + userId).then(
+        (response) => {
+          this.testrooms = response.data
+          this.testroomsIds = response.data.map(el => el.id)
+        }, (error) => {
+          console.log(error);
+        }
+      )
     },
 
     StopTest(code){
