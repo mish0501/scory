@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    
+
     <alert :alert="alert" v-if="hasAlert"></alert>
 
     <div class='box bordered-box' style='margin-bottom:0;'>
@@ -32,7 +32,7 @@
               <th>
                 Клас
               </th>
-              <th v-if="isAdmin">
+              <th v-if="isAdmin || isTeacher">
                 Опции
               </th>
             </tr>
@@ -42,13 +42,13 @@
               <td>{{ partition.name }}</td>
               <td>{{ partition.subject.name }}</td>
               <td class="class-col">{{ partition.class }}. Клас</td>
-              <td v-if="isAdmin">
+              <td v-if="isAdmin || isTeacher">
                 <div class='text-right'>
                     <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditPartition', params:{ id: partition.id }}">
                       <i class="icon-edit"></i>
                       <span>Редактирай</span>
                     </router-link>
-                    <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)">
+                    <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)" v-if="!isTeacher">
                       <i class="icon-remove"></i>
                       <span>Изтрий</span>
                     </button>
@@ -94,6 +94,10 @@ export default {
   computed:{
     isAdmin(){
       return this.$store.getters.User.role == 'admin'
+    },
+
+    isTeacher(){
+      return this.$store.getters.User.role == 'teacher'
     }
   },
 

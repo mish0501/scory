@@ -39,25 +39,25 @@
                 Клас
               </th>
 
-              <th v-if="isAdmin">
+              <th v-if="isAdmin || isTeacher">
                 Опции
               </th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="question in questions">
-              <td>{{ question.short_name }}</td>
+              <td class="name"><span>{{ question.name }}</span></td>
               <td>{{ question.subject.name }}</td>
               <td>{{ question.partition.name }}</td>
               <td>{{ question.user.name }}</td>
               <td class="class-col">{{ question.class }}. Клас</td>
-              <td v-if="isAdmin">
+              <td v-if="isAdmin || isTeacher">
                 <div class='text-right'>
                     <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditQuestion', params:{ id: question.id }}">
                       <i class="icon-edit"></i>
                       <span>Редактирай</span>
                     </router-link>
-                    <button class="btn btn-danger btn-xs" @click="DeleteQuestion(question.id)">
+                    <button class="btn btn-danger btn-xs" @click="DeleteQuestion(question.id)" v-if="!isTeacher">
                       <i class="icon-remove"></i>
                       <span>Изтрий</span>
                     </button>
@@ -103,6 +103,10 @@ export default {
   computed:{
     isAdmin(){
       return this.$store.getters.User.role == 'admin'
+    },
+
+    isTeacher(){
+      return this.$store.getters.User.role == 'teacher'
     }
   },
 
@@ -130,4 +134,14 @@ export default {
 </script>
 
 <style lang="css">
+td.name {
+    max-width: 177px;
+}
+td.name span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+}
 </style>

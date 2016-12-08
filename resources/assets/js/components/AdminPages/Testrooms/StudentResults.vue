@@ -7,7 +7,7 @@
       </h1>
     </div>
 
-    <div class="alert alert-info alert-dismissable" v-if="questions.length >= 0">
+    <div class="alert alert-info alert-dismissable" v-if="questions.length-1 >= 0">
       <a class="close" data-dismiss="alert" href="#">×</a>
       <h4>
         <i class="icon-info-sign"></i>
@@ -26,7 +26,7 @@
       Няма данни за отговорите на този ученик/чка.
     </div>
 
-    <div class='accordion accordion-green panel-group' id='questions' style='margin-bottom:0;' v-if="questions.length >= 0">
+    <div class='accordion accordion-green panel-group' id='questions' style='margin-bottom:0;' v-if="questions.length-1 >= 0">
       <div class="panel panel-default" v-for="question in questions">
         <div class="panel-heading">
           <a class="accordion-toggle" data-parent="#questions" data-toggle="collapse" :href='"#" + question.id'>

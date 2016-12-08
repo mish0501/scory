@@ -249,7 +249,7 @@ class TestRoomController extends Controller
       $student = TestRoomStudents::where('code', '=', $code)->where('number', '=' , $user)->get()[0];
       $questions = '';
 
-      if(isset($student->checked_answers)){
+      if($student->checked_answers != ""){
         $userAnswers = json_decode($student->checked_answers);
 
         $index = 0;

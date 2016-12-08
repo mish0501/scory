@@ -123,8 +123,7 @@ class QuestionController extends Controller
          'subject_id' => 'required',
          'partition_id' => 'required',
          'answers' => 'required',
-         'type' => 'required',
-         'removedIds' => 'required'
+         'type' => 'required'
       ];
 
       $attrName = [
