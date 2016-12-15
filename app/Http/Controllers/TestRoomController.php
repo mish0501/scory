@@ -283,8 +283,6 @@ class TestRoomController extends Controller
 
       $testroom_students = TestRoomStudents::where('code', '=', $code)->update(['trash' => true]);
 
-      Session::flash('flash_message', 'Стаята беше изтрита!');
-
-      return redirect()->route('admin.testroom.index');
+      return ['success' => 'Стаята беше успешно преместена в кошчето!'];
     }
 }

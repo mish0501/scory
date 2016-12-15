@@ -70,7 +70,7 @@
       Echo.channel('testroom.'+this.code)
         .listen('TestStart', (e) => {
           this.$router.push({ name:'Testroom', params: { code: this.code }})
-        })
+        });
 
       if(typeof(Storage) !== "undefined") {
           if (localStorage.testroom) {
@@ -101,19 +101,20 @@
 
         this.$http.post('/api/connect', data).then(
           (response) => {
+            
+            if(typeof(Storage) !== "undefined") {
+                if (!localStorage.testroom) {
+                  let data = { name: this.name, lastname: this.lastname, code: this.code }
+                  localStorage.testroom = JSON.stringify(data)
+                }
+            } else {
+                alert("Съжаляваме, но браузърът ви не подържа уеб хранилище");
+            }
+
             if(!response.data.testStarted){
               this.wait = true
               this.waitMsg = "Моля изчакайте, докато всички влязат в стаята и учителят пусне теста!"
               this.title = "Моля изчакайте"
-
-              if(typeof(Storage) !== "undefined") {
-                  if (!localStorage.testroom) {
-                    let data = { name: this.name, lastname: this.lastname, code: this.code }
-                    localStorage.testroom = JSON.stringify(data)
-                  }
-              } else {
-                  alert("Съжаляваме, но браузърът ви не подържа уеб хранилище");
-              }
             }else {
               this.$router.push({ name:'Testroom', params: { code: this.code }})
             }

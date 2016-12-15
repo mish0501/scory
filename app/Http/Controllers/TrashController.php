@@ -27,7 +27,7 @@ class TrashController extends Controller
       $subjects = Subject::where('trash', '=', true)->get();
       $partitions = Partition::where('trash', '=', true)->with('subject')->get();
 
-      $testrooms = TestRoom::where('trash', '=', true)->where('teacher_id', '=', \Auth::user()->id)->get();
+      $testrooms = TestRoom::where('trash', '=', true)->with('subject', 'partition')->where('teacher_id', '=', \Auth::user()->id)->get();
 
       $mail = MailStore::where('trash', '=', true)->get();
 

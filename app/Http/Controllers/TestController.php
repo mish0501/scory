@@ -81,40 +81,42 @@ class TestController extends Controller
       $questions = $request->get('questions');
 
       foreach ($questions as $k => $question) {
-        $answers = $request->get('answers')[$question['id']];
+        if(array_key_exists($question["id"], $request->get('answers'))){
+          $answers = $request->get('answers')[$question['id']];
 
-        if(is_array($answers)){
-          $check = 0;
+          if(is_array($answers)){
+            $check = 0;
 
-          foreach ($answers as $key => $v) {
+            foreach ($answers as $key => $v) {
 
-            foreach ($question["answers"] as $answerKey => $answer) {
-              if($answer->id == $v){
-                $questions[$k]["answers"][$answerKey]["checked"] = true;
+              foreach ($question["answers"] as $answerKey => $answer) {
+                if($answer->id == $v){
+                  $questions[$k]["answers"][$answerKey]["checked"] = true;
 
-                if($answer->correct == true){
-                  $check ++;
-                }else{
-                  $check --;
+                  if($answer->correct == true){
+                    $check ++;
+                  }else{
+                    $check --;
+                  }
                 }
               }
-            }
 
-            if($check >= 1){
-              $questions[$k]["correct"] = true;
-            }elseif($check < 0){
-              $questions[$k]["correct"] = false;
-            }
-          }
-        }else{
-          foreach ($question["answers"] as $answerKey => $answer) {
-            if($answer["id"] == $answers){
-              $questions[$k]["answers"][$answerKey]["checked"] = true;
-
-              if($answer["correct"] == true){
+              if($check >= 1){
                 $questions[$k]["correct"] = true;
-              }else{
+              }elseif($check < 0){
                 $questions[$k]["correct"] = false;
+              }
+            }
+          }else{
+            foreach ($question["answers"] as $answerKey => $answer) {
+              if($answer["id"] == $answers){
+                $questions[$k]["answers"][$answerKey]["checked"] = true;
+
+                if($answer["correct"] == true){
+                  $questions[$k]["correct"] = true;
+                }else{
+                  $questions[$k]["correct"] = false;
+                }
               }
             }
           }
@@ -130,7 +132,7 @@ class TestController extends Controller
         $userAnswers = json_encode($request->get('answers'));
 
         foreach ($questions as $key => $value) {
-          if($value['correct'] == 1){
+          if(array_key_exists('corect', $value) && $value['correct'] == 1){
             $correctAnswers ++;
           }
         }

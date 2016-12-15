@@ -80,7 +80,7 @@
                       <span>Резултати</span>
                     </router-link>
 
-                    <button class="btn btn-danger btn-xs" @click="DeleteTestroom(testroom.id)">
+                    <button class="btn btn-danger btn-xs" @click="DeleteTestroom(testroom.code, testroom.id)">
                       <i class="icon-remove"></i>
                       <span>Изтрий</span>
                     </button>
@@ -174,10 +174,10 @@ export default {
       )
     },
 
-    DeleteTestroom(id) {
+    DeleteTestroom(code, id) {
       this.hasAlert = false
 
-      this.$http.delete('/api/testroom/' + id).then((response) => {
+      this.$http.delete('/api/testroom/' + code).then((response) => {
         this.hasAlert = true
 
         this.alert = {

@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth:api'], function () {
       Route::delete('/subject/{subject}' , 'TrashController@deleteSubject');
       Route::delete('/partition/{partition}' , 'TrashController@deletePartition');
       Route::delete('/question/{question}' , 'TrashController@deleteQuestion');
-      Route::delete('/testroom/{question}' , 'TrashController@deleteTestRoom');
+      Route::delete('/testroom/{code}' , 'TrashController@deleteTestRoom');
       Route::delete('/mail/{question}' , 'TrashController@deleteMail');
     });
   });
@@ -71,6 +71,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/{code}/end' , 'TestRoomController@endTest');
     Route::post('/results' , 'TestRoomController@getResults');
     Route::get('/{code}/student/{user}' , 'TestRoomController@getStudentResults');
+    Route::delete('/{code}' , 'TestRoomController@destroy');
 
 
   });

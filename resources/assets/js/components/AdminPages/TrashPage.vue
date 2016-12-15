@@ -40,7 +40,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="subject in subjects">
+              <tr v-for="subject in subjects" v-if="subjects.length >= 0">
                 <td>{{ subject.name }}</td>
                 <td class="class-col">{{ subject.class }}. Клас</td>
                 <td>
@@ -97,7 +97,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="partition in partitions">
+              <tr v-for="partition in partitions" v-if="partitions.length >= 0">
                 <td>{{ partition.name }}</td>
                 <td>{{ partition.subject.name }}</td>
                 <td class="class-col">{{ partition.class }}. Клас</td>
@@ -158,7 +158,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="question in questions">
+              <tr v-for="question in questions" v-if="questions.length >= 0">
                 <td>{{ question.name }}</td>
                 <td>{{ question.partition.name }}</td>
                 <td>{{ question.subject.name }}</td>
@@ -219,17 +219,17 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="room in testrooms">
+              <tr v-for="room in testrooms"v-if="testrooms.length >= 0">
                 <td>{{ room.code }}</td>
                 <td>{{ room.subject.name }}</td>
                 <td>{{ room.partition.name }}</td>
                 <td class="class-col">{{ room.class }}. Клас</td>
                 <td>
                   <div class='text-right'>
-                    <button class='btn btn-success btn-xs' @click="RenewTestroom(room.id)">
+                    <button class='btn btn-success btn-xs' @click="RenewTestroom(room.id, room.code)">
                       <i class='icon-check'></i> Възтанови
                     </button>
-                    <button class="btn btn-danger btn-xs" @click="DeleteTestroom(room.id)">
+                    <button class="btn btn-danger btn-xs" @click="DeleteTestroom(room.id, room.code)">
                       <i class="icon-remove"></i>
                       <span>Изтрий</span>
                     </button>
@@ -242,7 +242,7 @@
       </div>
       <br>
     </div>
-    <div class='box bordered-box orange-border' :class="[(testrooms.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="isAdmin">
+    <div class='box bordered-box orange-border' :class="[(mail.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="isAdmin">
       <div class='box-header orange-background'>
         <div class='title'>
           <i class="icon-group"></i>
@@ -283,7 +283,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="message in mail">
+              <tr v-for="message in mail" v-if="mail.length >= 0">
                 <td>{{ message.name }} ({{ message.email }})</td>
                 <td>{{ message.subject }}</td>
                 <td>{{ message.message }}</td>
@@ -350,15 +350,16 @@ export default {
   },
 
   computed: {
-    isRead(read){
-      return (read) ? 'Прочетено' : 'Непрочетено'
-    },
     isAdmin() {
       return this.$store.getters.User.role == 'admin'
     }
   },
 
   methods: {
+    isRead(read){
+      return (read) ? 'Прочетено' : 'Непрочетено'
+    },
+
     DeleteSubject(id) {
       this.$http.delete('/api/trash/delete/subject/'+id).then((response) => {
         if(response.data.done){
@@ -431,11 +432,11 @@ export default {
       })
     },
 
-    DeleteTestroom(id) {
-      this.$http.delete('/api/trash/delete/testroom/'+id).then((response) => {
+    DeleteTestroom(id, code) {
+      this.$http.delete('/api/trash/delete/testroom/'+code).then((response) => {
         if(response.data.done){
           const index = this.testroomsIds.indexOf(id)
-          this.subjects.splice(index, 1)
+          this.testrooms.splice(index, 1)
           this.testroomsIds.splice(index, 1)
         }
       }, (error) => {
@@ -443,8 +444,8 @@ export default {
       })
     },
 
-    RenewTestroom(id) {
-      this.$http.post('/api/trash/renew/testroom', { id }).then((response) => {
+    RenewTestroom(id, code) {
+      this.$http.post('/api/trash/renew/testroom', { code }).then((response) => {
         if(response.data.done){
           const index = this.testroomsIds.indexOf(id)
           this.testrooms.splice(index, 1)
