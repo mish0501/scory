@@ -72,8 +72,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/results' , 'TestRoomController@getResults');
     Route::get('/{code}/student/{user}' , 'TestRoomController@getStudentResults');
     Route::delete('/{code}' , 'TestRoomController@destroy');
-
-
   });
 });
 

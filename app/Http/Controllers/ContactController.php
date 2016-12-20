@@ -37,9 +37,7 @@ class ContactController extends Controller
 
     MailStore::create($message);
 
-    $pusher = \App::make('pusher');
-
-    $pusher->trigger('MailChanel', 'NewMail', array('new_mail' => true));
+    event(new NewMail($message));
 
     return ["mailSend" => 'Съобщението изпратено успешно.', 'success' => true];
   }

@@ -59,7 +59,11 @@ class APIController extends Controller
     $subject = $request->get('subject');
     $partition = $request->get('partition');
 
-    $questions = Question::where('class', '=', $class)->where('subject_id', '=', $subject)->where('partition_id', '=', $partition)->where('trash', false)->get();
+    $questions = Question::where('class', '=', $class)
+                  ->where('subject_id', '=', $subject)
+                  ->where('partition_id', '=', $partition)
+                  ->where('trash', false)
+                  ->get();
 
     return $questions;
   }
@@ -75,12 +79,10 @@ class APIController extends Controller
       $messages[$key]['id'] = $message->id;
       $messages[$key]['name'] = $message->name;
       $messages[$key]['time'] = $message->created_at->diffForHumans();
+      $messages[$key]['url'] = '/admin/mail/'.$message->id;
     }
 
-    $messages[0]['count'] = $unreadMessagesCount;
-    $messages[0]['token'] = $request->get("_token");
-
-    return $messages;
+    return ['messages' => $messages, 'count' => $unreadMessagesCount];
   }
 
   public function getMessage(Request $request)

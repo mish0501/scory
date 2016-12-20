@@ -132,7 +132,7 @@ class TestController extends Controller
         $userAnswers = json_encode($request->get('answers'));
 
         foreach ($questions as $key => $value) {
-          if(array_key_exists('corect', $value) && $value['correct'] == 1){
+          if($value['correct']){
             $correctAnswers ++;
           }
         }
