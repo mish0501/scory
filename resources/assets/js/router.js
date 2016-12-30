@@ -30,6 +30,12 @@ import AdminTestroomStartPage from './components/AdminPages/Testrooms/Start.vue'
 import AdminTestroomResultsPage from './components/AdminPages/Testrooms/Results.vue'
 import AdminTestroomStudentResultsPage from './components/AdminPages/Testrooms/StudentResults.vue'
 
+import AdminMailPage from './components/AdminPages/Mail/Index.vue'
+import AdminShowMailPage from './components/AdminPages/Mail/Show.vue'
+
+import FileManager from './components/FileManager/Index.vue'
+import Test from './components/Test.vue'
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -44,9 +50,12 @@ const routes = [
 
   { path: '/test/check', component: CheckTestPage },
 
-  {path: '/testroom/finish', component:TestroomFinishPage },
-  {path: '/testroom/:code/join', component:JoinTestroomPage, name:"JoinTestroom" },
-  {path: '/testroom/:code', component:TestroomPage, name:"Testroom" },
+  { path: '/testroom/finish', component: TestroomFinishPage },
+  { path: '/testroom/:code/join', component: JoinTestroomPage, name:'JoinTestroom' },
+  { path: '/testroom/:code', component: TestroomPage, name:'Testroom' },
+
+  { path: '/file/manager', component: FileManager, name:'FileManager' },
+  { path: '/file/test', component: Test },
 
   { path: '/admin', component: AdminPage,
     children: [
@@ -74,7 +83,11 @@ const routes = [
       { path: 'testroom/:code/active', component: AdminTestroomActivatePage, name:'ActivateTestroom' },
       { path: 'testroom/:code/start', component: AdminTestroomStartPage, name:'StartTestroom' },
       { path: 'testroom/:code/student/:number', component: AdminTestroomStudentResultsPage, name:'StudentResultsTestroom' },
-      { path: 'testroom/:code/results', component: AdminTestroomResultsPage, name:'ResultsTestroom' }
+      { path: 'testroom/:code/results', component: AdminTestroomResultsPage, name:'ResultsTestroom' },
+
+      // Mail
+      { path: 'mail', component: AdminMailPage },
+      { path: 'mail/:id', component: AdminShowMailPage, name:'ShowMail' }
     ]
   }
 ]

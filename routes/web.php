@@ -15,6 +15,24 @@ Route::get('/', function() {
     return view('welcome');
 });
 
+Route::group(['prefix' => 'file', 'middleware' => ['auth']],function() {
+  Route::get('/manager', function() {
+      return view('file-manager');
+  });
+
+  Route::get('/test', function() {
+      return view('file-manager');
+  });
+
+  Route::post('/upload', 'FileManagerController@upload');
+
+  Route::get('/all', 'FileManagerController@getFiles');
+
+  Route::delete('/{id}', 'FileManagerController@delete');
+
+  Route::get('/{filename?}', ['as' => 'file', 'uses' => 'FileManagerController@getFile'])->where('filename', '[\/\w\.-]*');
+});
+
 Route::get('/home', function() {
     return redirect(url("/admin/home"));
 });
