@@ -32,6 +32,16 @@
       <script src="/admin/assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
       <script src="/admin/assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
+
+    <style media="screen">
+      #main-nav-bg {
+        z-index: 1
+      }
+
+      #main-nav {
+        z-index: 2
+      }
+    </style>
   </head>
   <body class='contrast-grass-green'>
     <div id="app">
