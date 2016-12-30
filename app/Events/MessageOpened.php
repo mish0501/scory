@@ -9,20 +9,20 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class NewMail implements ShouldBroadcast
+class MessageOpened implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
-    public $new_mail;
+    public $message_opened = true;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($new_mail)
+    public function __construct()
     {
-        $this->new_mail = $new_mail;
+        //
     }
 
     /**

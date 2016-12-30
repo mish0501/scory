@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\MailStore;
-
-use Vinkla\Pusher\Facades\Pusher;
+use App\Events\NewMail;
+use App\Events\MessageOpened;
 
 class ContactController extends Controller
 {
@@ -37,7 +37,7 @@ class ContactController extends Controller
 
     MailStore::create($message);
 
-    event(new NewMail($message));
+    event(new NewMail(true));
 
     return ["mailSend" => 'Съобщението изпратено успешно.', 'success' => true];
   }
@@ -51,9 +51,10 @@ class ContactController extends Controller
 
     foreach ($mail as $key => $message) {
       $mail[$key]['time'] = $message->created_at->diffForHumans();
+      $mail[$key]['message'] = str_limit($message->message, 55);
     }
 
-    return view('admin.mail.index', ['mail' => $mail]);
+    return $mail;
   }
 
   public function show($id)
@@ -63,7 +64,9 @@ class ContactController extends Controller
     $message->read = true;
     $message->save();
 
-    return view('admin.mail.show', ['message' => $message]);
+    event(new MessageOpened());
+
+    return $message;
   }
 
   public function destroy($id)
@@ -73,8 +76,6 @@ class ContactController extends Controller
     $message->trash = true;
     $message->save();
 
-    \Session::flash('flash_message', 'Съобщението беше успешно преместено в кошчето!');
-
-    return redirect()->route('admin.mail.index');
+    return ['success' => 'Съобщението беше успешно преместено в кошчето!'];
   }
 }

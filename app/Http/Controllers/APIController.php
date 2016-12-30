@@ -75,6 +75,8 @@ class APIController extends Controller
     $allMessages = MailStore::orderBy('created_at', 'desc')->where('trash', '=', false)->limit(5)->get();
     $unreadMessagesCount = MailStore::where('read', '=', false)->where('trash', '=', false)->count();
 
+    $messages = [];
+
     foreach ($allMessages as $key => $message) {
       $messages[$key]['id'] = $message->id;
       $messages[$key]['name'] = $message->name;
@@ -87,13 +89,12 @@ class APIController extends Controller
 
   public function getMessage(Request $request)
   {
+    \Carbon\Carbon::setLocale('bg');
+
     $message = MailStore::orderBy('created_at', 'desc')->where('trash', '=', false)->first();
 
     $message->message = str_limit($message->message, 55);
-    $message->created_at = $message->created_at->diffForHumans();
-    $message->token = $request->get("_token");
-
-    $message->toJSON();
+    $message->time = $message->created_at->diffForHumans();
 
     return $message;
   }

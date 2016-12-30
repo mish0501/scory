@@ -27,5 +27,9 @@ class BroadcastServiceProvider extends ServiceProvider
         Broadcast::channel('testroom.*', function ($user, $code) {
             return (int) $user->id === (int) TestRoom::where('code', $code)->get()[0]->teacher_id;
         });
+
+        Broadcast::channel('MailChannel', function ($user) {
+            return $user->hasRole('admin');
+        });
     }
 }

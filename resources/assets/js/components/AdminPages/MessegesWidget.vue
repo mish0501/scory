@@ -6,17 +6,19 @@
     </a>
     <ul class='dropdown-menu'>
 
-        <li v-for="message in messages">
-          <a :href="message.url">
-            <div class="widget-body">
-              <div class="pull-left icon"><i class="icon-comments text-success"></i></div>
-              <div class="pull-left text">{{ message.name }} изпрати съобщение <small class="text-muted">{{ message.time }}</small></div>
-            </div>
-          </a>
-        </li>
+      <li v-for="message in messages">
+        <a :href="message.url">
+          <div class="widget-body">
+            <div class="pull-left icon"><i class="icon-comments text-success"></i></div>
+            <div class="pull-left text">{{ message.name }} изпрати съобщение <small class="text-muted">{{ message.time }}</small></div>
+          </div>
+        </a>
+      </li>
 
 
-      <li class="widget-footer"><a href="/admin/mail">Всички съобщения</a></li>
+      <li class="widget-footer">
+        <router-link tag="a" :to="{ path: '/admin/mail' }">Всички съобщения</a>
+      </li>
     </ul>
   </li>
 </template>
@@ -30,15 +32,33 @@ export default {
     }
   },
 
+  methods: {
+    loadMessages() {
+      this.$http.post('/api/getAllMessages').then(
+        (response) => {
+          this.messageCount = response.data.count
+          this.messages = response.data.messages
+        }, (error) => {
+          console.error(error);
+        }
+      )
+    }
+  },
+
   created(){
-    this.$http.post('/api/getAllMessages').then(
-      (response) => {
-        this.messageCount = response.data.count
-        this.messages = response.data.messages
-      }, (error) => {
-        console.error(error);
-      }
-    )
+    this.loadMessages()
+
+    Echo.private('MailChannel')
+      .listen('NewMail', (e) => {
+        if(e.new_mail) {
+          this.loadMessages()
+        }
+      })
+      .listen('MessageOpened', (e) => {
+        if(e.message_opened) {
+          this.messageCount -= 1
+        }
+      })
   }
 }
 </script>
