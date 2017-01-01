@@ -33,6 +33,9 @@ import AdminTestroomStudentResultsPage from './components/AdminPages/Testrooms/S
 import AdminMailPage from './components/AdminPages/Mail/Index.vue'
 import AdminShowMailPage from './components/AdminPages/Mail/Show.vue'
 
+import AdminSettingsUsersPage from './components/AdminPages/Settings/Users/Index.vue'
+import AdminSettingsEditUsersPage from './components/AdminPages/Settings/Users/Edit.vue'
+
 import FileManager from './components/FileManager/Index.vue'
 import Test from './components/Test.vue'
 
@@ -87,7 +90,12 @@ const routes = [
 
       // Mail
       { path: 'mail', component: AdminMailPage },
-      { path: 'mail/:id', component: AdminShowMailPage, name:'ShowMail' }
+      { path: 'mail/:id', component: AdminShowMailPage, name:'ShowMail' },
+
+      // Settings
+      // Users
+      { path: 'settings/users', component: AdminSettingsUsersPage },
+      { path: 'settings/users/:id/edit', component: AdminSettingsEditUsersPage, name:'SettingsEditUser' }
     ]
   }
 ]

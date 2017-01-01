@@ -80,6 +80,28 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/{id}', 'ContactController@show');
     Route::delete('/{id}', 'ContactController@destroy');
   });
+
+  // Settings
+  Route::group(['prefix' => 'settings'], function () {
+    // User Role
+    Route::get('/users' , 'SettingsController@users');
+    Route::get('/users/{id}/edit' , 'SettingsController@editUsers');
+    Route::post('/users/{id}/edit' , 'SettingsController@updateUsers');
+
+    // Permission
+    Route::get('/permissions' , 'SettingsController@permissions');
+    Route::get('/permissions/create' , 'SettingsController@createPermissions');
+    Route::post('/permissions/create' , 'SettingsController@storePermissions');
+    Route::get('/permissions/{id}/edit' , 'SettingsController@editPermissions');
+    Route::post('/permissions/{id}/edit' , 'SettingsController@updatePermissions');
+
+    // Roles
+    Route::get('/roles' , 'SettingsController@roles');
+    Route::get('/roles/create' , 'SettingsController@createRoles');
+    Route::post('/roles/create' , 'SettingsController@storeRoles');
+    Route::get('/roles/{id}/edit' , 'SettingsController@editRoles');
+    Route::post('/roles/{id}/edit' , 'SettingsController@updateRoles');
+  });
 });
 
 //Test routes
@@ -89,6 +111,6 @@ Route::post('/selectQuestions', 'TestController@selectQuestions');
 Route::post('/test/check', 'TestController@checkTest');
 
 // Testroom
-Route::post('/join' , ['as' => 'testroom.join', 'uses' => 'TestRoomController@join']);
-Route::post('/connect' , ['as' => 'testroom.connect', 'uses' => 'TestRoomController@connect']);
+Route::post('/join' , 'TestRoomController@join');
+Route::post('/connect' , 'TestRoomController@connect');
 Route::post('/testroom/getQuestions' , 'TestRoomController@getQuestions');

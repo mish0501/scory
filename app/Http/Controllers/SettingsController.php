@@ -26,7 +26,7 @@ class SettingsController extends Controller
       $users[$key]['role'] = $role;
     }
 
-    return view('admin.settings.users.index', ['users' => $users]);
+    return $users;
   }
 
   public function editUsers($id)
@@ -37,16 +37,22 @@ class SettingsController extends Controller
 
     $roles = Role::all();
 
-    return view('admin.settings.users.edit', ['user' => $user, 'roles' => $roles]);
+    return ['user' => $user, 'roles' => $roles];
   }
 
   public function updateUsers(Request $request, $id)
   {
-    $this->validate($request,[
+    $validator = \Validator::make($request->all(), [
       'name' => 'required|exists:users,name',
       'email' => 'required|exists:users,email',
       'role' => 'required'
+    ], [
+      'role.required' => 'Полето с ролята е задължително.'
     ]);
+
+    if ($validator->fails()) {
+      return ['error' => $validator->errors()];
+    }
 
     $name = $request->get('name');
     $email = $request->get('email');
@@ -56,9 +62,8 @@ class SettingsController extends Controller
 
     $user->roles()->sync([$role]);
 
-    \Session::flash('flash_message', 'Ролята на потребителя беше успешно зададена!');
 
-    return redirect()->route('admin.settings.users.index');
+    return ['success' => 'Ролята на потребителя беше успешно зададена!'];
   }
 
   public function permissions()
