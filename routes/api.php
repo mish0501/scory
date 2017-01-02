@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::resource('partition', 'PartitionController', ['except' => ['show', 'create']]);
   Route::resource('question', 'QuestionController', ['except' => ['show', 'create']]);
 
+  // Trash
   Route::group(['prefix' => 'trash'], function () {
     Route::get('/', 'TrashController@index');
 
@@ -101,6 +102,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/roles/{id}/edit' , 'SettingsController@editRoles');
     Route::post('/roles/{id}/edit' , 'SettingsController@updateRoles');
   });
+
+  // Invites
+  Route::get('/invite', 'InviteController@index');
+  Route::get('/invite/create/{id?}', 'InviteController@create');
+  Route::post('/invite', 'InviteController@store');
+  Route::delete('/invite/{id}', 'InviteController@destroy');
 });
 
 //Test routes

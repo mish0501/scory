@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InviteMail;
 use App\Invite;
 
 class InviteController extends Controller
@@ -18,38 +20,45 @@ class InviteController extends Controller
     public function index()
     {
       $invites = Invite::all();
-      return view('admin.invite.index', ['invites' => $invites]);
+      return $invites;
     }
 
-    public function create()
+    public function create($id = null)
     {
-        $code = str_random(40);
-        return view('admin.invite.create', ['code' => $code]);
+      $invite = '';
+      if ($id) {
+        $invite = Invite::find($id);
+      }
+
+      $code = str_random(40);
+
+      return ['code' => $code, 'invite' => $invite];
     }
 
     public function store(Request $request)
     {
-      $this->validate($request, [
+      $validator = \Validator::make($request->all(), [
          'invite' => 'required',
          'email' => 'required|email'
       ]);
 
+      if ($validator->fails()){
+        return ['error' => $validator->errors()];
+      }
+
        $input = $request->all();
 
-       Invite::create($input);
+       if($request->get('id')){
+         $invite = Invite::find($request->get('id'));
 
-       \Mail::send('emails.invite',
-           array(
-               'invite' => $request->get('invite'),
-               'register' => url('/auth/register'),
-               'home' => url('/')
-           ), function($message) {
-             $message->to(\Input::get('email'))
-             ->subject('Покана за участие в проекта Green Sheet');
-       });
+         $invite->update($input);
+       }else {
+         Invite::create($input);
+       }
 
-       \Session::flash('flash_message', 'Поканата беше успешно изпратена!');
-       return redirect()->route('admin.invite.index');
+       Mail::to($request->get('email'))->send(new InviteMail($request->get('invite')));
+
+       return ['success' => 'Поканата беше успешно изпратена!'];
     }
 
     public function destroy($id)
@@ -58,9 +67,7 @@ class InviteController extends Controller
 
         $invite->delete();
 
-
-        \Session::flash('flash_message', 'Поканата беше успешно изтрита!');
-        return redirect()->route('admin.invite.index');
+        return ['success' => 'Поканата беше успешно изтрита!'];
     }
 
     public function redirect(Request $request)
@@ -90,16 +97,11 @@ class InviteController extends Controller
         return [$validator->errors(), "success" => false];
       }
 
+      $input['invite'] = "";
       $input['email'] = $request->get('inviteEmail');
 
       Invite::create($input);
 
       return ['invite_email' => 'След проверка на вашият E-mail, ще получите поканата си.', 'success' => true];
-    }
-
-    public function sendInvite($email)
-    {
-      $code = str_random(40);
-      return view('admin.invite.create', ['code' => $code, 'email' => $email]);
     }
 }

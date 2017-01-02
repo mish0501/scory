@@ -99,8 +99,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin|teacher'
       return view('admin.setings');
   });
 
-  Route::resource('invite', 'InviteController', ['except' => ['show', 'update', 'edit'], 'names' => ['index' => 'admin.invite.index', 'store' => 'admin.invite.store', 'create' => 'admin.invite.create', 'destroy' => 'admin.invite.destroy', ]]);
-  Route::get('/invite/create/{email?}', 'InviteController@sendInvite');
 
   // Trash
   Route::group(['prefix' => 'trash'], function () {

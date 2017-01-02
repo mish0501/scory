@@ -44,6 +44,9 @@ import AdminSettingsRolesPage from './components/AdminPages/Settings/Roles/Index
 import AdminSettingsCreateRolesPage from './components/AdminPages/Settings/Roles/Create.vue'
 import AdminSettingsEditRolesPage from './components/AdminPages/Settings/Roles/Edit.vue'
 
+import AdminInvitesPage from './components/AdminPages/Invites/Index.vue'
+import AdminCreateInvitesPage from './components/AdminPages/Invites/Create.vue'
+
 import FileManager from './components/FileManager/Index.vue'
 import Test from './components/Test.vue'
 
@@ -113,7 +116,11 @@ const routes = [
         // Roles
         { path: 'settings/roles', component: AdminSettingsRolesPage },
         { path: 'settings/roles/create', component: AdminSettingsCreateRolesPage },
-        { path: 'settings/roles/:id/edit', component: AdminSettingsEditRolesPage, name:'SettingsEditRole' }
+        { path: 'settings/roles/:id/edit', component: AdminSettingsEditRolesPage, name:'SettingsEditRole' },
+
+      // Invites
+      { path:'invite', component: AdminInvitesPage },
+      { path:'invite/create/:id?', component: AdminCreateInvitesPage, name: 'CreateInvite' }
     ]
   }
 ]
