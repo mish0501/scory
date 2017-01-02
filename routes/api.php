@@ -90,7 +90,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // Permission
     Route::get('/permissions' , 'SettingsController@permissions');
-    Route::get('/permissions/create' , 'SettingsController@createPermissions');
     Route::post('/permissions/create' , 'SettingsController@storePermissions');
     Route::get('/permissions/{id}/edit' , 'SettingsController@editPermissions');
     Route::post('/permissions/{id}/edit' , 'SettingsController@updatePermissions');

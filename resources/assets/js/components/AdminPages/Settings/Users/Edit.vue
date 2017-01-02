@@ -3,17 +3,8 @@
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
         <i class="icon-cogs"></i>
-        Всички потребители
+        Смяна на роля на потребител
       </h1>
-
-      <div class='pull-right' v-if="isAdmin">
-        <div class='btn-group'>
-          <router-link class="btn btn-success" :to="{ path: 'subject/create' }">
-            <i class='icon-plus'></i>
-            Добави предмет
-          </router-link>
-        </div>
-      </div>
     </div>
 
     <alert :alert="alert" v-if="hasAlert"></alert>

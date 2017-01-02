@@ -46,6 +46,7 @@
             <multiselect
             v-model="selectedQuestions"
             :options="questions"
+            :max-height="150"
             :multiple="true"
             :allow-empty="false"
             :close-on-select="false"
@@ -55,7 +56,7 @@
             :selectLabel="'Натиснете Enter, за да изберете'"
             :selectedLabel="'Избран'"
             :deselectLabel="'Натиснете Enter, за да се премахне'"
-            :hide-selected="true"
+            :hide-selected="false"
             :limit="1"
             :limitText="count => `и още ${count}`"
             >

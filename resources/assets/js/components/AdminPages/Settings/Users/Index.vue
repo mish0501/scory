@@ -5,15 +5,6 @@
         <i class="icon-cogs"></i>
         Всички потребители
       </h1>
-
-      <div class='pull-right' v-if="isAdmin">
-        <div class='btn-group'>
-          <router-link class="btn btn-success" :to="{ path: 'subject/create' }">
-            <i class='icon-plus'></i>
-            Добави предмет
-          </router-link>
-        </div>
-      </div>
     </div>
 
     <alert :alert="alert" v-if="hasAlert"></alert>

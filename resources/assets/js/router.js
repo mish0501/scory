@@ -36,6 +36,14 @@ import AdminShowMailPage from './components/AdminPages/Mail/Show.vue'
 import AdminSettingsUsersPage from './components/AdminPages/Settings/Users/Index.vue'
 import AdminSettingsEditUsersPage from './components/AdminPages/Settings/Users/Edit.vue'
 
+import AdminSettingsPermissionsPage from './components/AdminPages/Settings/Permissions/Index.vue'
+import AdminSettingsCreatePermissionsPage from './components/AdminPages/Settings/Permissions/Create.vue'
+import AdminSettingsEditPermissionsPage from './components/AdminPages/Settings/Permissions/Edit.vue'
+
+import AdminSettingsRolesPage from './components/AdminPages/Settings/Roles/Index.vue'
+import AdminSettingsCreateRolesPage from './components/AdminPages/Settings/Roles/Create.vue'
+import AdminSettingsEditRolesPage from './components/AdminPages/Settings/Roles/Edit.vue'
+
 import FileManager from './components/FileManager/Index.vue'
 import Test from './components/Test.vue'
 
@@ -93,9 +101,19 @@ const routes = [
       { path: 'mail/:id', component: AdminShowMailPage, name:'ShowMail' },
 
       // Settings
-      // Users
-      { path: 'settings/users', component: AdminSettingsUsersPage },
-      { path: 'settings/users/:id/edit', component: AdminSettingsEditUsersPage, name:'SettingsEditUser' }
+        // Users
+        { path: 'settings/users', component: AdminSettingsUsersPage },
+        { path: 'settings/users/:id/edit', component: AdminSettingsEditUsersPage, name:'SettingsEditUser' },
+
+        // Permissions
+        { path: 'settings/permissions', component: AdminSettingsPermissionsPage },
+        { path: 'settings/permissions/create', component: AdminSettingsCreatePermissionsPage },
+        { path: 'settings/permissions/:id/edit', component: AdminSettingsEditPermissionsPage, name:'SettingsEditPermission' },
+
+        // Roles
+        { path: 'settings/roles', component: AdminSettingsRolesPage },
+        { path: 'settings/roles/create', component: AdminSettingsCreateRolesPage },
+        { path: 'settings/roles/:id/edit', component: AdminSettingsEditRolesPage, name:'SettingsEditRole' }
     ]
   }
 ]

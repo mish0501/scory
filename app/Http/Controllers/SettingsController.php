@@ -70,21 +70,25 @@ class SettingsController extends Controller
   {
     $permissions = Permission::all();
 
-    return view('admin.settings.permissions.index', ['permissions' => $permissions]);
-  }
-
-  public function createPermissions()
-  {
-    return view('admin.settings.permissions.create');
+    return $permissions;
   }
 
   public function storePermissions(Request $request)
   {
-    $this->validate($request,[
+    $validator = \Validator::make($request->all(), [
       'display_name' => 'required|min:5',
       'name' => 'required|min:5',
       'description' => 'required|min:15',
+    ], [
+      'display_name.required' => 'Полето Името на правото е задължително.',
+      'display_name.min' => 'Полето Името на правото трябва да бъде минимум 5 знака.',
+      'name.required' => 'Полето Името на правото в системата е задължително.',
+      'name.min' => 'Полето Името на правото в системата трябва да бъде минимум 5 знака.',
     ]);
+
+    if ($validator->fails()) {
+      return ['error' => $validator->errors()];
+    }
 
     $permission = new Permission();
     $permission->name = $request->get('name');
@@ -92,27 +96,34 @@ class SettingsController extends Controller
     $permission->description  = $request->get('description');
     $permission->save();
 
-    \Session::flash('flash_message', 'Правото беше успешно създадено!');
-
-    return redirect()->route('admin.settings.permissions.index');
+    return ['success' => 'Правото беше успешно създадено!'];
   }
 
   public function editPermissions($id)
   {
     $permission = Permission::find($id);
 
-    return view('admin.settings.permissions.edit', ['permission' => $permission]);
+    return $permission;
   }
 
   public function updatePermissions(Request $request, $id)
   {
     $permission = Permission::find($id);
 
-    $this->validate($request,[
+    $validator = \Validator::make($request->all(), [
       'display_name' => 'required',
       'name' => 'required',
       'description' => 'required'
+    ], [
+      'display_name.required' => 'Полето Името на правото е задължително.',
+      'display_name.min' => 'Полето Името на правото трябва да бъде минимум 5 знака.',
+      'name.required' => 'Полето Името на правото в системата е задължително.',
+      'name.min' => 'Полето Името на правото в системата трябва да бъде минимум 5 знака.',
     ]);
+
+    if ($validator->fails()) {
+      return ['error' => $validator->errors()];
+    }
 
     $input['name'] = $request->get('name');
     $input['display_name'] = $request->get('display_name');
@@ -120,41 +131,51 @@ class SettingsController extends Controller
 
     $permission->fill($input)->save();
 
-    \Session::flash('flash_message', 'Правото беше успешно редактирано!');
-
-    return redirect()->route('admin.settings.permissions.index');
+    return ['success' => 'Правото беше успешно редактирано!'];
   }
 
   public function roles()
   {
     $roles = Role::all();
 
-    return view('admin.settings.roles.index', ['roles' => $roles]);
+    return $roles;
   }
 
   public function createRoles()
   {
     $permissions = Permission::all();
-    return view('admin.settings.roles.create', ['permissions' => $permissions]);
+    return $permissions;
   }
 
   public function storeRoles(Request $request)
   {
-    $this->validate($request,[
+    $validator = \Validator::make($request->all(), [
       'display_name' => 'required|min:5',
       'name' => 'required|min:5',
       'description' => 'required|min:15',
+      'permissions' => 'required'
+    ], [
+      'display_name.required' => 'Полето Името на ролята е задължително.',
+      'display_name.min' => 'Полето Името на ролята трябва да бъде минимум 5 знака.',
+      'name.required' => 'Полето Името на правото в системата е задължително.',
+      'name.min' => 'Полето Името на правото в системата трябва да бъде минимум 5 знака.',
+      'permissions.required' => 'Полето Права е задължително.',
     ]);
 
-    $permission = new Permission();
-    $permission->name = $request->get('name');
-    $permission->display_name = $request->get('display_name');
-    $permission->description  = $request->get('description');
-    $permission->save();
+    if ($validator->fails()) {
+      return ['error' => $validator->errors()];
+    }
 
-    \Session::flash('flash_message', 'Правото беше успешно създадено!');
+    $role = new Role();
+    $role->name = $request->get('name');
+    $role->display_name = $request->get('display_name');
+    $role->description  = $request->get('description');
+    $role->save();
 
-    return redirect()->route('admin.settings.partitions.index');
+
+    $role->perms()->sync($request->get("permissions"));
+
+    return ['success' => 'Правото беше успешно създадено!'];
   }
 
   public function editRoles($id)
@@ -163,19 +184,28 @@ class SettingsController extends Controller
     $permissions = Permission::all();
     $rolePerms = $role->perms()->get();
 
-    return view('admin.settings.roles.edit', ['role' => $role, 'permissions' => $permissions, 'rolePerms' => $rolePerms]);
+    return ['role' => $role, 'permissions' => $permissions, 'rolePerms' => $rolePerms];
   }
 
   public function updateRoles(Request $request, $id)
   {
     $role = Role::find($id);
 
-    $this->validate($request,[
+    $validator = \Validator::make($request->all(), [
       'display_name' => 'required',
       'name' => 'required',
       'description' => 'required',
       'permissions' => 'required'
+    ], [
+      'display_name.required' => 'Полето Името на ролята е задължително.',
+      'display_name.min' => 'Полето Името на ролята трябва да бъде минимум 5 знака.',
+      'name.required' => 'Полето Името на правото в системата е задължително.',
+      'name.min' => 'Полето Името на правото в системата трябва да бъде минимум 5 знака.',
     ]);
+
+    if ($validator->fails()) {
+      return ['error' => $validator->errors()];
+    }
 
     $input['name'] = $request->get('name');
     $input['display_name'] = $request->get('display_name');
@@ -183,11 +213,8 @@ class SettingsController extends Controller
 
     $role->fill($input)->save();
 
-    $role->perms()->sync([]);
-    $role->attachPermissions($request->get("permissions"));
+    $role->perms()->sync($request->get("permissions"));
 
-    \Session::flash('flash_message', 'Ролята беше успешно редактирана!');
-
-    return redirect()->route('admin.settings.roles.index');
+    return ['success' => 'Ролята беше успешно редактирана!'];
   }
 }
