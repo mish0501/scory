@@ -56,7 +56,9 @@ export default {
       })
       .listen('MessageOpened', (e) => {
         if(e.message_opened) {
-          this.messageCount -= 1
+          if(this.messageCount > 0) {
+            this.messageCount -= 1
+          }
         }
       })
   }
