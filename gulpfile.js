@@ -2,6 +2,8 @@ const elixir = require('laravel-elixir');
 
 require('laravel-elixir-vue-2');
 
+elixir.config.sourcemaps = process.env.NODE_ENV === 'development';
+
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
