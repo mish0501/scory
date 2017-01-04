@@ -1,11 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "prod": "gulp --production",
-    "dev": "gulp watch"
-  },
-  "scripts": {
-    "postinstall": "gulp default"
+    "postinstall": "gulp --production"
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.7",

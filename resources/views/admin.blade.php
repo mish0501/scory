@@ -55,7 +55,9 @@
             <i class='icon-reorder'></i>
           </a>
           <ul class='nav'>
-            <messeges-widget></messeges-widget>
+            @if(Auth::user()->can('list-mail'))
+              <messeges-widget></messeges-widget>
+            @endif
             <li class='dropdown dark user-menu'>
               <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
                 @if(Auth::user()->avatar != NULL)
