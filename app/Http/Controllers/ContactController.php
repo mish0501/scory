@@ -61,6 +61,10 @@ class ContactController extends Controller
   {
     $message = MailStore::findOrFail($id);
 
+    if($message->read) {
+      return $message;
+    }
+
     $message->read = true;
     $message->save();
 

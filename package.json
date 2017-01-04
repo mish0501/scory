@@ -4,7 +4,10 @@
     "prod": "gulp --production",
     "dev": "gulp watch"
   },
-  "devDependencies": {
+  "scripts": {
+    "postinstall": "gulp default"
+  },
+  "dependencies": {
     "bootstrap-sass": "^3.3.7",
     "gulp": "^3.9.1",
     "jquery": "^3.1.0",
