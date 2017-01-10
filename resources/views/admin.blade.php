@@ -61,9 +61,9 @@
             <li class='dropdown dark user-menu'>
               <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
                 @if(Auth::user()->avatar != NULL)
-                  <img width="60" height="60" alt="" src="{{ Auth::user()->files()->find(Auth::user()->avatar)->url }}" />
+                  <img id='avatar' width="60" height="60" alt="" src="{{ Auth::user()->files()->find(Auth::user()->avatar)->url }}" />
                 @else
-                  <img width="23" height="23" alt="" src="/admin/assets/images/avatar/avatar.jpg" />
+                  <img id='avatar' width="23" height="23" alt="" src="/admin/assets/images/avatar/avatar.jpg" />
                 @endif
                 <span class='user-name'>{{ Auth::user()->name }}</span>
                 <b class='caret'></b>

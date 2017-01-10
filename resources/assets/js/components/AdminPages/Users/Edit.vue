@@ -233,6 +233,8 @@ export default {
       this.$http.post('/api/user/changeavatar', { id: data.selecteds }).then(
        (response) => {
          this.avatar = response.data
+
+         $('#avatar').attr('src', response.data)
        }, console.error
       )
     },
