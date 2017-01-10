@@ -25,7 +25,7 @@ class UserController extends Controller
 
         $avatar = $user->files()->find($avatarId)->url;
       }else{
-        $avatar = 'admin/assets/images/avatar/avatar.jpg';
+        $avatar = url('admin/assets/images/avatar/avatar.jpg');
       }
 
       $questionCount = $user->questions->count();
@@ -42,7 +42,7 @@ class UserController extends Controller
 
         $avatar = $user->files()->find($avatarId)->url;
       }else{
-        $avatar = 'admin/assets/images/avatar/avatar.jpg';
+        $avatar = url('admin/assets/images/avatar/avatar.jpg');
       }
       return ['name' => $user->name, 'email' => $user->email, 'avatar' => $avatar];
     }
