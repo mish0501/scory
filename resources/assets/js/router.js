@@ -50,6 +50,9 @@ import AdminCreateInvitesPage from './components/AdminPages/Invites/Create.vue'
 import FileManager from './components/FileManager/Index.vue'
 import Test from './components/Test.vue'
 
+import AdminUsersPage from './components/AdminPages/Users/Show.vue'
+import AdminEditUsersPage from './components/AdminPages/Users/Edit.vue'
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -119,8 +122,12 @@ const routes = [
         { path: 'settings/roles/:id/edit', component: AdminSettingsEditRolesPage, name:'SettingsEditRole' },
 
       // Invites
-      { path:'invite', component: AdminInvitesPage },
-      { path:'invite/create/:id?', component: AdminCreateInvitesPage, name: 'CreateInvite' }
+      { path: 'invite', component: AdminInvitesPage },
+      { path: 'invite/create/:id?', component: AdminCreateInvitesPage, name: 'CreateInvite' },
+
+      // Users
+      { path: 'user/edit', component: AdminEditUsersPage, name: 'UserEdit' },
+      { path: 'user/:id', component: AdminUsersPage }
     ]
   }
 ]

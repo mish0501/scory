@@ -108,6 +108,13 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::get('/invite/create/{id?}', 'InviteController@create');
   Route::post('/invite', 'InviteController@store');
   Route::delete('/invite/{id}', 'InviteController@destroy');
+
+  // Users
+  Route::get('/user/edit', 'UserController@edit');
+  Route::put('/user/edit', 'UserController@update');
+  Route::post('user/changepass', 'UserController@changePass');
+  Route::post('user/changeavatar', 'UserController@changeAvatar');
+  Route::get('/user/{id}', 'UserController@show');
 });
 
 //Test routes

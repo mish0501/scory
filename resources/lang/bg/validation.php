@@ -140,6 +140,7 @@ return [
             "subject_id" => "Предмет",
             "partition_id" => "Раздел",
             "class" => "Клас",
+            "old_password" => "Стара парола"
     ],
 
 ];

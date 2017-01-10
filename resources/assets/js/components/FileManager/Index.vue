@@ -58,11 +58,17 @@ export default {
             <div class="dz-select-btn"><i class="fa fa-check"></i></div>
           </div>`
       },
-      selecteds: []
+      selecteds: null
     }
   },
 
   created () {
+    if (window.fileCount == 'one') {
+      this.selecteds = ""
+    }else if (window.fileCount == 'many') {
+      this.selecteds = []
+    }
+
     this.$http.get('/file/all').then(
       (response) => {
         const dropzone = this.$children[0].dropzone
@@ -110,13 +116,32 @@ export default {
 
         preview.toggleClass('dz-selected')
 
-        const index = vm.selecteds.indexOf(id)
+        if(window.fileCount == 'one') {
 
-        if (index > -1) {
-          vm.selecteds.splice(index, 1)
-        } else {
-          vm.selecteds.push(id)
+          if (vm.selecteds == id) {
+            vm.selecteds = ""
+          } else {
+            if(vm.selecteds != null){
+              let current = vm.selecteds
+              $("div").find("[data-id='" + current + "']").removeClass('dz-selected')
+            }
+
+            vm.selecteds = id
+          }
+
+        }else if (window.fileCount == 'many') {
+
+          const index = vm.selecteds.indexOf(id)
+
+          if (index > -1) {
+            vm.selecteds.splice(index, 1)
+          } else {
+            vm.selecteds.push(id)
+          }
+
         }
+
+        console.log(vm.selecteds);
       })
     },
 
