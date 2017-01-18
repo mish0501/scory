@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><?php $s = explode(" ",$__env->yieldContent('title'));unset($s[2]);unset($s[3]);$s = implode(" ",$s); echo $s;?> | Green Sheet - Администраторски панел</title>
+    <title><?php $s = explode(" ",$__env->yieldContent('title'));unset($s[2]);unset($s[3]);$s = implode(" ",$s); echo $s;?> | Scory - Администраторски панел</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta content='text/html;charset=utf-8' http-equiv='content-type'>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -268,7 +268,7 @@
             <div class='footer-wrapper'>
               <div class='row'>
                 <div class='col-sm-6 text'>
-                  Copyright © 2015 Green Sheet
+                  Copyright © 2015 Scory
                 </div>
               </div>
             </div>

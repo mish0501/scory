@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>@yield('title') | Green Sheet - Администраторски панел</title>
+    <title>@yield('title') | Scory - Администраторски панел</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta content='text/html;charset=utf-8' http-equiv='content-type'>
     <meta content='Flat administration template for Twitter Bootstrap. Twitter Bootstrap 3 template with Ruby on Rails support.' name='description'>
@@ -61,7 +61,7 @@
                     @if(Route::currentRouteName() == 'login')
                       <a href='/auth/register'>
                         <i class='icon-user'></i>
-                        Нов за Green Sheet?
+                        Нов за Scory?
                         <strong>Регистрирай се</strong>
                       </a>
                     @elseif(Route::currentRouteName() == 'register')

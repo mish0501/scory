@@ -62,7 +62,7 @@
         <div class='text-center'>
           <a href='/auth/register'>
             <i class='icon-user'></i>
-            Нов за Green Sheet?
+            Нов за Scory?
             <strong>Регистрирай се</strong>
           </a>
         </div>

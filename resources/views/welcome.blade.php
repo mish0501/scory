@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Михаил Георгиев">
 
-    <title>GreenSheet</title>
+    <title>Scory</title>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicons/apple-touch-icon-57x57.png">

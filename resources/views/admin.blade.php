@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Green Sheet - Администраторски панел</title>
+    <title>Scory - Администраторски панел</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta content='text/html;charset=utf-8' http-equiv='content-type'>
 
@@ -201,7 +201,7 @@
               <div class='footer-wrapper'>
                 <div class='row'>
                   <div class='col-sm-6 text'>
-                    Copyright © 2015 Green Sheet
+                    Copyright © 2015 Scory
                   </div>
                 </div>
               </div>

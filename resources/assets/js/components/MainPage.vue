@@ -9,7 +9,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand scroll-effect" data-scroll="top">GreenSheet</a>
+          <a class="navbar-brand scroll-effect" data-scroll="top">Scory</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -26,7 +26,7 @@
     <!-- Top -->
     <div class="jumbotron" id="top">
       <div class="container">
-        <h1>Green Sheet</h1>
+        <h1>Scory</h1>
       </div>
     </div>
 
@@ -36,7 +36,7 @@
       <div class="row" id="about">
         <div class="col-md-10 col-md-offset-1">
           <h2 class="text-center">За проекта</h2>
-          <p class="text-justify">Чрез „Green Sheet“ можете лесно и бързо да генерирате най-различни тестове във всяка една образователна област, за всеки един клас по раздели.</p>
+          <p class="text-justify">Чрез „Scory“ можете лесно и бързо да генерирате най-различни тестове във всяка една образователна област, за всеки един клас по раздели.</p>
         </div>
       </div>
 
@@ -88,7 +88,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2014</p>
+        <p>&copy; Scory 2017</p>
       </footer>
     </div>
   </div>

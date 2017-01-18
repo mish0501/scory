@@ -30,6 +30,6 @@ class InviteMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.invite')->subject('Покана за участие в проекта Green Sheet');
+        return $this->view('emails.invite')->subject('Покана за участие в проекта Scory');
     }
 }

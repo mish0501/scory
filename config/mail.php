@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => 'no-reply@greensheet.ml',
-        'name' => 'Green Sheet',
+        'address' => 'no-reply@scory.ml',
+        'name' => 'Scory',
     ],
 
     /*
