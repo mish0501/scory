@@ -74,7 +74,7 @@ export default {
     }
   },
 
-  mounted() {
+  beforeCreate() {
     this.$http.post('/api/getDashboardInfo').then(
       (response) => {
         const data = response.data

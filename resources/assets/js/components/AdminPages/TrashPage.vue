@@ -326,7 +326,7 @@ export default {
     }
   },
 
-  mounted() {
+  beforeCreate() {
     this.$http.get('/api/trash').then((response) => {
       const data = response.data
 

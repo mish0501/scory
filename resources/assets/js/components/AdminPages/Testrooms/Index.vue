@@ -110,7 +110,7 @@ export default {
     "alert": Alert
   },
 
-  mounted() {
+  beforeCreate() {
     if(this.userId){
       this.getTestrooms()
     }

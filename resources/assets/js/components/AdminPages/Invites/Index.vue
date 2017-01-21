@@ -79,7 +79,7 @@ export default {
     "alert": Alert
   },
 
-  created () {
+  beforeCreate () {
     this.$http.get('/api/invite').then(
       (response) => {
         this.invites = response.data

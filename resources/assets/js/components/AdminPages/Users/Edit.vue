@@ -124,7 +124,7 @@ export default {
     "alert": Alert
   },
 
-  created() {
+  beforeCreate() {
     this.$http.get('/api/user/edit').then((response) => {
       this.name = response.data.name
       this.email = response.data.email

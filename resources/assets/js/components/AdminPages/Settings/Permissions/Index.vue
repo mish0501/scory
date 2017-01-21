@@ -80,7 +80,7 @@ export default {
     }
   },
 
-  created () {
+  beforeCreate () {
     this.$http.get('/api/settings/permissions').then(
       (response) => {
         this.permissions = response.data

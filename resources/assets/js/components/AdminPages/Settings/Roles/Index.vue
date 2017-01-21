@@ -80,7 +80,7 @@ export default {
     }
   },
 
-  created () {
+  beforeCreate () {
     this.$http.get('/api/settings/roles').then(
       (response) => {
         this.roles = response.data

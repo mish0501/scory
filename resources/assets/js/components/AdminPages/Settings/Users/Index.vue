@@ -65,7 +65,7 @@ export default {
     "alert": Alert
   },
 
-  created () {
+  beforeCreate () {
     this.$http.get('/api/settings/users').then(
       (response) => {
         this.users = response.data
