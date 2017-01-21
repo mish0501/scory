@@ -9,7 +9,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand scroll-effect" data-scroll="top">Scory</a>
+          <a class="navbar-brand scroll-effect" data-scroll="top">
+            <span id="logo"></span> Scory
+          </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -26,7 +28,7 @@
     <!-- Top -->
     <div class="jumbotron" id="top">
       <div class="container">
-        <h1>Scory</h1>
+        <h1>Добре дошли!</h1>
       </div>
     </div>
 

@@ -3,6 +3,15 @@
   background: transparent;
 }
 
+#menu #logo{
+  background: url('/assets/images/logo.svg') no-repeat center;
+  height: 30px;
+  width: 30px;
+  display: block;
+  float: left;
+  margin: -5px 10px 0 0;
+}
+
 #menu.bg{
   background: #222;
 }
@@ -77,6 +86,10 @@
 
   #menu a.login{
     text-transform: uppercase;
+  }
+
+  #menu.bg #logo{
+    background-image: url('/assets/images/logo_bg.svg');
   }
 
   #menu.bg{
