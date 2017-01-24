@@ -20,44 +20,48 @@
 
     <div class='box bordered-box' style='margin-bottom:0;'>
       <div class='box-content'>
-        <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-          <thead>
-            <tr>
-              <th>
-                Поканата
-              </th>
-              <th>
-                E-mail
-              </th>
-              <th v-if="isAdmin">
-                Опции
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="invite in invites">
-              <td>{{ hasInvite(invite) }}</td>
-              <td>{{ invite.email }}</td>
-              <td v-if="isAdmin">
-                <div class='text-right'>
-                    <button class="btn btn-danger btn-xs" @click="DeleteInvite(invite.id)">
-                      <i class="icon-remove"></i>
-                      <span>Изтрий</span>
-                    </button>
-                    <router-link
-                      tag="a"
-                      class="btn btn-success btn-xs"
-                      :to="{ name:'CreateInvite', params:{ id: invite.id }}"
-                      v-if="!hasInvite(invite)"
-                    >
-                      <i class='icon-mail-forward'></i>
-                      <span>Изпрати покана</span>
-                    </router-link>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="responsive-table">
+          <div class="scrollable-area">
+            <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+              <thead>
+                <tr>
+                  <th>
+                    Поканата
+                  </th>
+                  <th>
+                    E-mail
+                  </th>
+                  <th v-if="isAdmin">
+                    Опции
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="invite in invites">
+                  <td>{{ hasInvite(invite) }}</td>
+                  <td>{{ invite.email }}</td>
+                  <td v-if="isAdmin">
+                    <div class='text-right'>
+                        <button class="btn btn-danger btn-xs" @click="DeleteInvite(invite.id)">
+                          <i class="icon-remove"></i>
+                          <span>Изтрий</span>
+                        </button>
+                        <router-link
+                          tag="a"
+                          class="btn btn-success btn-xs"
+                          :to="{ name:'CreateInvite', params:{ id: invite.id }}"
+                          v-if="!hasInvite(invite)"
+                        >
+                          <i class='icon-mail-forward'></i>
+                          <span>Изпрати покана</span>
+                        </router-link>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -20,40 +20,44 @@
 
     <div class='box bordered-box' style='margin-bottom:0;'>
       <div class='box-content'>
-        <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-          <thead>
-            <tr>
-              <th>
-                Име на правото
-              </th>
-              <th>
-                Име на правото в системата
-              </th>
-              <th>
-                Описание
-              </th>
-              </th>
-              <th>
-                Опции
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="permission in permissions">
-              <td>{{ permission.display_name }}</td>
-              <td>{{ permission.name }}</td>
-              <td>{{ permission.description }}</td>
-              <td>
-                <div class='text-right'>
-                  <router-link tag="a" :to="{ name: 'SettingsEditPermission', params: {id: permission.id } }" class='btn btn-success btn-xs'>
-                    <i class='icon-edit'></i>
-                    <span>Редактирай</span>
-                  </router-link>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="responsive-table">
+          <div class="scrollable-area">
+            <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+              <thead>
+                <tr>
+                  <th>
+                    Име на правото
+                  </th>
+                  <th>
+                    Име на правото в системата
+                  </th>
+                  <th>
+                    Описание
+                  </th>
+                  </th>
+                  <th>
+                    Опции
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="permission in permissions">
+                  <td>{{ permission.display_name }}</td>
+                  <td>{{ permission.name }}</td>
+                  <td>{{ permission.description }}</td>
+                  <td>
+                    <div class='text-right'>
+                      <router-link tag="a" :to="{ name: 'SettingsEditPermission', params: {id: permission.id } }" class='btn btn-success btn-xs'>
+                        <i class='icon-edit'></i>
+                        <span>Редактирай</span>
+                      </router-link>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>

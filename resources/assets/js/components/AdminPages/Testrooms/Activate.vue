@@ -18,28 +18,32 @@
 
     <div class='box bordered-box' style='margin-bottom:0;'>
       <div class='box-content'>
-        <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-          <thead>
-            <tr>
-              <th>
-                Номер в стаята
-              </th>
-              <th>
-                Име на ученика
-              </th>
-              <th>
-                Фамилия на ученика
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="student in students" v-if="students">
-              <td>{{student.number}}</td>
-              <td>{{student.name}}</td>
-              <td>{{student.lastname}}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="responsive-table">
+          <div class="scrollable-area">
+            <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+              <thead>
+                <tr>
+                  <th>
+                    Номер в стаята
+                  </th>
+                  <th>
+                    Име на ученика
+                  </th>
+                  <th>
+                    Фамилия на ученика
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="student in students" v-if="students">
+                  <td>{{student.number}}</td>
+                  <td>{{student.name}}</td>
+                  <td>{{student.lastname}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -20,52 +20,56 @@
 
     <div class='box bordered-box' style='margin-bottom:0;'>
       <div class='box-content'>
-        <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-          <thead>
-            <tr>
-              <th>
-                Име на въпроса
-              </th>
-              <th>
-                Име на предмета
-              </th>
-              <th>
-                Име на раздела
-              </th>
-              <th>
-                Име на потребителя
-              </th>
-              <th>
-                Клас
-              </th>
+        <div class="responsive-table">
+          <div class="scrollable-area">
+            <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+              <thead>
+                <tr>
+                  <th>
+                    Име на въпроса
+                  </th>
+                  <th>
+                    Име на предмета
+                  </th>
+                  <th>
+                    Име на раздела
+                  </th>
+                  <th>
+                    Име на потребителя
+                  </th>
+                  <th>
+                    Клас
+                  </th>
 
-              <th v-if="isAdmin || isTeacher">
-                Опции
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="question in questions">
-              <td class="name"><span>{{ question.name }}</span></td>
-              <td>{{ question.subject.name }}</td>
-              <td>{{ question.partition.name }}</td>
-              <td>{{ question.user.name }}</td>
-              <td class="class-col">{{ question.class }}. Клас</td>
-              <td v-if="isAdmin || isTeacher">
-                <div class='text-right'>
-                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditQuestion', params:{ id: question.id }}">
-                      <i class="icon-edit"></i>
-                      <span>Редактирай</span>
-                    </router-link>
-                    <button class="btn btn-danger btn-xs" @click="DeleteQuestion(question.id)" v-if="!isTeacher">
-                      <i class="icon-remove"></i>
-                      <span>Изтрий</span>
-                    </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                  <th v-if="isAdmin || isTeacher">
+                    Опции
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="question in questions">
+                  <td class="name"><span>{{ question.name }}</span></td>
+                  <td>{{ question.subject.name }}</td>
+                  <td>{{ question.partition.name }}</td>
+                  <td>{{ question.user.name }}</td>
+                  <td class="class-col">{{ question.class }}. Клас</td>
+                  <td v-if="isAdmin || isTeacher">
+                    <div class='text-right'>
+                        <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditQuestion', params:{ id: question.id }}">
+                          <i class="icon-edit"></i>
+                          <span>Редактирай</span>
+                        </router-link>
+                        <button class="btn btn-danger btn-xs" @click="DeleteQuestion(question.id)" v-if="!isTeacher">
+                          <i class="icon-remove"></i>
+                          <span>Изтрий</span>
+                        </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>
