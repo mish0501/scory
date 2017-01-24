@@ -85,7 +85,7 @@ Route::get('/finish' , ['as' => 'testroom.finish', function() {
 
 // Authentication routes
 Auth::routes();
-Route::get('auth/register/{invite?}', 'Auth\RegisterController@showRegistrationForm');
+Route::get('/register/{invite?}', 'Auth\RegisterController@showRegistrationForm');
 
 // Admin Routes
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin|teacher']], function () {

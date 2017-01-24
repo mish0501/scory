@@ -63,7 +63,7 @@
                                 <tr>
                                     <td align='center' style='border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;' valign='top'>
                                         <p style='margin:1em 0 1em 0;'>
-                                            <strong>Посетете този адрес <a href="{{ url('/auth/register', $invite) }}">{{ url('/auth/register', $invite) }}</a></strong>
+                                            <strong>Посетете този адрес <a href="{{ url('/register', $invite) }}">{{ url('/register', $invite) }}</a></strong>
                                             <h2>{{ $invite }}</h2>
                                         </p>
                                     </td>
@@ -71,7 +71,7 @@
                                 <tr>
                                     <td align='center' height="100px" valign='top'>
                                         <p style='margin:1em 0 1em 0;'>
-                                            Ако не успеете, копирайте този адрес и го поставете в браузъра си "{{ url('/auth/register') }}" и въведете кода по горе в полето "Покана".
+                                            Ако не успеете, копирайте този адрес и го поставете в браузъра си "{{ url('/register') }}" и въведете кода по горе в полето "Покана".
                                         </p>
                                     </td>
                                 </tr>
