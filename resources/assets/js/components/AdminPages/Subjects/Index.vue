@@ -20,40 +20,44 @@
 
     <div class='box bordered-box' style='margin-bottom:0;'>
       <div class='box-content'>
-        <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-          <thead>
-            <tr>
-              <th>
-                Име на предмета
-              </th>
-              <th>
-                Клас
-              </th>
+        <div class="responsive-table">
+          <div class="scrollable-area">
+            <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+              <thead>
+                <tr>
+                  <th>
+                    Име на предмета
+                  </th>
+                  <th>
+                    Клас
+                  </th>
 
-              <th v-if="isAdmin">
-                Опции
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="subject in subjects">
-              <td>{{ subject.name }}</td>
-              <td class="class-col">{{ subject.class }}. Клас</td>
-              <td v-if="isAdmin">
-                <div class='text-right'>
-                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditSubject', params:{ id: subject.id }}">
-                      <i class="icon-edit"></i>
-                      <span>Редактирай</span>
-                    </router-link>
-                    <button class="btn btn-danger btn-xs" @click="DeleteSubject(subject.id)">
-                      <i class="icon-remove"></i>
-                      <span>Изтрий</span>
-                    </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                  <th v-if="isAdmin">
+                    Опции
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="subject in subjects">
+                  <td>{{ subject.name }}</td>
+                  <td class="class-col">{{ subject.class }}. Клас</td>
+                  <td v-if="isAdmin">
+                    <div class='text-right'>
+                        <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditSubject', params:{ id: subject.id }}">
+                          <i class="icon-edit"></i>
+                          <span>Редактирай</span>
+                        </router-link>
+                        <button class="btn btn-danger btn-xs" @click="DeleteSubject(subject.id)">
+                          <i class="icon-remove"></i>
+                          <span>Изтрий</span>
+                        </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>
