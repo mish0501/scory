@@ -54,10 +54,11 @@ export default {
   },
 
   created () {
+    this.$parent.isLoading = true
     this.$http.get('/api/mail/' + this.id).then(
       (response) => {
-        console.log(response.data)
         this.message = response.data
+        this.$parent.isLoading = false
       }, console.error
     )
   },

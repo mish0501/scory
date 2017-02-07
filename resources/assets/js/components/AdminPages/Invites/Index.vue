@@ -84,10 +84,12 @@ export default {
   },
 
   beforeCreate () {
+    this.$parent.isLoading = true
     this.$http.get('/api/invite').then(
       (response) => {
         this.invites = response.data
         this.invitesIds = response.data.map(el => el.id)
+        this.$parent.isLoading = false
       }, (error) => {
         console.log(error);
       }
@@ -103,6 +105,7 @@ export default {
   methods: {
     DeleteInvite(id) {
       this.hasAlert = false
+      this.$parent.isLoading = true
 
       this.$http.delete('/api/invite/' + id).then((response) => {
         this.hasAlert = true
@@ -115,6 +118,7 @@ export default {
         const index = this.invitesIds.indexOf(id)
         this.invites.splice(index, 1)
         this.invitesIds.splice(index, 1)
+        this.$parent.isLoading = false
       }, console.error)
     },
 

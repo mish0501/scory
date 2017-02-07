@@ -70,9 +70,11 @@ export default {
   },
 
   beforeCreate () {
+    this.$parent.isLoading = true
     this.$http.get('/api/settings/users').then(
       (response) => {
         this.users = response.data
+        this.$parent.isLoading = false
       }, console.error
     )
   }

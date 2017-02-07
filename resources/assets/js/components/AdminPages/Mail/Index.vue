@@ -78,10 +78,12 @@ export default {
   },
 
   beforeCreate () {
+    this.$parent.isLoading = true
     this.$http.get('/api/mail').then(
       (response) => {
         this.mail = response.data
         this.mailIds = response.data.map(el => el.id)
+        this.$parent.isLoading = false
       }, (error) => {
         console.log(error);
       }
@@ -119,6 +121,7 @@ export default {
   methods: {
     DeleteMail(id) {
       this.hasAlert = false
+      this.$parent.isLoading = true
 
       this.$http.delete('/api/mail/' + id).then((response) => {
         this.hasAlert = true
@@ -131,6 +134,7 @@ export default {
         const index = this.mailIds.indexOf(id)
         this.mail.splice(index, 1)
         this.mailIds.splice(index, 1)
+        this.$parent.isLoading = false
       }, (error) => {
         console.error(error);
       })

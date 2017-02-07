@@ -92,10 +92,12 @@ export default {
   },
 
   beforeCreate () {
+    this.$parent.isLoading = true
     this.$http.get('/api/question').then(
       (response) => {
         this.questions = response.data
         this.questionsIds = response.data.map(el => el.id)
+        this.$parent.isLoading = false
       }, (error) => {
         console.log(error);
       }
@@ -117,6 +119,7 @@ export default {
   methods: {
     DeleteQuestion(id) {
       this.hasAlert = false
+      this.$parent.isLoading = true
 
       this.$http.delete('/api/question/' + id).then((response) => {
         this.hasAlert = true
@@ -129,6 +132,7 @@ export default {
         const index = this.questionsIds.indexOf(id)
         this.questions.splice(index, 1)
         this.questionsIds.splice(index, 1)
+        this.$parent.isLoading = false
       }, (error) => {
         console.error(error);
       })

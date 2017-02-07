@@ -98,7 +98,14 @@ export default {
           correct: false
         }
       ],
-      hasAlert: false
+      hasAlert: false,
+      isLoading: false
+    }
+  },
+
+  watch: {
+    isLoading (newValue) {
+      this.$parent.isLoading = newValue
     }
   },
 
@@ -142,7 +149,7 @@ export default {
     partitionSelected(data){
       this.partition = data.partition
     },
-    
+
     AddAnswer(){
       const newAnswer = {
         name: "",
@@ -172,6 +179,7 @@ export default {
       }
 
       this.hasAlert=false
+      this.$parent.isLoading = true
 
       this.$http.post('/api/question', data).then( (response) => {
         data = response.data
@@ -200,6 +208,7 @@ export default {
           }
           this.hasAlert = true
         }
+        this.$parent.isLoading = false
       }, console.error)
     }
   }

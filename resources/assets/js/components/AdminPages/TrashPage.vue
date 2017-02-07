@@ -335,6 +335,7 @@
 
 <script>
 export default {
+  name:"Trash",
   data() {
     return{
       subjects: [],
@@ -351,6 +352,7 @@ export default {
   },
 
   beforeCreate() {
+    this.$parent.isLoading = true
     this.$http.get('/api/trash').then((response) => {
       const data = response.data
 
@@ -368,6 +370,7 @@ export default {
 
       this.mail = data.mail
       this.mailIds = data.mail.map(el => el.id)
+      this.$parent.isLoading = false
     }, (error) => {
       console.error(error);
     })
@@ -385,11 +388,13 @@ export default {
     },
 
     DeleteSubject(id) {
+      this.$parent.isLoading = false
       this.$http.delete('/api/trash/delete/subject/'+id).then((response) => {
         if(response.data.done){
           const index = this.subjectsIds.indexOf(id)
           this.subjects.splice(index, 1)
           this.subjectsIds.splice(index, 1)
+          this.$parent.isLoading = false
         }
       }, (error) => {
         console.error(error);
@@ -397,11 +402,13 @@ export default {
     },
 
     RenewSubject(id) {
+      this.$parent.isLoading = true
       this.$http.post('/api/trash/renew/subject', { id }).then((response) => {
         if(response.data.done){
           const index = this.subjectsIds.indexOf(id)
           this.subjects.splice(index, 1)
           this.subjectsIds.splice(index, 1)
+          this.$parent.isLoading = false
         }
       }, (error) => {
         console.error(error);
@@ -409,11 +416,13 @@ export default {
     },
 
     DeletePartition(id) {
+      this.$parent.isLoading = true
       this.$http.delete('/api/trash/delete/partition/'+id).then((response) => {
         if(response.data.done){
           const index = this.partitionsIds.indexOf(id)
           this.partitions.splice(index, 1)
           this.partitionsIds.splice(index, 1)
+          this.$parent.isLoading = false
         }
       }, (error) => {
         console.error(error);
@@ -421,11 +430,13 @@ export default {
     },
 
     RenewPartition(id) {
+      this.$parent.isLoading = true
       this.$http.post('/api/trash/renew/partition', { id }).then((response) => {
         if(response.data.done){
           const index = this.partitionsIds.indexOf(id)
           this.partitions.splice(index, 1)
           this.partitionsIds.splice(index, 1)
+          this.$parent.isLoading = false
         }
       }, (error) => {
         console.error(error);
@@ -433,11 +444,13 @@ export default {
     },
 
     DeleteQuestion(id) {
+      this.$parent.isLoading = true
       this.$http.delete('/api/trash/delete/question/'+id).then((response) => {
         if(response.data.done){
           const index = this.questionsIds.indexOf(id)
           this.question.splice(index, 1)
           this.questionsIds.splice(index, 1)
+          this.$parent.isLoading = false
         }
       }, (error) => {
         console.error(error);
@@ -445,11 +458,13 @@ export default {
     },
 
     RenewQuestion(id) {
+      this.$parent.isLoading = true
       this.$http.post('/api/trash/renew/question', { id }).then((response) => {
         if(response.data.done){
           const index = this.questionsIds.indexOf(id)
           this.questions.splice(index, 1)
           this.questionsIds.splice(index, 1)
+          this.$parent.isLoading = false
         }
       }, (error) => {
         console.error(error);
@@ -457,11 +472,13 @@ export default {
     },
 
     DeleteTestroom(id, code) {
+      this.$parent.isLoading = true
       this.$http.delete('/api/trash/delete/testroom/'+code).then((response) => {
         if(response.data.done){
           const index = this.testroomsIds.indexOf(id)
           this.testrooms.splice(index, 1)
           this.testroomsIds.splice(index, 1)
+          this.$parent.isLoading = false
         }
       }, (error) => {
         console.error(error);
@@ -469,11 +486,13 @@ export default {
     },
 
     RenewTestroom(id, code) {
+      this.$parent.isLoading = true
       this.$http.post('/api/trash/renew/testroom', { code }).then((response) => {
         if(response.data.done){
           const index = this.testroomsIds.indexOf(id)
           this.testrooms.splice(index, 1)
           this.testroomsIds.splice(index, 1)
+          this.$parent.isLoading = false
         }
       }, (error) => {
         console.error(error);
@@ -481,11 +500,13 @@ export default {
     },
 
     DeleteMail(id) {
+      this.$parent.isLoading = true
       this.$http.delete('/api/trash/delete/mail/'+id).then((response) => {
         if(response.data.done){
           const index = this.mailIds.indexOf(id)
           this.mail.splice(index, 1)
           this.mailIds.splice(index, 1)
+          this.$parent.isLoading = false
         }
       }, (error) => {
         console.error(error);
@@ -493,11 +514,13 @@ export default {
     },
 
     RenewMail(id) {
+      this.$parent.isLoading = true
       this.$http.post('/api/trash/renew/mail', { id }).then((response) => {
         if(response.data.done){
           const index = this.mailIds.indexOf(id)
           this.mail.splice(index, 1)
           this.mailIds.splice(index, 1)
+          this.$parent.isLoading = false
         }
       }, (error) => {
         console.error(error);

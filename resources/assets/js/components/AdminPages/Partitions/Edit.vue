@@ -76,6 +76,7 @@ export default {
   },
 
   created() {
+    this.$parent.isLoading = true
     this.$http.get('/api/partition/' + this.id + '/edit').then((response) => {
       this.name = response.data.partition.name
       this.subject = response.data.partition.subject_id
@@ -83,6 +84,7 @@ export default {
       this.classes = response.data.partition.class
       this.$store.dispatch('set_class', response.data.partition.class)
       this.$store.dispatch('set_subjects', response.data.subjects)
+      this.$parent.isLoading = false
     }, (error) => {
       console.error(error);
     })
@@ -109,6 +111,7 @@ export default {
 
       console.log(data);
       this.hasAlert=false
+      this.$parent.isLoading = true
 
       this.$http.put('/api/partition/'+this.id, data).then( (response) => {
         data = response.data
@@ -137,6 +140,7 @@ export default {
           }
           this.hasAlert = true
         }
+        this.$parent.isLoading = false
       }, console.error)
     }
   }

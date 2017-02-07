@@ -72,6 +72,7 @@ export default {
       }
 
       this.hasAlert = false
+      this.$parent.isLoading = true
 
       this.$http.post('/api/settings/permissions/create', sendData).then(
         (response) => {
@@ -107,6 +108,7 @@ export default {
             }
             this.hasAlert = true
           }
+          this.$parent.isLoading = false
         }, console.error
       )
     }

@@ -53,6 +53,7 @@
 import Alert from "../../Alert.vue"
 
 export default {
+  name: 'ShowUserProfile',
   data () {
     return {
       name: "",
@@ -75,7 +76,8 @@ export default {
     "alert": Alert
   },
 
-  beforeCreate() {
+  created() {
+    this.$parent.isLoading = true
     this.$http.get('/api/user/' + this.id).then((response) => {
       let data = response.data
 
@@ -84,6 +86,7 @@ export default {
       this.questions = data.questions
       this.avatar = data.avatar
       this.edit = data.edit
+      this.$parent.isLoading = false
     }, (error) => {
       console.error(error);
     })

@@ -88,9 +88,11 @@ export default {
   },
 
   created () {
+    this.$parent.isLoading = true
     this.$http.get('/api/settings/roles/create').then(
       (response) => {
         this.permissions = response.data
+        this.$parent.isLoading = false
       }, console.error
     )
   },

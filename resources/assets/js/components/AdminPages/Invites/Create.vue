@@ -69,6 +69,7 @@ export default {
         this.invite = response.data.code
       }, console.error
     )
+    this.$parent.isLoading = false
   },
 
   components: {
@@ -84,6 +85,7 @@ export default {
       }
 
       this.hasAlert=false
+      this.$parent.isLoading = true
 
       this.$http.post('/api/invite', sendData).then( (response) => {
         let data = response.data
@@ -112,6 +114,7 @@ export default {
           }
           this.hasAlert = true
         }
+        this.$parent.isLoading = false
       }, console.error)
     }
   }

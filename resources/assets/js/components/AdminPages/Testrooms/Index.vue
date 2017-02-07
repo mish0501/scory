@@ -101,6 +101,7 @@
 <script>
 import Alert from "../../Alert.vue"
 export default {
+  name: 'TestRoomIndex',
   data () {
     return {
       testrooms: [],
@@ -114,7 +115,7 @@ export default {
     "alert": Alert
   },
 
-  beforeCreate() {
+  created() {
     if(this.userId){
       this.getTestrooms()
     }
@@ -149,10 +150,12 @@ export default {
 
     getTestrooms(){
       const userId = this.userId
+      this.$parent.isLoading = true
       this.$http.get('/api/testroom/' + userId).then(
         (response) => {
           this.testrooms = response.data
           this.testroomsIds = response.data.map(el => el.id)
+          this.$parent.isLoading = false
         }, (error) => {
           console.log(error);
         }
@@ -160,6 +163,7 @@ export default {
     },
 
     StopTest(code){
+      this.$parent.isLoading = true
       this.$http.get('/api/testroom/'+code+'/end').then(
         (response) => {
           if(response.data.success){
@@ -167,6 +171,7 @@ export default {
               (response) => {
                 this.testrooms = response.data
                 this.testroomsIds = response.data.map(el => el.id)
+                this.$parent.isLoading = false
               }, (error) => {
                 console.log(error);
               }
@@ -180,6 +185,7 @@ export default {
 
     DeleteTestroom(code, id) {
       this.hasAlert = false
+      this.$parent.isLoading = true
 
       this.$http.delete('/api/testroom/' + code).then((response) => {
         this.hasAlert = true
@@ -192,6 +198,7 @@ export default {
         const index = this.testroomsIds.indexOf(id)
         this.testrooms.splice(index, 1)
         this.testroomsIds.splice(index, 1)
+        this.$parent.isLoading = false
       }, (error) => {
         console.error(error);
       })

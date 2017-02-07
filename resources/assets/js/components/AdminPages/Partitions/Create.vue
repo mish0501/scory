@@ -96,6 +96,7 @@ export default {
       }
 
       this.hasAlert = false
+      this.$parent.isLoading = true
 
       this.$http.post('/api/partition', data).then( (response) => {
         data = response.data
@@ -124,6 +125,7 @@ export default {
           }
           this.hasAlert = true
         }
+        this.$parent.isLoading = false
       }, (error) => {
         console.log(error);
       })

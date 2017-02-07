@@ -70,11 +70,13 @@ export default {
   },
 
   created () {
+    this.$parent.isLoading = true
     this.$http.get('/api/settings/users/'+this.id+'/edit').then(
       (response) => {
         this.user = response.data.user
         this.roles = response.data.roles
         this.roleId =this.user.role.id
+        this.$parent.isLoading = false
       }, console.error
     )
   },
@@ -88,6 +90,7 @@ export default {
       }
 
       this.hasAlert = false
+      this.$parent.isLoading = true
 
       this.$http.post('/api/settings/users/' + this.id + '/edit', sendData).then(
         (response) => {
@@ -117,6 +120,7 @@ export default {
             }
             this.hasAlert = true
           }
+          this.$parent.isLoading = false
         }, console.error
       )
     }

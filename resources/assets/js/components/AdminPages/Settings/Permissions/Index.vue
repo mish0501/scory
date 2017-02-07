@@ -85,9 +85,11 @@ export default {
   },
 
   beforeCreate () {
+    this.$parent.isLoading = true
     this.$http.get('/api/settings/permissions').then(
       (response) => {
         this.permissions = response.data
+        this.$parent.isLoading = false
       }, console.error
     )
   }

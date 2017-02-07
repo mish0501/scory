@@ -117,6 +117,7 @@ export default {
   },
 
   created() {
+    this.$parent.isLoading = true
     this.$http.get('/api/question/' + this.id + '/edit').then((response) => {
       this.name = response.data.question.name
       this.answers = response.data.question.answers
@@ -128,6 +129,7 @@ export default {
 
       this.partition = response.data.question.partition_id
       this.$store.dispatch('set_partitions', response.data.partitions)
+      this.$parent.isLoading = false
     }, (error) => {
       console.error(error);
     })
@@ -147,7 +149,7 @@ export default {
     partitionSelected(data){
       this.partition = data.partition
     },
-    
+
     AddAnswer(){
       const newAnswer = {
         name: "",
@@ -183,6 +185,7 @@ export default {
 
       this.hasAlert=false
 
+      this.$parent.isLoading = true
       this.$http.put('/api/question/'+this.id, data).then( (response) => {
         data = response.data
 
@@ -210,6 +213,7 @@ export default {
           }
           this.hasAlert = true
         }
+        this.$parent.isLoading = false
       }, console.error)
     }
   }

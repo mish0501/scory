@@ -7,7 +7,6 @@
       </h1>
     </div>
 
-
     <div class="col-sm-2" v-if="invites">
       <div class="box-content box-statistic">
         <h3 class="title text-error">{{ invites }}</h3>
@@ -62,19 +61,21 @@
 
 <script>
 export default {
+  name: "AdminHomePage",
   data () {
     return {
-      subjects: null,
-      partitions: null,
-      invites: null,
-      questions: null,
-      users: null,
-      testrooms: null,
-      trash: null,
+      subjects: {},
+      partitions: {},
+      invites: {},
+      questions: {},
+      users: {},
+      testrooms: {},
+      trash: {}
     }
   },
 
   beforeCreate() {
+    this.$parent.isLoading = true
     this.$http.post('/api/getDashboardInfo').then(
       (response) => {
         const data = response.data
@@ -86,6 +87,7 @@ export default {
         this.users = data.users
         this.testrooms = data.testrooms
         this.trash = data.trash
+        this.$parent.isLoading = false
       }, (error) =>{
         console.log(error);
       }

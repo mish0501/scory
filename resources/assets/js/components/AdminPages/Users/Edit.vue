@@ -125,10 +125,12 @@ export default {
   },
 
   beforeCreate() {
+    this.$parent.isLoading = true
     this.$http.get('/api/user/edit').then((response) => {
       this.name = response.data.name
       this.email = response.data.email
       this.avatar = response.data.avatar
+      this.$parent.isLoading = false
     }, (error) => {
       console.error(error);
     })

@@ -66,9 +66,11 @@ export default {
   },
 
   created () {
+    this.$parent.isLoading = true
     this.$http.get('/api/settings/permissions/'+this.id+'/edit').then(
       (response) => {
         this.permission = response.data
+        this.$parent.isLoading = false
       }, console.error
     )
   },
@@ -82,6 +84,7 @@ export default {
       }
 
       this.hasAlert = false
+      this.$parent.isLoading = true
 
       this.$http.post('/api/settings/permissions/' + this.id + '/edit', sendData).then(
         (response) => {
@@ -111,6 +114,7 @@ export default {
             }
             this.hasAlert = true
           }
+          this.$parent.isLoading = false
         }, console.error
       )
     }

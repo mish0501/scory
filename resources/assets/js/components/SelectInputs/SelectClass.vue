@@ -23,6 +23,7 @@ export default {
 
   methods: {
     ClassSelected: function() {
+      this.$parent.isLoading = true
       this.$http.post("/api/selectSubjects", { class: this.classes }).then((response) => {
         this.$store.dispatch('set_class', this.classes);
         this.$store.dispatch('set_subjects', response.data);
@@ -33,6 +34,7 @@ export default {
           title: "Избери си предмет"
         })
 
+        this.$parent.isLoading = false
       }, (err) => {
         console.log(err);
       })

@@ -79,10 +79,12 @@ export default {
   },
 
   beforeCreate () {
+    this.$parent.isLoading = true
     this.$http.get('/api/partition').then(
       (response) => {
         this.partitions = response.data
         this.subjectsIds = response.data.map(el => el.id)
+        this.$parent.isLoading = false
       }, (error) => {
         console.log(error);
       }
@@ -108,6 +110,7 @@ export default {
   methods: {
     DeletePartition(id) {
       this.hasAlert = false
+      this.$parent.isLoading = true
 
       this.$http.delete('/api/partition/' + id).then((response) => {
         this.hasAlert = true
@@ -122,6 +125,7 @@ export default {
         const index = this.partitionsIds.indexOf(id)
         this.partitions.splice(index, 1)
         this.partitionsIds.splice(index, 1)
+        this.$parent.isLoading = false
       }, (error) => {
         console.error(error);
       })

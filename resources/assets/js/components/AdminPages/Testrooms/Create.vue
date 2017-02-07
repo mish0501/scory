@@ -104,7 +104,15 @@ export default {
 
       selectedQuestions: null,
       questions: [],
-      randomQuestion: 5
+      randomQuestion: 5,
+
+      isLoading: false
+    }
+  },
+
+  watch: {
+    isLoading (newValue) {
+      this.$parent.isLoading = newValue
     }
   },
 
@@ -153,9 +161,11 @@ export default {
         subject: this.subject,
         partition: this.partition
       }
+      this.$parent.isLoading = true
       this.$http.post('/api/questionGenerate', data).then(
         (response) => {
           this.questions = response.data
+          this.$parent.isLoading = false
         }, (error) => {
           console.error(error);
         }
@@ -219,6 +229,7 @@ export default {
       }
 
       this.hasAlert = false
+      this.$parent.isLoading = true
 
       this.$http.post('/api/testroom', data).then( (response) => {
         data = response.data
@@ -247,6 +258,7 @@ export default {
           }
           this.hasAlert = true
         }
+        this.$parent.isLoading = false
       }, (error) => {
         console.log(error);
       })

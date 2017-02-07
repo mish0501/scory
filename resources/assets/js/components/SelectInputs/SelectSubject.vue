@@ -39,6 +39,7 @@ export default {
 
   methods: {
     SubjectSelected: function() {
+      this.$parent.isLoading = true
       this.$http.post("/api/selectPartitions", { class: this.class, subject_id: this.subject }).then((response) => {
 
         this.$store.dispatch('set_partitions', response.data)
@@ -49,6 +50,7 @@ export default {
           partition: 0,
           title: "Избери си раздел"
         })
+        this.$parent.isLoading = false
       }, (err) => {
         console.log(err);
       })

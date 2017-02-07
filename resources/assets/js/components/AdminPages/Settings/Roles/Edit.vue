@@ -94,11 +94,13 @@ export default {
   },
 
   created () {
+    this.$parent.isLoading = true
     this.$http.get('/api/settings/roles/'+this.id+'/edit').then(
       (response) => {
         this.role = response.data.role
         this.permissions = response.data.permissions
         this.selectedPermisions = response.data.rolePerms
+        this.$parent.isLoading = false
       }, console.error
     )
   },
@@ -113,6 +115,7 @@ export default {
       }
 
       this.hasAlert = false
+      this.$parent.isLoading = true
 
       this.$http.post('/api/settings/roles/' + this.id + '/edit', sendData).then(
         (response) => {
@@ -142,6 +145,7 @@ export default {
             }
             this.hasAlert = true
           }
+          this.$parent.isLoading = false
         }, console.error
       )
     }

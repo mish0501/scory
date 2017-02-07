@@ -43,6 +43,7 @@ import Alert from "../../Alert.vue"
 import SelectClass from "../../SelectInputs/SelectClass.vue"
 
 export default {
+  name: 'SubjectsEdit',
   data () {
     return {
       name: "",
@@ -67,11 +68,13 @@ export default {
   },
 
   created() {
+    this.$parent.isLoading = true
     this.$http.get('/api/subject/' + this.id + '/edit').then((response) => {
       this.name = response.data.name
 
       this.classes = response.data.class
       this.$store.dispatch('set_class', response.data.class)
+      this.$parent.isLoading = false
     }, (error) => {
       console.error(error);
     })
@@ -85,6 +88,7 @@ export default {
       }
 
       this.hasAlert=false
+      this.$parent.isLoading = true
 
       this.$http.put('/api/subject/'+this.id, data).then( (response) => {
         data = response.data
@@ -113,6 +117,7 @@ export default {
           }
           this.hasAlert = true
         }
+        this.$parent.isLoading = false
       }, console.error)
     }
   }

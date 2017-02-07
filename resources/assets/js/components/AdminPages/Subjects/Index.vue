@@ -66,6 +66,7 @@
 <script>
 import Alert from "../../Alert.vue"
 export default {
+  name: 'SubjectsIndex',
   data () {
     return {
       subjects: [],
@@ -80,10 +81,12 @@ export default {
   },
 
   beforeCreate () {
+    this.$parent.isLoading = true
     this.$http.get('/api/subject').then(
       (response) => {
         this.subjects = response.data
         this.subjectsIds = response.data.map(el => el.id)
+        this.$parent.isLoading = false
       }, (error) => {
         console.log(error);
       }
@@ -101,6 +104,7 @@ export default {
   methods: {
     DeleteSubject(id) {
       this.hasAlert = false
+      this.$parent.isLoading = true
 
       this.$http.delete('/api/subject/' + id).then((response) => {
         this.hasAlert = true
@@ -113,6 +117,7 @@ export default {
         const index = this.subjectsIds.indexOf(id)
         this.subjects.splice(index, 1)
         this.subjectsIds.splice(index, 1)
+        this.$parent.isLoading = false
       }, (error) => {
         console.error(error);
       })

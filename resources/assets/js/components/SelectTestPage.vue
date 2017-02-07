@@ -20,6 +20,8 @@
 
     <br><br><br>
 
+    <loading v-if="isLoading"></loading>
+
     <div class="container">
       <form class="form" autocomplete="off" v-on:submit.prevent="selectQuestions">
         <div class="form-group">
@@ -62,7 +64,8 @@
         subject: null,
         partition: null,
         questionCount: null,
-        title: "Избери си клас"
+        title: "Избери си клас",
+        isLoading: false
       }
     },
 
