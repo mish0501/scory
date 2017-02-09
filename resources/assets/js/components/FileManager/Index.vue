@@ -140,8 +140,6 @@ export default {
           }
 
         }
-
-        console.log(vm.selecteds);
       })
     },
 

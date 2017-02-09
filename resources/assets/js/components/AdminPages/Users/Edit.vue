@@ -124,7 +124,7 @@ export default {
     "alert": Alert
   },
 
-  beforeCreate() {
+  created() {
     this.$parent.isLoading = true
     this.$http.get('/api/user/edit').then((response) => {
       this.name = response.data.name
@@ -134,8 +134,9 @@ export default {
     }, (error) => {
       console.error(error);
     })
+  },
 
-
+  mounted() {
     $(window).on('message', this.onMessage)
   },
 
@@ -232,11 +233,13 @@ export default {
         return
       }
 
+      this.$parent.isLoading = true
       this.$http.post('/api/user/changeavatar', { id: data.selecteds }).then(
        (response) => {
          this.avatar = response.data
 
          $('#avatar').attr('src', response.data)
+         this.$parent.isLoading = false
        }, console.error
       )
     },
