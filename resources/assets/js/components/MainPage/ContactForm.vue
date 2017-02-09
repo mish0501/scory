@@ -5,10 +5,12 @@
     </div>
 
     <div class="alert alert-danger" v-if="messageError">
-      <p v-for="error in messageErrors[0]">
+      <p v-for="error in messageErrors">
         {{ error }}
       </p>
     </div>
+
+    <loading v-if="isLoading"></loading>
 
     <form class="form-horizontal" v-on:submit.prevent="messegeSend" accept-charset="UTF-8" autocomplete="off">
       <div class="form-group">
@@ -55,12 +57,13 @@ export default {
         message: '',
         messageSuccess: '',
         messageError: false,
-        messageErrors: []
+        messageErrors: [],
+        isLoading: false
     }
   },
 
   methods: {
-    messegeSend: function(){
+    messegeSend(){
       var mail = {
         'first_name': this.firstName,
         'last_name': this.lastName,
@@ -69,16 +72,25 @@ export default {
         'message': this.message
       }
 
+      this.isLoading = true
+
       this.$http.post('/contact', mail).then((response) => {
         this.messageErrors = [];
         this.messageSuccess = '';
         this.messageError = false;
 
-        if(!response.data.success){
-          this.messageErrors.push(JSON.parse(response.data[0]));
+        let data = response.data
+
+        if(!data.success){
+          for(var messages in data.errors){
+            for(var message in data.errors[messages]){
+              this.messageErrors.push(data.errors[messages][message])
+            }
+          }
+
           this.messageError = true;
         }else{
-          this.messageSuccess = response.data.mailSend;
+          this.messageSuccess = data.mailSend;
 
           this.firstName= '';
           this.lastName= '';
@@ -86,6 +98,7 @@ export default {
           this.subject= '';
           this.message= '';
         }
+        this.isLoading = false
       }, (err) => {
         console.log(err);
       });

@@ -25,7 +25,7 @@ class ContactController extends Controller
     ]);
 
     if ($validator->fails()) {
-      return [$validator->errors()->toJSON(), 'success' => false];
+      return ['errors' => $validator->errors(), 'success' => false];
     }
 
     $message['name'] = $request->get('first_name').' '.$request->get('last_name');
