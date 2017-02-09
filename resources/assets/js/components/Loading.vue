@@ -5,7 +5,6 @@
         <img src="/assets/images/logo_bg.svg" alt="">
       </div>
     </div>
-    <div class="clear"></div>
   </div>
 </template>
 
@@ -30,10 +29,6 @@ export default {
     left: 0;
     z-index: 100;
     background-color: rgba(255,255,255,0.8);
-  }
-
-  .clear{
-    clear: both;
   }
 
   .spinner{
@@ -102,7 +97,7 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    padding: 15px
+    padding: 20px
   }
 
   #loading .logo img {
