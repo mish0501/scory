@@ -120,6 +120,15 @@ class TestRoomController extends Controller
         $url = url('testroom/'.$code.'/join');
         return ['redirect' => true, 'url' => $url];
       }
+
+      return [
+        [
+          'roomcode' => [
+            'Стаята все още не е активирана.'
+          ]
+        ],
+        'room_code_error' => 'Възникна грешка с кода на стаята:'
+      ];
     }
 
     public function connect(Request $request)

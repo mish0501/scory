@@ -38,9 +38,9 @@ export default {
           this.roomCodeError = response.data['room_code_error'];
         }
 
-        console.log('here');
-        console.log(response.data);
-        window.location.replace(response.data.url)
+        if(response.data.redirect){
+          window.location.replace(response.data.url)
+        }
       }, (err) => {
         console.log(err);
       });
