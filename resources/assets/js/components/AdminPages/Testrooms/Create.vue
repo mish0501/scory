@@ -65,7 +65,7 @@
         </div>
         <div class='form-group' v-if="questions.length > 0">
           <div class='col-md-1 col-md-offset-2'>
-            <input type="number" min="5" v-model="randomQuestion" step="1" class='form-control' :max="questions.length" />
+            <input type="number" min="1" v-model="randomQuestion" step="1" class='form-control' :max="questions.length" />
           </div>
           <div class='col-md-4'>
             <input type="button" class="btn btn-primary" value="Избери произволни въпроси" @click="selectRandomQuestions">

@@ -22,7 +22,7 @@
       <div class='box-content'>
         <div class="responsive-table">
           <div class="scrollable-area">
-            <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
               <thead>
                 <tr>
                   <th>
@@ -90,6 +90,12 @@ export default {
         this.invites = response.data
         this.invitesIds = response.data.map(el => el.id)
         this.$parent.isLoading = false
+
+        this.$nextTick(() => {
+          $(".table").dataTable({
+            sPaginationType: "bootstrap"
+          })
+        })
       }, (error) => {
         console.log(error);
       }

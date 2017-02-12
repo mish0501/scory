@@ -191,11 +191,14 @@ class TestRoomController extends Controller
     {
       $code = $request->get('code');
 
-      $testroom = TestRoom::where('code', '=', $code)->update(['status' => 2]);
+      $testroom = TestRoom::where('code', '=', $code);
+      if($testroom->get()[0]->status != 2){
+        $testroom->update(['status' => 2]);
 
-      $data = array('code' => $code);
+        $data = array('code' => $code);
 
-      event(new TestStart($data));
+        event(new TestStart($data));
+      }
 
       $students = TestRoomStudents::where('code', '=', $code)->where('correct', '>', '0')->get();
 

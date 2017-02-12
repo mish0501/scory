@@ -20,7 +20,7 @@
       <div class='box-content'>
         <div class="responsive-table">
           <div class="scrollable-area">
-            <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
               <thead>
                 <tr>
                   <th>
@@ -79,12 +79,19 @@ export default {
   },
 
   mounted(){
+    this.$parent.isLoading = true
     this.$http.post('/api/testroom/start', {code: this.code}).then(
       (response) => {
         this.students = response.data.students
-      }, (error) => {
-        console.error(error);
-      }
+
+        this.$nextTick(() => {
+          $(".table").dataTable({
+            sPaginationType: "bootstrap"
+          })
+        })
+
+        this.$parent.isLoading = false
+      },console.error
     )
 
     Echo.private('testroom.'+this.code)
@@ -97,6 +104,7 @@ export default {
         }
 
         this.students.push(student)
+        $(".table").dataTable()._fnDraw()
       })
   },
 

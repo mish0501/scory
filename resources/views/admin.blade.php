@@ -232,6 +232,10 @@
     <!-- / theme file [required] -->
     <script src="/admin/assets/javascripts/theme.js" type="text/javascript"></script>
 
+
+    <script src="/admin/assets/javascripts/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/admin/assets/javascripts/plugins/datatables/dataTables.overrides.js" type="text/javascript"></script>
+
     <script type="text/javascript">
       $('li.dropdown').on('click', function() {
         $(this).toggleClass('open');

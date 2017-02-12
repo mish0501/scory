@@ -13,7 +13,7 @@
       <div class='box-content'>
         <div class="responsive-table">
           <div class="scrollable-area">
-            <table class='data-table table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
               <thead>
                 <tr>
                   <th>
@@ -75,6 +75,12 @@ export default {
       (response) => {
         this.users = response.data
         this.$parent.isLoading = false
+
+        this.$nextTick(() => {
+          $(".table").dataTable({
+            sPaginationType: "bootstrap"
+          })
+        })
       }, console.error
     )
   }

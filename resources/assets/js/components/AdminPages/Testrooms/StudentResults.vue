@@ -53,10 +53,13 @@ export default {
   },
 
   mounted() {
+    this.$parent.isLoading = true
     this.$http.get('/api/testroom/'+this.code+'/student/'+this.number).then(
       (response) => {
         this.student = response.data.student
         this.questions = response.data.questions
+
+        this.$parent.isLoading = false
       },(error) => {
         console.error(error);
       }
