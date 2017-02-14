@@ -10,45 +10,43 @@
     <div class='box bordered-box' style='margin-bottom:0;'>
       <div class='box-content'>
         <div class="responsive-table">
-          <div class="scrollable-area">
-            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-              <thead>
-                <tr>
-                  <th>
-                    Номер в стаята
-                  </th>
-                  <th>
-                    Име на ученика
-                  </th>
-                  <th>
-                    Фамилия на ученика
-                  </th>
-                  <th>
-                    Брой точки
-                  </th>
-                  <th>
-                    Отговорите на ученика
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="student in students" v-if="students">
-                  <td>{{student.number}}</td>
-                  <td>{{student.name}}</td>
-                  <td>{{student.lastname}}</td>
-                  <td>{{student.correct}}</td>
-                  <td>
-                    <div class="text-right">
-                      <router-link class='btn btn-success btn-xs' :to="{ name: 'StudentResultsTestroom', params: { code: code, number: student.number}}">
-                        <i class='icon-question'></i>
-                        <span>Покажи отговорите на ученика</span>
-                      </router-link>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+            <thead>
+              <tr>
+                <th>
+                  Номер в стаята
+                </th>
+                <th>
+                  Име на ученика
+                </th>
+                <th>
+                  Фамилия на ученика
+                </th>
+                <th>
+                  Брой точки
+                </th>
+                <th>
+                  Отговорите на ученика
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="student in students" v-if="students">
+                <td>{{student.number}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.lastname}}</td>
+                <td>{{student.correct}}</td>
+                <td>
+                  <div class="text-right">
+                    <router-link class='btn btn-success btn-xs' :to="{ name: 'StudentResultsTestroom', params: { code: code, number: student.number}}">
+                      <i class='icon-question'></i>
+                      <span>Покажи отговорите на ученика</span>
+                    </router-link>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -12,42 +12,40 @@
     <div class='box bordered-box' style='margin-bottom:0;'>
       <div class='box-content'>
         <div class="responsive-table">
-          <div class="scrollable-area">
-            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-              <thead>
-                <tr>
-                  <th>
-                    Име на потребителя
-                  </th>
-                  <th>
-                    E-mail
-                  </th>
-                  <th>
-                    Роля
-                  </th>
-                  </th>
-                  <th>
-                    Опции
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="user in users">
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>{{ user.role.display_name }}</td>
-                  <td>
-                    <div class='text-right'>
-                      <router-link tag="a" :to="{ name: 'SettingsEditUser', params: {id: user.id } }" class='btn btn-success btn-xs'>
-                        <i class='icon-edit'></i>
-                        <span>Редактирай</span>
-                      </router-link>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+            <thead>
+              <tr>
+                <th>
+                  Име на потребителя
+                </th>
+                <th>
+                  E-mail
+                </th>
+                <th>
+                  Роля
+                </th>
+                </th>
+                <th>
+                  Опции
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="user in users">
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role.display_name }}</td>
+                <td>
+                  <div class='text-right'>
+                    <router-link tag="a" :to="{ name: 'SettingsEditUser', params: {id: user.id } }" class='btn btn-success btn-xs'>
+                      <i class='icon-edit'></i>
+                      <span>Редактирай</span>
+                    </router-link>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

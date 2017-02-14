@@ -21,77 +21,75 @@
     <div class='box bordered-box' style='margin-bottom:0;'>
       <div class='box-content'>
         <div class="responsive-table">
-          <div class="scrollable-area">
-            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-              <thead>
-                <tr>
-                  <th>
-                    Код на стаята
-                  </th>
-                  <th>
-                    Предмет
-                  </th>
-                  <th>
-                    Раздел
-                  </th>
-                  <th>
-                    Клас
-                  </th>
-                  <th>
-                    Статус
-                  </th>
-                  <th>
-                    Опции
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="testroom in testrooms">
-                  <td>{{ testroom.code }}</td>
-                  <td>{{ testroom.subject.name }}</td>
-                  <td>{{ testroom.partition.name }}</td>
-                  <td>{{ testroom.class }}</td>
-                  <td>{{ status(testroom.status) }}</td>
-                  <td>
-                    <div class='text-right'>
-                        <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ActivateTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 0">
-                          <i class="icon-ok"></i>
-                          <span>Активирай</span>
-                        </router-link>
+          <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+            <thead>
+              <tr>
+                <th>
+                  Код
+                </th>
+                <th>
+                  Предмет
+                </th>
+                <th>
+                  Раздел
+                </th>
+                <th>
+                  Клас
+                </th>
+                <th>
+                  Статус
+                </th>
+                <th>
+                  Опции
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="testroom in testrooms">
+                <td>{{ testroom.code }}</td>
+                <td>{{ testroom.subject.name }}</td>
+                <td>{{ testroom.partition.name }}</td>
+                <td>{{ testroom.class }}</td>
+                <td>{{ status(testroom.status) }}</td>
+                <td>
+                  <div class='text-right'>
+                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ActivateTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 0">
+                        <i class="icon-ok"></i>
+                        <span>Активирай</span>
+                      </router-link>
 
-                        <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StartTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 1">
-                          <i class="icon-play"></i>
-                          <span>Старт</span>
-                        </router-link>
-                        <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ActivateTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 1">
-                          <i class="icon-group"></i>
-                          <span>Ученици</span>
-                        </router-link>
+                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StartTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 1">
+                        <i class="icon-play"></i>
+                        <span>Старт</span>
+                      </router-link>
+                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ActivateTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 1">
+                        <i class="icon-group"></i>
+                        <span>Ученици</span>
+                      </router-link>
 
-                        <a class="btn btn-success btn-xs" @click="StopTest(testroom.code)" v-if="testroom.status == 2">
-                          <i class="icon-stop"></i>
-                          <span>Стоп</span>
-                        </a>
-                        <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StartTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 2">
-                          <i class="icon-group"></i>
-                          <span>Резултати</span>
-                        </router-link>
+                      <a class="btn btn-success btn-xs" @click="StopTest(testroom.code)" v-if="testroom.status == 2">
+                        <i class="icon-stop"></i>
+                        <span>Стоп</span>
+                      </a>
+                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StartTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 2">
+                        <i class="icon-group"></i>
+                        <span>Резултати</span>
+                      </router-link>
 
-                        <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ResultsTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 3">
-                          <i class="icon-group"></i>
-                          <span>Резултати</span>
-                        </router-link>
+                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ResultsTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 3">
+                        <i class="icon-group"></i>
+                        <span>Резултати</span>
+                      </router-link>
 
-                        <button class="btn btn-danger btn-xs" @click="DeleteTestroom(testroom.code, testroom.id)">
-                          <i class="icon-remove"></i>
-                          <span>Изтрий</span>
-                        </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                      <button class="btn btn-danger btn-xs" @click="DeleteTestroom(testroom.code, testroom.id)">
+                        <i class="icon-remove"></i>
+                        <span>Изтрий</span>
+                      </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

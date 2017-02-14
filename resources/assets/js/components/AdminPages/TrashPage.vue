@@ -25,41 +25,39 @@
       <div class='box bordered-box purple-border' style='margin-bottom:0;'>
         <div class='box-content'>
           <div class="responsive-table">
-            <div class="scrollable-area">
-              <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-                <thead>
-                  <tr>
-                    <th>
-                      Име на предмета
-                    </th>
-                    </th>
-                    <th>
-                      Клас
-                    </th>
-                    <th>
-                      Опции
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="subject in subjects" v-if="subjects.length >= 0">
-                    <td>{{ subject.name }}</td>
-                    <td class="class-col">{{ subject.class }}. Клас</td>
-                    <td>
-                      <div class='text-right'>
-                        <button class='btn btn-success btn-xs' @click="RenewSubject(subject.id)">
-                          <i class='icon-check'></i> Възтанови
-                        </button>
-                        <button class="btn btn-danger btn-xs" @click="DeleteSubject(subject.id)">
-                          <i class="icon-remove"></i>
-                          <span>Изтрий</span>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+              <thead>
+                <tr>
+                  <th>
+                    Име на предмета
+                  </th>
+                  </th>
+                  <th>
+                    Клас
+                  </th>
+                  <th>
+                    Опции
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="subject in subjects" v-if="subjects.length >= 0">
+                  <td>{{ subject.name }}</td>
+                  <td class="class-col">{{ subject.class }}. Клас</td>
+                  <td>
+                    <div class='text-right'>
+                      <button class='btn btn-success btn-xs' @click="RenewSubject(subject.id)">
+                        <i class='icon-check'></i> Възтанови
+                      </button>
+                      <button class="btn btn-danger btn-xs" @click="DeleteSubject(subject.id)">
+                        <i class="icon-remove"></i>
+                        <span>Изтрий</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -84,45 +82,43 @@
       <div class='box bordered-box purple-border' style='margin-bottom:0;'>
         <div class='box-content'>
           <div class="responsive-table">
-            <div class="scrollable-area">
-              <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-                <thead>
-                  <tr>
-                    <th>
-                      Име на раздела
-                    </th>
-                    <th>
-                      Име на предмета
-                    </th>
-                    </th>
-                    <th>
-                      Клас
-                    </th>
-                    <th>
-                      Опции
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="partition in partitions" v-if="partitions.length >= 0">
-                    <td>{{ partition.name }}</td>
-                    <td>{{ partition.subject.name }}</td>
-                    <td class="class-col">{{ partition.class }}. Клас</td>
-                    <td>
-                      <div class='text-right'>
-                        <button class='btn btn-success btn-xs' @click="RenewPartition(partition.id)">
-                          <i class='icon-check'></i> Възтанови
-                        </button>
-                        <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)">
-                          <i class="icon-remove"></i>
-                          <span>Изтрий</span>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+              <thead>
+                <tr>
+                  <th>
+                    Име на раздела
+                  </th>
+                  <th>
+                    Име на предмета
+                  </th>
+                  </th>
+                  <th>
+                    Клас
+                  </th>
+                  <th>
+                    Опции
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="partition in partitions" v-if="partitions.length >= 0">
+                  <td>{{ partition.name }}</td>
+                  <td>{{ partition.subject.name }}</td>
+                  <td class="class-col">{{ partition.class }}. Клас</td>
+                  <td>
+                    <div class='text-right'>
+                      <button class='btn btn-success btn-xs' @click="RenewPartition(partition.id)">
+                        <i class='icon-check'></i> Възтанови
+                      </button>
+                      <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)">
+                        <i class="icon-remove"></i>
+                        <span>Изтрий</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -147,49 +143,47 @@
       <div class='box bordered-box purple-border' style='margin-bottom:0;'>
         <div class='box-content'>
           <div class="responsive-table">
-            <div class="scrollable-area">
-              <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-                <thead>
-                  <tr>
-                    <th>
-                      Име на въпроса
-                    </th>
-                    <th>
-                      Име на раздела
-                    </th>
-                    <th>
-                      Име на предмета
-                    </th>
-                    </th>
-                    <th>
-                      Клас
-                    </th>
-                    <th>
-                      Опции
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="question in questions" v-if="questions.length >= 0">
-                    <td>{{ question.name }}</td>
-                    <td>{{ question.partition.name }}</td>
-                    <td>{{ question.subject.name }}</td>
-                    <td class="class-col">{{ question.class }}. Клас</td>
-                    <td>
-                      <div class='text-right'>
-                        <button class='btn btn-success btn-xs' @click="RenewQuestion(question.id)">
-                          <i class='icon-check'></i> Възтанови
-                        </button>
-                        <button class="btn btn-danger btn-xs" @click="DeleteQuestion(question.id)">
-                          <i class="icon-remove"></i>
-                          <span>Изтрий</span>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+              <thead>
+                <tr>
+                  <th>
+                    Име на въпроса
+                  </th>
+                  <th>
+                    Име на раздела
+                  </th>
+                  <th>
+                    Име на предмета
+                  </th>
+                  </th>
+                  <th>
+                    Клас
+                  </th>
+                  <th>
+                    Опции
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="question in questions" v-if="questions.length >= 0">
+                  <td>{{ question.name }}</td>
+                  <td>{{ question.partition.name }}</td>
+                  <td>{{ question.subject.name }}</td>
+                  <td class="class-col">{{ question.class }}. Клас</td>
+                  <td>
+                    <div class='text-right'>
+                      <button class='btn btn-success btn-xs' @click="RenewQuestion(question.id)">
+                        <i class='icon-check'></i> Възтанови
+                      </button>
+                      <button class="btn btn-danger btn-xs" @click="DeleteQuestion(question.id)">
+                        <i class="icon-remove"></i>
+                        <span>Изтрий</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -214,48 +208,46 @@
       <div class='box bordered-box purple-border' style='margin-bottom:0;'>
         <div class='box-content'>
           <div class="responsive-table">
-            <div class="scrollable-area">
-              <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-                <thead>
-                  <tr>
-                    <th>
-                      Код на стаята
-                    </th>
-                    <th>
-                      Предмет
-                    </th>
-                    <th>
-                      Раздел
-                    </th>
-                    <th>
-                      Клас
-                    </th>
-                    <th>
-                      Опции
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="room in testrooms"v-if="testrooms.length >= 0">
-                    <td>{{ room.code }}</td>
-                    <td>{{ room.subject.name }}</td>
-                    <td>{{ room.partition.name }}</td>
-                    <td class="class-col">{{ room.class }}. Клас</td>
-                    <td>
-                      <div class='text-right'>
-                        <button class='btn btn-success btn-xs' @click="RenewTestroom(room.id, room.code)">
-                          <i class='icon-check'></i> Възтанови
-                        </button>
-                        <button class="btn btn-danger btn-xs" @click="DeleteTestroom(room.id, room.code)">
-                          <i class="icon-remove"></i>
-                          <span>Изтрий</span>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+              <thead>
+                <tr>
+                  <th>
+                    Код на стаята
+                  </th>
+                  <th>
+                    Предмет
+                  </th>
+                  <th>
+                    Раздел
+                  </th>
+                  <th>
+                    Клас
+                  </th>
+                  <th>
+                    Опции
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="room in testrooms"v-if="testrooms.length >= 0">
+                  <td>{{ room.code }}</td>
+                  <td>{{ room.subject.name }}</td>
+                  <td>{{ room.partition.name }}</td>
+                  <td class="class-col">{{ room.class }}. Клас</td>
+                  <td>
+                    <div class='text-right'>
+                      <button class='btn btn-success btn-xs' @click="RenewTestroom(room.id, room.code)">
+                        <i class='icon-check'></i> Възтанови
+                      </button>
+                      <button class="btn btn-danger btn-xs" @click="DeleteTestroom(room.id, room.code)">
+                        <i class="icon-remove"></i>
+                        <span>Изтрий</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -280,52 +272,50 @@
       <div class='box bordered-box purple-border' style='margin-bottom:0;'>
         <div class='box-content'>
           <div class="responsive-table">
-            <div class="scrollable-area">
-              <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-                <thead>
-                  <tr>
-                    <th>
-                      Име
-                    </th>
-                    <th>
-                      Относно
-                    </th>
-                    <th>
-                      Съобщение
-                    </th>
-                    <th>
-                      Статус
-                    </th>
-                    <th>
-                      Получено
-                    </th>
-                    <th>
-                      Опции
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="message in mail" v-if="mail.length >= 0">
-                    <td>{{ message.name }} ({{ message.email }})</td>
-                    <td>{{ message.subject }}</td>
-                    <td>{{ message.message }}</td>
-                    <td>{{ isRead(message.read) }}</td>
-                    <td>{{ message.time }}</td>
-                    <td>
-                      <div class='text-right'>
-                        <button class='btn btn-success btn-xs' @click="RenewMail(message.id)">
-                          <i class='icon-check'></i> Възтанови
-                        </button>
-                        <button class="btn btn-danger btn-xs" @click="DeleteMail(message.id)">
-                          <i class="icon-remove"></i>
-                          <span>Изтрий</span>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+              <thead>
+                <tr>
+                  <th>
+                    Име
+                  </th>
+                  <th>
+                    Относно
+                  </th>
+                  <th>
+                    Съобщение
+                  </th>
+                  <th>
+                    Статус
+                  </th>
+                  <th>
+                    Получено
+                  </th>
+                  <th>
+                    Опции
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="message in mail" v-if="mail.length >= 0">
+                  <td>{{ message.name }} ({{ message.email }})</td>
+                  <td>{{ message.subject }}</td>
+                  <td>{{ message.message }}</td>
+                  <td>{{ isRead(message.read) }}</td>
+                  <td>{{ message.time }}</td>
+                  <td>
+                    <div class='text-right'>
+                      <button class='btn btn-success btn-xs' @click="RenewMail(message.id)">
+                        <i class='icon-check'></i> Възтанови
+                      </button>
+                      <button class="btn btn-danger btn-xs" @click="DeleteMail(message.id)">
+                        <i class="icon-remove"></i>
+                        <span>Изтрий</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

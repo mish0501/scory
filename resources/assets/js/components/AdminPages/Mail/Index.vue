@@ -12,53 +12,51 @@
     <div class='box bordered-box' style='margin-bottom:0;'>
       <div class='box-content'>
         <div class="responsive-table">
-          <div class="scrollable-area">
-            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-              <thead>
-                <tr>
-                  <th>
-                    Име
-                  </th>
-                  <th>
-                    Относно
-                  </th>
-                  <th>
-                    Съобщение
-                  </th>
-                  <th>
-                    Статус
-                  </th>
-                  <th>
-                    Получено
-                  </th>
-                  <th>
-                    Опции
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="message in mail">
-                  <td>{{ message.name }} ({{ message.email }})</td>
-                  <td>{{ message.subject }}</td>
-                  <td>{{ message.message }}</td>
-                  <td>{{ (message.read == true)? 'Прочетено' : 'Непрочетено' }}</td>
-                  <td>{{ message.time }}</td>
-                  <td v-if="isAdmin">
-                    <div class='text-right'>
-                        <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ShowMail', params:{ id: message.id }}">
-                          <i class="icon-edit"></i>
-                          <span>Отвори</span>
-                        </router-link>
-                        <button class="btn btn-danger btn-xs" @click="DeleteMail(message.id)">
-                          <i class="icon-remove"></i>
-                          <span>Изтрий</span>
-                        </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+            <thead>
+              <tr>
+                <th>
+                  Име
+                </th>
+                <th>
+                  Относно
+                </th>
+                <th>
+                  Съобщение
+                </th>
+                <th>
+                  Статус
+                </th>
+                <th>
+                  Получено
+                </th>
+                <th>
+                  Опции
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="message in mail">
+                <td>{{ message.name }} ({{ message.email }})</td>
+                <td>{{ message.subject }}</td>
+                <td>{{ message.message }}</td>
+                <td>{{ (message.read == true)? 'Прочетено' : 'Непрочетено' }}</td>
+                <td>{{ message.time }}</td>
+                <td v-if="isAdmin">
+                  <div class='text-right'>
+                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ShowMail', params:{ id: message.id }}">
+                        <i class="icon-edit"></i>
+                        <span>Отвори</span>
+                      </router-link>
+                      <button class="btn btn-danger btn-xs" @click="DeleteMail(message.id)">
+                        <i class="icon-remove"></i>
+                        <span>Изтрий</span>
+                      </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

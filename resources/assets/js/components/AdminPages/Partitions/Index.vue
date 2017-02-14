@@ -21,45 +21,43 @@
     <div class='box bordered-box' style='margin-bottom:0;'>
       <div class='box-content'>
         <div class="responsive-table">
-          <div class="scrollable-area">
-            <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-              <thead>
-                <tr>
-                  <th>
-                    Име на предмета
-                  </th>
-                  <th>
-                    Име на предмета
-                  </th>
-                  <th>
-                    Клас
-                  </th>
-                  <th v-if="isAdmin || isTeacher">
-                    Опции
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="partition in partitions">
-                  <td>{{ partition.name }}</td>
-                  <td>{{ partition.subject.name }}</td>
-                  <td class="class-col">{{ partition.class }}. Клас</td>
-                  <td v-if="isAdmin || isTeacher">
-                    <div class='text-right'>
-                        <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditPartition', params:{ id: partition.id }}">
-                          <i class="icon-edit"></i>
-                          <span>Редактирай</span>
-                        </router-link>
-                        <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)" v-if="!isTeacher">
-                          <i class="icon-remove"></i>
-                          <span>Изтрий</span>
-                        </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <table class=' table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+            <thead>
+              <tr>
+                <th>
+                  Име на предмета
+                </th>
+                <th>
+                  Име на предмета
+                </th>
+                <th>
+                  Клас
+                </th>
+                <th v-if="isAdmin || isTeacher">
+                  Опции
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="partition in partitions">
+                <td>{{ partition.name }}</td>
+                <td>{{ partition.subject.name }}</td>
+                <td class="class-col">{{ partition.class }}. Клас</td>
+                <td v-if="isAdmin || isTeacher">
+                  <div class='text-right'>
+                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditPartition', params:{ id: partition.id }}">
+                        <i class="icon-edit"></i>
+                        <span>Редактирай</span>
+                      </router-link>
+                      <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)" v-if="!isTeacher">
+                        <i class="icon-remove"></i>
+                        <span>Изтрий</span>
+                      </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
