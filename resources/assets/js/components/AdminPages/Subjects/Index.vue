@@ -22,7 +22,7 @@
       <div class='box-content'>
         <div class="responsive-table">
           <div class="scrollable-area">
-            <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+            <table class='table table-bordered table-hover table-striped scrollable-area' style='margin-bottom:0;'>
               <thead>
                 <tr>
                   <th>
@@ -90,7 +90,10 @@ export default {
 
         this.$nextTick(() => {
           $(".table").dataTable({
-            sPaginationType: "bootstrap"
+            sPaginationType: "bootstrap",
+            fnDrawCallback () {
+              return $(".dataTables_wrapper").addClass("scrollable-area");
+            }
           })
         })
 

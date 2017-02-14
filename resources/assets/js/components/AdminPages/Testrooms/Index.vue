@@ -159,7 +159,10 @@ export default {
 
           this.$nextTick(() => {
             $(".table").dataTable({
-              sPaginationType: "bootstrap"
+              sPaginationType: "bootstrap",
+              fnDrawCallback () {
+                return $(".dataTables_wrapper").addClass("scrollable-area");
+              }
             })
           })
         }, (error) => {
