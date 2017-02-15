@@ -114,7 +114,7 @@ export default {
       this.$http.get('/api/testroom/'+this.code+'/end').then(
         (response) => {
           if(response.data.success){
-            this.$router.push('/admin/testroom')
+            this.$router.push({ name: 'ResultsTestroom', params:{ code: this.code}})
           }
         },(error) => {
           console.error(error);

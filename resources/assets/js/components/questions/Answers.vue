@@ -95,22 +95,6 @@ export default {
       }
 
       this.answerChange += 1
-    },
-
-    curentChecked() {
-      if(typeof(Storage) !== "undefined") {
-        if (localStorage.questionsAnswers) {
-          var questionsAnswers = JSON.parse(localStorage.questionsAnswers)
-
-          if (questionsAnswers[this.question_id]) {
-            return questionsAnswers[this.question_id]
-          }else{
-            return null
-          }
-        } else {
-          return null
-        }
-      }
     }
   },
 

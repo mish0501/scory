@@ -36,7 +36,7 @@
 import Question from "../questions/Question.vue"
 
 export default {
-
+  name: "TestRoomTestPage",
   data() {
     return{
       activeQuestion: 0,
@@ -78,6 +78,13 @@ export default {
     }
   },
 
+  mounted() {
+    Echo.channel('testroom.'+this.code)
+      .listen('EndTest', (e) => {
+        this.postTest(true)
+      });
+  },
+
   computed: {
     code(){
       return this.$route.params.code
@@ -101,7 +108,7 @@ export default {
       this.previousQuestion = this.activeQuestion - 1
     },
 
-    postTest() {
+    postTest(skip) {
       let data = {
         code: this.code,
         testroom: true
@@ -124,12 +131,16 @@ export default {
           data.answers= answers
 
         } else {
-          this.previousQuestion = -1
-          this.activeQuestion = 0
-          this.nextQuestion = 1
+          if (skip) {
+            data.answers = []
+          }else{
+            this.previousQuestion = -1
+            this.activeQuestion = 0
+            this.nextQuestion = 1
 
-          alert("Трябва да отговориш на всички въпроси.");
-          return;
+            alert("Трябва да отговориш на всички въпроси.");
+            return;
+          }
         }
       } else {
         alert("Съжаляваме, но браузърът ви не подържа уеб хранилище");

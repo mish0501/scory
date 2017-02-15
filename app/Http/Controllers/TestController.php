@@ -74,8 +74,7 @@ class TestController extends Controller
     public function checkTest(Request $request)
     {
       $this->validate($request, [
-       'questions' => 'required',
-       'answers' => 'required'
+       'questions' => 'required'
       ]);
 
       $questions = $request->get('questions');
@@ -132,7 +131,7 @@ class TestController extends Controller
         $userAnswers = json_encode($request->get('answers'));
 
         foreach ($questions as $key => $value) {
-          if($value['correct']){
+          if(array_key_exists('correct', $value) && $value['correct']== true){
             $correctAnswers ++;
           }
         }

@@ -93,6 +93,7 @@ export default {
         this.students.push(student)
 
         $(".table").dataTable()._fnDraw()
+        // $(".table").dataTable().draw()
       })
   }
 }

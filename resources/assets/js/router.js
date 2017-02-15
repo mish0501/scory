@@ -48,7 +48,6 @@ import AdminInvitesPage from './components/AdminPages/Invites/Index.vue'
 import AdminCreateInvitesPage from './components/AdminPages/Invites/Create.vue'
 
 import FileManager from './components/FileManager/Index.vue'
-import Test from './components/Test.vue'
 
 import AdminUsersPage from './components/AdminPages/Users/Show.vue'
 import AdminEditUsersPage from './components/AdminPages/Users/Edit.vue'
@@ -72,7 +71,6 @@ const routes = [
   { path: '/testroom/:code', component: TestroomPage, name:'Testroom' },
 
   { path: '/file/manager', component: FileManager, name:'FileManager' },
-  { path: '/file/test', component: Test },
 
   { path: '/admin', component: AdminPage,
     children: [

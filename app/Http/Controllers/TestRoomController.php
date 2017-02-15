@@ -19,6 +19,7 @@ use File;
 use App\Events\StudentConnected;
 use App\Events\TestStart;
 use App\Events\FinishTest;
+use App\Events\EndTest;
 
 class TestRoomController extends Controller
 {
@@ -241,7 +242,9 @@ class TestRoomController extends Controller
 
     public function endTest($code)
     {
-      $testroom = TestRoom::where('code', '=', $code)->where('status', '=', 2)->update(['status' => 3]);
+      // $testroom = TestRoom::where('code', '=', $code)->where('status', '=', 2)->update(['status' => 3]);
+
+      event(new EndTest($code));
 
       return response()->json([
         'success' => true
