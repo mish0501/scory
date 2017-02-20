@@ -8,7 +8,7 @@ class TestRoom extends Model
 {
     protected $table = 'testroom';
 
-    protected $fillable = ['code', 'teacher_id', 'subject_id', 'partition_id', 'class', 'questions_id', 'status', 'trash'];
+    protected $fillable = ['code', 'teacher_id', 'subject_id', 'partition_id', 'class', 'questions_id', 'status', 'duration', 'test_started', 'trash'];
 
     public function teacher()
     {

@@ -23,11 +23,6 @@ use App\Events\EndTest;
 
 class TestRoomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index($user_id)
     {
       $testrooms = TestRoom::where('teacher_id', '=', $user_id)->where('trash', '=', false)->with('subject', 'partition')->get();
@@ -194,7 +189,11 @@ class TestRoomController extends Controller
 
       $testroom = TestRoom::where('code', '=', $code);
       if($testroom->get()[0]->status != 2){
-        $testroom->update(['status' => 2]);
+        $now = \Carbon\Carbon::now('Europe/Sofia');
+        $testroom->update([
+          'status' => 2,
+          'test_started' => $now
+        ]);
 
         $data = array('code' => $code);
 
@@ -221,6 +220,21 @@ class TestRoomController extends Controller
       shuffle($questions);
 
       return ['questions' => $questions];
+    }
+
+    public function getTime(Request $request)
+    {
+      $code = $request->get('code');
+
+      $testroom = TestRoom::where('code', '=', $code)->get()[0];
+
+      $testStarted = $testroom->test_started;
+      $duration = $testroom->duration;
+
+      return [
+        'testStarted' => $testStarted,
+        'duration' => $duration
+      ];
     }
 
     public function finishTest($correctAnswers, $userAnswers, $code, $name, $lastname)

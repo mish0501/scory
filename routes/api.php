@@ -127,3 +127,4 @@ Route::post('/test/check', 'TestController@checkTest');
 Route::post('/join' , 'TestRoomController@join');
 Route::post('/connect' , 'TestRoomController@connect');
 Route::post('/testroom/getQuestions' , 'TestRoomController@getQuestions');
+Route::post('/testroom/getTime' , 'TestRoomController@getTime');

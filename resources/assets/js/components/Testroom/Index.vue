@@ -3,6 +3,9 @@
     <nav>
       <div class="container">
         <div class="row">
+          <div class="col-md-2 pull-left">
+            <span class="timer">{{ time }}</span>
+          </div>
           <div class="pull-right text-right col-md-1">
             <a href="/endtest"><i class="fa fa-times fa-3x"></i></a>
           </div>
@@ -42,7 +45,8 @@ export default {
       activeQuestion: 0,
       nextQuestion: 1,
       previousQuestion: -1,
-      gotQuestions: false
+      gotQuestions: false,
+      time: '00:00'
     }
   },
 
@@ -51,6 +55,20 @@ export default {
   },
 
   created() {
+    this.$http.post('/api/testroom/getTime', { code: this.code }).then(
+      (response) => {
+        let data = response.data
+        let now = new Date()
+        let testStarted = new Date(data.testStarted)
+
+        let elapsedT = Math.floor((now - testStarted) / 1000)
+
+        let timer = data.duration - elapsedT
+
+        this.startTimer(timer)
+      }, console.error
+    )
+
     if(typeof(Storage) !== "undefined") {
         if (localStorage.testroom) {
           const testroom = JSON.parse(localStorage.testroom)
@@ -96,6 +114,25 @@ export default {
   },
 
   methods: {
+    startTimer(duration) {
+      var timer = duration, minutes, seconds;
+      var vm = this
+      var func = function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        vm.time = minutes + ":" + seconds
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+      }
+      setInterval(func, 1000);
+    },
+
     changeNextQuestion() {
       this.previousQuestion = this.activeQuestion
       this.activeQuestion = this.nextQuestion
