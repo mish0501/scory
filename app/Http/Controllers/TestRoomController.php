@@ -58,7 +58,8 @@ class TestRoomController extends Controller
          'subject_id' => 'required',
          'partition_id' => 'required',
          'questions' => 'required',
-         'teacher_id' => 'required'
+         'teacher_id' => 'required',
+         'duration' => 'required'
       ], [
         'questions.required' => 'Трабва да изберете въпроси.'
       ]);
@@ -77,6 +78,10 @@ class TestRoomController extends Controller
 
       $input = $request->all();
       $input['questions_id'] = $questions;
+
+      if($request->get('duration') != 0){
+        $input['duration'] = $request->get('duration') * 60;
+      }
 
       TestRoom::create($input);
 

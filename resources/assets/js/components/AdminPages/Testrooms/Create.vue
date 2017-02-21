@@ -71,6 +71,14 @@
             <input type="button" class="btn btn-primary" value="Избери произволни въпроси" @click="selectRandomQuestions">
           </div>
         </div>
+        <div class='form-group' v-if="questions.length > 0">
+          <label class='col-md-2 control-label' for='class'>Време за теста</label>
+          <div class='col-md-5'>
+            <select v-model="sTime" class="form-control">
+              <option v-for="t in time" :value="t.value">{{ t.text }}</option>
+            </select>
+          </div>
+        </div>
         <div class='form-actions form-actions-padding-sm'>
           <div class='row'>
             <div class='col-md-10 col-md-offset-2'>
@@ -94,6 +102,7 @@ import SelectPartition from "../../SelectInputs/SelectPartition.vue"
 import Multiselect from 'vue-multiselect'
 
 export default {
+  name: "TestroomCreate",
   data () {
     return {
       code: "",
@@ -106,7 +115,16 @@ export default {
       questions: [],
       randomQuestion: 5,
 
-      isLoading: false
+      isLoading: false,
+      time: [
+        { value: 0, text: "Без време"},
+        { value: 10, text: "10 минути"},
+        { value: 15, text: "15 минути"},
+        { value: 20, text: "20 минути"},
+        { value: 30, text: "30 минути"},
+        { value: 40, text: "40 минути"},
+      ],
+      sTime: 0
     }
   },
 
@@ -209,7 +227,8 @@ export default {
     CreateTestroom() {
       var data = {
         code: this.code,
-        teacher_id: this.user.id
+        teacher_id: this.user.id,
+        duration: this.sTime
       }
 
       if(this.classes > 0){
