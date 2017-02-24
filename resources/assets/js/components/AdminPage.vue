@@ -18,6 +18,26 @@ export default {
   data () {
     return {
       isLoading: false,
+      table: {}
+    }
+  },
+  methods: {
+    setDataTable() {
+      this.$nextTick(() => {
+        var table = $(".table").dataTable({
+          sPaginationType: "bootstrap",
+          fnDrawCallback () {
+            return $(".dataTables_wrapper").addClass("scrollable-area");
+          }
+        })
+
+        this.table = table
+      })
+    },
+
+    redrawTable() {
+      this.table.fnDestroy()
+      this.setDataTable()
     }
   }
 }

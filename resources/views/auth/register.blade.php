@@ -25,25 +25,25 @@
           <div class='form-group'>
             <div class='controls with-icon-over-input'>
               <input value="{{ old('name') }}" placeholder="Име" class="form-control" name="name" type="text" />
-              <i class='icon-user text-muted'></i>
+              <i class='fa fa-user text-muted'></i>
             </div>
           </div>
           <div class='form-group'>
             <div class='controls with-icon-over-input'>
               <input value="{{ old('email') }}" placeholder="E-mail" class="form-control" name="email" type="text" />
-              <i class='icon-envelope text-muted'></i>
+              <i class='fa fa-envelope text-muted'></i>
             </div>
           </div>
           <div class='form-group'>
             <div class='controls with-icon-over-input'>
               <input placeholder="Парола" class="form-control" name="password" type="password" />
-              <i class='icon-lock text-muted'></i>
+              <i class='fa fa-lock text-muted'></i>
             </div>
           </div>
           <div class='form-group'>
             <div class='controls with-icon-over-input'>
               <input placeholder="Повтори паролата" class="form-control" name="password_confirmation" type="password" />
-              <i class='icon-lock text-muted'></i>
+              <i class='fa fa-lock text-muted'></i>
             </div>
           </div>
           <?php if (isset($invite)): ?>
@@ -52,7 +52,7 @@
             <div class="form-group">
               <div class='controls with-icon-over-input'>
                 <input placeholder="Покана" class="form-control" name="invite" />
-                <i class='icon-envelope text-muted'></i>
+                <i class='fa fa-envelope text-muted'></i>
               </div>
             </div>
           <?php endif; ?>
@@ -70,7 +70,7 @@
         <div class='text-center'>
           <hr class='hr-normal'>
           <a href='/login'>
-            <i class='icon-chevron-left'></i>
+            <i class='fa fa-chevron-left'></i>
             Обратно към вход
           </a>
         </div>

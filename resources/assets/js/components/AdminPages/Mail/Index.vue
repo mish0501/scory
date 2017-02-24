@@ -2,7 +2,7 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-comments"></i>
+        <i class="fa fa-comments"></i>
         Всички съобщения
       </h1>
     </div>
@@ -45,11 +45,11 @@
                 <td v-if="isAdmin">
                   <div class='text-right'>
                       <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ShowMail', params:{ id: message.id }}">
-                        <i class="icon-edit"></i>
+                        <i class="fa fa-edit"></i>
                         <span>Отвори</span>
                       </router-link>
                       <button class="btn btn-danger btn-xs" @click="DeleteMail(message.id)">
-                        <i class="icon-remove"></i>
+                        <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>
                   </div>
@@ -81,16 +81,10 @@ export default {
       (response) => {
         this.mail = response.data
         this.mailIds = response.data.map(el => el.id)
-        this.$parent.isLoading = false
 
-        this.$nextTick(() => {
-          $(".table").dataTable({
-            sPaginationType: "bootstrap",
-            fnDrawCallback () {
-              return $(".dataTables_wrapper").addClass("scrollable-area");
-            }
-          })
-        })
+        this.$parent.setDataTable()
+
+        this.$parent.isLoading = false
       }, (error) => {
         console.log(error);
       }
@@ -139,8 +133,13 @@ export default {
         }
 
         const index = this.mailIds.indexOf(id)
+
+        this.$parent.table.fnDestroy()
+
         this.mail.splice(index, 1)
         this.mailIds.splice(index, 1)
+
+        this.$parent.setDataTable()
         this.$parent.isLoading = false
       }, (error) => {
         console.error(error);

@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-group"></i>
+  <i class="fa fa-group"></i>
   Всички готови ученици в стая {{ $code }}
 @endsection
 
@@ -9,7 +9,7 @@
 <div class='pull-right'>
   <div class='btn-group'>
     <a class="btn btn-success" href="/admin/testroom/{{ $code }}/end">
-      <i class='icon-stop'></i>
+      <i class='fa fa-stop'></i>
       Стоп на теста
     </a>
   </div>
@@ -50,7 +50,7 @@
               <td>
                 <div class="text-right">
                   <a class='btn btn-success btn-xs' href='/admin/testroom/{{$code}}/student/{{$student->number}}'>
-                    <i class='icon-question'></i>
+                    <i class='fa fa-question'></i>
                     <span>Покажи отговорите на ученика</span>
                   </a>
                 </div>
@@ -85,14 +85,14 @@
     var channel = pusher.subscribe('TestRoomChanel');
     channel.bind('FinishTest', function(data) {
       // $(".dataTables_empty").parent().remove();
-      // row = '<tr><td>'+ data.number +'</td><td>'+ data.name +'</td><td>'+ data.lastname +'</td><td>'+data.correct+'</td><td><div class="text-right"><a class="btn btn-success btn-xs" href="/admin/testroom/'+data.code+'/student/'+data.number+'"><i class="icon-question"></i><span>Покажи отговорите на ученика</span></a></div></td></tr>';
+      // row = '<tr><td>'+ data.number +'</td><td>'+ data.name +'</td><td>'+ data.lastname +'</td><td>'+data.correct+'</td><td><div class="text-right"><a class="btn btn-success btn-xs" href="/admin/testroom/'+data.code+'/student/'+data.number+'"><i class="fa fa-question"></i><span>Покажи отговорите на ученика</span></a></div></td></tr>';
       // table.append(row);
       dataTable.fnAddData([
         data.number,
         data.name,
         data.lastname,
         data.correct,
-        '<div class="text-right"><a class="btn btn-success btn-xs" href="/admin/testroom/'+data.code+'/student/'+data.number+'"><i class="icon-question"></i><span>Покажи отговорите на ученика</span></a></div>'
+        '<div class="text-right"><a class="btn btn-success btn-xs" href="/admin/testroom/'+data.code+'/student/'+data.number+'"><i class="fa fa-question"></i><span>Покажи отговорите на ученика</span></a></div>'
       ]);
     });
   </script>

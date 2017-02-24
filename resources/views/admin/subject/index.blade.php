@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-book"></i>
+  <i class="fa fa-book"></i>
   Всички предмети
 @endsection
 
@@ -10,7 +10,7 @@
   <div class='pull-right'>
     <div class='btn-group'>
       <a class="btn btn-success" href="{{ route('admin.subject.create') }}">
-        <i class='icon-plus'></i>
+        <i class='fa fa-plus'></i>
         Добави предмет
       </a>
     </div>
@@ -51,18 +51,18 @@
                         'route' => ['admin.subject.destroy', $data->id]
                     ]) !!}
                         <a class='btn btn-success btn-xs' href='/admin/subject/{{$data["id"]}}/edit'>
-                          <i class='icon-edit'></i>
+                          <i class='fa fa-edit'></i>
                           <span>Редактирай</span>
                         </a>
                         <button type="submit" class='btn btn-danger btn-xs'>
-                          <i class='icon-remove'></i>
+                          <i class='fa fa-remove'></i>
                           <span>Изтрий</span>
                         </button>
                     {!! Form::close() !!}
                   @else
                     @if(Entrust::can('edit-subject'))
                       <a class='btn btn-success btn-xs' href='/admin/subject/{{$data["id"]}}/edit'>
-                        <i class='icon-edit'></i>
+                        <i class='fa fa-edit'></i>
                         <span>Редактирай</span>
                       </a>
                     @endif
@@ -73,7 +73,7 @@
                           'route' => ['admin.subject.destroy', $data->id]
                       ]) !!}
                           <button type="submit" class='btn btn-danger btn-xs'>
-                            <i class='icon-remove'></i>
+                            <i class='fa fa-remove'></i>
                             <span>Изтрий</span>
                           </button>
                       {!! Form::close() !!}

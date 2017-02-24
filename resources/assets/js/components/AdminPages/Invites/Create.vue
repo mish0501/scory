@@ -2,7 +2,7 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-envelope"></i>
+        <i class="fa fa-envelope"></i>
         Добавяне на покана
       </h1>
     </div>
@@ -27,7 +27,7 @@
           <div class='row'>
             <div class='col-md-10 col-md-offset-2'>
               <button class='btn btn-primary' @click.prevent="CreateInvite">
-                <i class='icon-save'></i>
+                <i class='fa fa-save'></i>
                 Запази
               </button>
             </div>

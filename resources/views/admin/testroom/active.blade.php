@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-group"></i>
+  <i class="fa fa-group"></i>
   Всички ученици в стая {{ $code }}
 @endsection
 
@@ -9,7 +9,7 @@
 <div class='pull-right'>
   <div class='btn-group'>
     <a class="btn btn-success" href="/admin/testroom/{{ $code }}/start">
-      <i class='icon-play'></i>
+      <i class='fa fa-play'></i>
       Стартирай теста
     </a>
   </div>

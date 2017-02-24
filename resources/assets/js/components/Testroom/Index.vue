@@ -3,7 +3,7 @@
     <nav>
       <div class="container">
         <div class="row">
-          <div class="col-md-2 pull-left">
+          <div class="col-md-2" v-if="time">
             <span class="timer">{{ time }}</span>
           </div>
           <div class="pull-right text-right col-md-1">
@@ -46,7 +46,8 @@ export default {
       nextQuestion: 1,
       previousQuestion: -1,
       gotQuestions: false,
-      time: '00:00'
+      time: '',
+      interval: 0
     }
   },
 
@@ -65,7 +66,9 @@ export default {
 
         let timer = data.duration - elapsedT
 
-        this.startTimer(timer)
+        if(timer > 0) {
+          this.startTimer(timer)
+        }
       }, console.error
     )
 
@@ -99,6 +102,7 @@ export default {
   mounted() {
     Echo.channel('testroom.'+this.code)
       .listen('EndTest', (e) => {
+        clearInterval(this.interval)
         this.postTest(true)
       });
   },
@@ -126,11 +130,10 @@ export default {
 
         vm.time = minutes + ":" + seconds
 
-        if (--timer < 0) {
-            timer = duration;
-        }
+        timer--
       }
-      setInterval(func, 1000);
+      let interval = setInterval(func, 1000);
+      this.interval = interval
     },
 
     changeNextQuestion() {

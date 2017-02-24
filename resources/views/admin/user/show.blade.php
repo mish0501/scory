@@ -33,7 +33,7 @@
           <div class='form-actions form-actions-padding' style='margin-bottom: 0;'>
             <div class='text-right'>
               <a href="/admin/user/edit" class='btn btn-success btn-lg'>
-                <i class='icon-edit'></i>
+                <i class='fa fa-edit'></i>
                 Редактирай
               </a>
             </div>

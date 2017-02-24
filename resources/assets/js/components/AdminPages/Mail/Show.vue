@@ -2,7 +2,7 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-comments"></i>
+        <i class="fa fa-comments"></i>
         Преглед на съобщение
       </h1>
     </div>

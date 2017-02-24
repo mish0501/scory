@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-group"></i>
+  <i class="fa fa-group"></i>
   Резултати на ученикът/чката {{$student->name}} {{$student->lastname}}
 @endsection
 
@@ -10,7 +10,7 @@
     <div class="alert alert-info alert-dismissable">
       <a class="close" data-dismiss="alert" href="#">×</a>
       <h4>
-        <i class="icon-info-sign"></i>
+        <i class="fa fa-info-sign"></i>
         Информация
       </h4>
       Натиснете върху въпроса, за да видите какви са отговорите на ученикът/чката.<br>
@@ -20,7 +20,7 @@
     <div class="alert alert-danger alert-dismissable">
       <a class="close" data-dismiss="alert" href="#">×</a>
       <h4>
-        <i class="icon-remove-sign"></i>
+        <i class="fa fa-remove-sign"></i>
         Информация
       </h4>
       Няма данни за отговорите на този ученик/чка.

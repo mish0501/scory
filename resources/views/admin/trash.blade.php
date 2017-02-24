@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-trash"></i>
+  <i class="fa fa-trash"></i>
   Кошче
 @endsection
 
@@ -10,7 +10,7 @@
 <div class='box bordered-box purple-border {{ ($subjects->isEmpty()) ? "box-collapsed" : "" }}' style='margin-bottom:0;'>
   <div class='box-header purple-background'>
     <div class='title'>
-      <i class="icon-book"></i>
+      <i class="fa fa-book"></i>
       @if ($subjects->isEmpty())
        Няма предмети в кошчето
       @else
@@ -51,7 +51,7 @@
                   ]) !!}
                     <input type="hidden" name="id" value="{{ $subject->id }}">
                       <button type="submit" class='btn btn-success btn-xs'>
-                        <i class='icon-check'></i> Възтанови
+                        <i class='fa fa-check'></i> Възтанови
                       </button>
                   {!! Form::close() !!}
 
@@ -60,7 +60,7 @@
                       'route' => ['trash.delete.subject', $subject->id]
                   ]) !!}
                       <button type="submit" class='btn btn-danger btn-xs'>
-                        <i class='icon-remove'></i> Изтрий
+                        <i class='fa fa-remove'></i> Изтрий
                       </button>
                   {!! Form::close() !!}
                 </div>
@@ -79,7 +79,7 @@
 <div class='box bordered-box blue-border {{ ($partitions->isEmpty()) ? "box-collapsed" : "" }}' style='margin-bottom:0;'>
   <div class='box-header blue-background'>
     <div class='title'>
-      <i class="icon-folder-open"></i>
+      <i class="fa fa-folder-open"></i>
       @if ($partitions->isEmpty())
        Няма раздели в кошчето
       @else
@@ -124,7 +124,7 @@
                   ]) !!}
                     <input type="hidden" name="id" value="{{ $partition->id }}">
                       <button type="submit" class='btn btn-success btn-xs'>
-                        <i class='icon-check'></i> Възтанови
+                        <i class='fa fa-check'></i> Възтанови
                       </button>
                   {!! Form::close() !!}
 
@@ -133,7 +133,7 @@
                       'route' => ['trash.delete.partition', $partition->id]
                   ]) !!}
                       <button type="submit" class='btn btn-danger btn-xs'>
-                        <i class='icon-remove'></i> Изтрий
+                        <i class='fa fa-remove'></i> Изтрий
                       </button>
                   {!! Form::close() !!}
                 </div>
@@ -152,7 +152,7 @@
 <div class='box bordered-box green-border {{ ($questions->isEmpty()) ? "box-collapsed" : "" }}' style='margin-bottom:0;'>
   <div class='box-header green-background'>
     <div class='title'>
-      <i class="icon-question"></i>
+      <i class="fa fa-question"></i>
       @if ($questions->isEmpty())
        Няма въпроси в кошчето
       @else
@@ -201,7 +201,7 @@
                   ]) !!}
                     <input type="hidden" name="id" value="{{ $question->id }}">
                       <button type="submit" class='btn btn-success btn-xs'>
-                        <i class='icon-check'></i> Възтанови
+                        <i class='fa fa-check'></i> Възтанови
                       </button>
                   {!! Form::close() !!}
 
@@ -210,7 +210,7 @@
                       'route' => ['trash.delete.question', $question->id]
                   ]) !!}
                       <button type="submit" class='btn btn-danger btn-xs'>
-                        <i class='icon-remove'></i> Изтрий
+                        <i class='fa fa-remove'></i> Изтрий
                       </button>
                   {!! Form::close() !!}
                 </div>
@@ -229,7 +229,7 @@
 <div class='box bordered-box red-border {{ ($testrooms->isEmpty()) ? "box-collapsed" : "" }}' style='margin-bottom:0;'>
   <div class='box-header red-background'>
     <div class='title'>
-      <i class="icon-group"></i>
+      <i class="fa fa-group"></i>
       @if ($testrooms->isEmpty())
        Няма стаи в кошчето
       @else
@@ -277,7 +277,7 @@
                   ]) !!}
                     <input type="hidden" name="code" value="{{ $testroom->code }}">
                       <button type="submit" class='btn btn-success btn-xs'>
-                        <i class='icon-check'></i> Възтанови
+                        <i class='fa fa-check'></i> Възтанови
                       </button>
                   {!! Form::close() !!}
 
@@ -286,7 +286,7 @@
                       'route' => ['trash.delete.testroom', $testroom->code]
                   ]) !!}
                       <button type="submit" class='btn btn-danger btn-xs'>
-                        <i class='icon-remove'></i> Изтрий
+                        <i class='fa fa-remove'></i> Изтрий
                       </button>
                   {!! Form::close() !!}
                 </div>
@@ -305,7 +305,7 @@
 <div class='box bordered-box orange-border {{ ($mail->isEmpty()) ? "box-collapsed" : "" }}' style='margin-bottom:0;'>
   <div class='box-header orange-background'>
     <div class='title'>
-      <i class="icon-comments"></i>
+      <i class="fa fa-comments"></i>
       @if ($mail->isEmpty())
        Няма съобщения в кошчето
       @else
@@ -357,7 +357,7 @@
                   ]) !!}
                     <input type="hidden" name="id" value="{{ $message->id }}">
                       <button type="submit" class='btn btn-success btn-xs'>
-                        <i class='icon-check'></i> Възтанови
+                        <i class='fa fa-check'></i> Възтанови
                       </button>
                   {!! Form::close() !!}
 
@@ -366,7 +366,7 @@
                       'route' => ['trash.delete.mail', $message->id]
                   ]) !!}
                       <button type="submit" class='btn btn-danger btn-xs'>
-                        <i class='icon-remove'></i> Изтрий
+                        <i class='fa fa-remove'></i> Изтрий
                       </button>
                   {!! Form::close() !!}
                 </div>

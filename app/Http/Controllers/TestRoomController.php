@@ -191,9 +191,8 @@ class TestRoomController extends Controller
     public function startTest(Request $request)
     {
       $code = $request->get('code');
-
       $testroom = TestRoom::where('code', '=', $code);
-      if($testroom->get()[0]->status != 2){
+      if($testroom->get()[0]->status == 1){
         $now = \Carbon\Carbon::now('Europe/Sofia');
         $testroom->update([
           'status' => 2,
@@ -261,7 +260,7 @@ class TestRoomController extends Controller
 
     public function endTest($code)
     {
-      // $testroom = TestRoom::where('code', '=', $code)->where('status', '=', 2)->update(['status' => 3]);
+      $testroom = TestRoom::where('code', '=', $code)->where('status', '=', 2)->update(['status' => 3]);
 
       event(new EndTest($code));
 

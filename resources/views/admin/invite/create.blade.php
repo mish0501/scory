@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-envelope"></i>
+  <i class="fa fa-envelope"></i>
   Добавяне на покана
 @endsection
 
@@ -28,7 +28,7 @@
       <div class='row'>
         <div class='col-md-10 col-md-offset-2'>
           <button class='btn btn-primary' type='submit'>
-            <i class='icon-save'></i>
+            <i class='fa fa-save'></i>
             Запази
           </button>
         </div>

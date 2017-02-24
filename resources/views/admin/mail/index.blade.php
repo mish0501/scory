@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-comments"></i>
+  <i class="fa fa-comments"></i>
   Всички съобщения
 @endsection
 
@@ -46,11 +46,11 @@
                       'route' => ['admin.mail.destroy', $message->id]
                   ]) !!}
                       <a class='btn btn-success btn-xs' href='/admin/mail/{{ $message->id }}'>
-                        <i class='icon-edit'></i>
+                        <i class='fa fa-edit'></i>
                         <span>Отвори</span>
                       </a>
                       <button type="submit" class='btn btn-danger btn-xs'>
-                        <i class='icon-remove'></i>
+                        <i class='fa fa-remove'></i>
                         <span>Изтрий</span>
                       </button>
                   {!! Form::close() !!}
@@ -95,7 +95,7 @@
             _token: "{{ csrf_token() }}"
           }
         }).done(function(data) {
-          var options = '<div class="text-right"><form method="POST" action="/admin/mail/'+data.id+'" accept-charset="UTF-8"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="'+data.token+'"><a class="btn btn-success btn-xs" href="/admin/mail/'+data.id+'"><i class="icon-edit"></i> <span>Отвори</span></a> <button type="submit" class="btn btn-danger btn-xs"><i class="icon-remove"></i> <span>Изтрий</span></button></form></div>'
+          var options = '<div class="text-right"><form method="POST" action="/admin/mail/'+data.id+'" accept-charset="UTF-8"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="'+data.token+'"><a class="btn btn-success btn-xs" href="/admin/mail/'+data.id+'"><i class="fa fa-edit"></i> <span>Отвори</span></a> <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-remove"></i> <span>Изтрий</span></button></form></div>'
           dataTable.fnAddData([
             data.name + ' ('+ data.email +')',
             data.subject,

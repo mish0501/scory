@@ -2,7 +2,7 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-book"></i>
+        <i class="fa fa-book"></i>
         Редактирай предмет
       </h1>
     </div>
@@ -39,13 +39,13 @@
         <div class='form-group'>
           <div class='col-md-5 col-md-offset-2'>
             <button class='btn btn-success add-answer' :disabled="!canAdd" @click.prevent="AddAnswer()">
-              <i class='icon-plus'></i>
+              <i class='fa fa-plus'></i>
               Добави още един отговор
             </button>
             <br class="hidden-lg hidden-sm">
             <br class="hidden-lg hidden-sm">
             <button class='btn btn-danger remove-answer' :disabled="!canRemove" @click.prevent="RemoveAnswer()">
-              <i class='icon-remove'></i>
+              <i class='fa fa-remove'></i>
               Изтрий последния въпрос
             </button>
           </div>
@@ -54,7 +54,7 @@
           <div class='row'>
             <div class='col-md-10 col-md-offset-2'>
               <button class='btn btn-primary' @click.prevent="UpdateQuestion">
-                <i class='icon-save'></i>
+                <i class='fa fa-save'></i>
                 Запази
               </button>
             </div>

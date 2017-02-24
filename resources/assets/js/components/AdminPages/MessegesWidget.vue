@@ -1,7 +1,7 @@
 <template lang="html">
   <li class='dropdown medium only-icon widget'>
     <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
-      <i class='icon-comments'></i>
+      <i class='fa fa-comments'></i>
       <div class='label'>{{ (messageCount != 0) ? messageCount : '' }}</div>
     </a>
     <ul class='dropdown-menu'>
@@ -9,7 +9,7 @@
       <li v-for="message in messages">
         <a :href="message.url">
           <div class="widget-body">
-            <div class="pull-left icon"><i class="icon-comments text-success"></i></div>
+            <div class="pull-left icon"><i class="fa fa-comments text-success"></i></div>
             <div class="pull-left text">{{ message.name }} изпрати съобщение <small class="text-muted">{{ message.time }}</small></div>
           </div>
         </a>

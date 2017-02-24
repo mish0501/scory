@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-group"></i>
+  <i class="fa fa-group"></i>
   Резултати на учениците в стая {{ $code }}
 @endsection
 
@@ -38,7 +38,7 @@
             <td>
               <div class="text-right">
                 <a class='btn btn-success btn-xs' href='/admin/testroom/{{$code}}/student/{{$student->number}}'>
-                  <i class='icon-question'></i>
+                  <i class='fa fa-question'></i>
                   <span>Покажи отговорите на ученика</span>
                 </a>
               </div>

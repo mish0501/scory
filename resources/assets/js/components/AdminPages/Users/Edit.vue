@@ -2,7 +2,7 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-user"></i>
+        <i class="fa fa-user"></i>
           Настройки на профила
       </h1>
     </div>
@@ -57,7 +57,7 @@
               <div class='form-actions form-actions-padding' style='margin-bottom: 0;'>
                 <div class='text-right'>
                   <button type="submit" class='btn btn-primary btn-lg' @click.prevent="UpdateUser">
-                    <i class='icon-save'></i>
+                    <i class='fa fa-save'></i>
                     Запази
                   </button>
                 </div>
@@ -89,7 +89,7 @@
               <div class='form-actions form-actions-padding' style='margin-bottom: 0;'>
                 <div class='text-right'>
                   <button type="submit" class='btn btn-danger btn-lg' @click.prevent="ChangePass">
-                    <i class='icon-key'></i>
+                    <i class='fa fa-key'></i>
                     Смени паролата
                   </button>
                 </div>

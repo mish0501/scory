@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-envelope"></i>
+  <i class="fa fa-envelope"></i>
   Всички покани
 @endsection
 
@@ -10,7 +10,7 @@
   <div class='pull-right'>
     <div class='btn-group'>
       <a class="btn btn-success" href="{{ route('admin.invite.create') }}">
-        <i class='icon-plus'></i>
+        <i class='fa fa-plus'></i>
         Създай покана
       </a>
     </div>
@@ -51,14 +51,14 @@
                         'route' => ['admin.invite.destroy', $invite->id]
                     ]) !!}
                         <button type="submit" class='btn btn-danger btn-xs'>
-                          <i class='icon-remove'></i>
+                          <i class='fa fa-remove'></i>
                           <span>Изтрий</span>
                         </button>
                     {!! Form::close() !!}
                     @if ($invite->invite == NULL)
                       <br>
                       <a class='btn btn-success btn-xs' href='/admin/invite/create/{{ $invite->email }}'>
-                        <i class='icon-mail-forward'></i>
+                        <i class='fa fa-mail-forward'></i>
                         <span>Изпрати покана</span>
                       </a>
                     @endif

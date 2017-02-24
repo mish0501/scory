@@ -25,13 +25,13 @@
                 <div class='form-group'>
                   <div class='controls with-icon-over-input'>
                     <input value="{{ old('email') }}" placeholder="E-mail" class="form-control" data-rule-required="true" name="email" type="text" />
-                    <i class='icon-user text-muted'></i>
+                    <i class='fa fa-user text-muted'></i>
                   </div>
                 </div>
                 <div class='form-group'>
                   <div class='controls with-icon-over-input'>
                     <input placeholder="Парола" class="form-control" data-rule-required="true" name="password" type="password" />
-                    <i class='icon-lock text-muted'></i>
+                    <i class='fa fa-lock text-muted'></i>
                   </div>
                 </div>
                 <div class="form-group">

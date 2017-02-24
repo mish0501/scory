@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-book"></i>
+  <i class="fa fa-book"></i>
   Добавяне на предмет
 @endsection
 
@@ -34,7 +34,7 @@
       <div class='row'>
         <div class='col-md-10 col-md-offset-2'>
           <button class='btn btn-primary' type='submit'>
-            <i class='icon-save'></i>
+            <i class='fa fa-save'></i>
             Запази
           </button>
         </div>

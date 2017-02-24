@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-question"></i>
+  <i class="fa fa-question"></i>
   Редактиране на въпрос
 @endsection
 
@@ -131,11 +131,11 @@
     <div class='form-group'>
       <div class='col-md-5 col-md-offset-2'>
         <button class='btn btn-success add-answer'>
-          <i class='icon-plus'></i>
+          <i class='fa fa-plus'></i>
           Добави още един отговор
         </button>
         <button class='btn btn-danger remove-answer' disabled>
-          <i class='icon-remove'></i>
+          <i class='fa fa-remove'></i>
           Изтрий последния въпрос
         </button>
       </div>
@@ -144,7 +144,7 @@
       <div class='row'>
         <div class='col-md-10 col-md-offset-2'>
           <button class='btn btn-primary' type='submit'>
-            <i class='icon-save'></i>
+            <i class='fa fa-save'></i>
             Запази
           </button>
         </div>

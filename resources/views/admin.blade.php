@@ -28,16 +28,6 @@
       <script src="/admin/assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
       <script src="/admin/assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
-
-    <style media="screen">
-      #main-nav-bg {
-        z-index: 1
-      }
-
-      #main-nav {
-        z-index: 2
-      }
-    </style>
   </head>
   <body class='contrast-grass-green'>
     <div id="app">
@@ -48,7 +38,7 @@
             <img height="30" class="logo-xs" alt="Flatty" src="/admin/assets/images/logo_xs.svg" />
           </a>
           <a class='toggle-nav btn pull-left' href='#'>
-            <i class='icon-reorder'></i>
+            <i class='fa fa-reorder'></i>
           </a>
           <ul class='nav'>
             @if(Auth::user()->can('list-mail'))
@@ -67,7 +57,7 @@
               <ul class='dropdown-menu'>
                 <li>
                   <a href='/admin/user/{{ Auth::user()->id }}'>
-                    <i class='icon-cog'></i>
+                    <i class='fa fa-cog'></i>
                     Настройки
                   </a>
                 </li>
@@ -77,7 +67,7 @@
                     {{ csrf_field() }}
                   </form>
                   <a href="#" onclick="document.getElementById('logout-form').submit();">
-                    <i class="icon-signout"></i>
+                    <i class="fa fa-signout"></i>
                     Изход
                   </a>
                 </li>
@@ -93,7 +83,7 @@
             <ul class='nav nav-stacked'>
               <router-link to="/admin/home" tag="li">
                 <a>
-                  <i class='icon-dashboard'></i>
+                  <i class='fa fa-dashboard'></i>
                   <span>Начало</span>
                 </a>
               </router-link>
@@ -101,7 +91,7 @@
               @if(Entrust::can('list-subject'))
                 <router-link to="/admin/subject" tag="li">
                   <a>
-                    <i class='icon-book'></i>
+                    <i class='fa fa-book'></i>
                     <span>Предмет</span>
                   </a>
                 </router-link>
@@ -110,7 +100,7 @@
               @if(Entrust::can('list-partition'))
                 <router-link to="/admin/partition" tag="li">
                   <a>
-                    <i class='icon-folder-open'></i>
+                    <i class='fa fa-folder-open'></i>
                     <span>Раздел</span>
                   </a>
                 </router-link>
@@ -119,7 +109,7 @@
               @if(Entrust::can('list-question'))
                 <router-link to="/admin/question" tag="li">
                   <a>
-                    <i class='icon-question'></i>
+                    <i class='fa fa-question'></i>
                     <span>Въпроси</span>
                   </a>
                 </router-link>
@@ -127,7 +117,7 @@
 
               <router-link to="/admin/testroom" tag="li">
                 <a>
-                  <i class='icon-group'></i>
+                  <i class='fa fa-group'></i>
                   <span>Стая за тестове</span>
                 </a>
               </router-link>
@@ -135,7 +125,7 @@
               @if(Entrust::can('list-invitation') && Entrust::hasRole('admin'))
                 <router-link to="/admin/invite" tag="li">
                   <a>
-                    <i class='icon-envelope'></i>
+                    <i class='fa fa-envelope'></i>
                     <span>Покана</span>
                   </a>
                 </router-link>
@@ -144,7 +134,7 @@
               @if(Entrust::can('list-mail') && Entrust::hasRole('admin'))
                 <router-link to="/admin/mail" tag="li">
                   <a>
-                    <i class='icon-comments'></i>
+                    <i class='fa fa-comments'></i>
                     <span>Съобщения</span>
                   </a>
                 </router-link>
@@ -153,7 +143,7 @@
               @if(Entrust::hasRole('admin') || (Entrust::hasRole('teacher') && Entrust::can('delete-testroom')))
                 <router-link to="/admin/trash" tag="li">
                   <a>
-                    <i class='icon-trash'></i>
+                    <i class='fa fa-trash'></i>
                     <span>Кошче</span>
                   </a>
                 </router-link>
@@ -162,9 +152,9 @@
               @if(Entrust::hasRole('admin'))
                 <li>
                   <a class="dropdown-collapse">
-                    <i class='icon-cogs'></i>
+                    <i class='fa fa-cogs'></i>
                     <span>Настройки на сайта</span>
-                    <i class='icon-angle-down angle-down'></i>
+                    <i class='fa fa-angle-down angle-down'></i>
                   </a>
 
                   <router-link to="/admin/settings" tag="ul" class="nav nav-stacked" active-class="in">

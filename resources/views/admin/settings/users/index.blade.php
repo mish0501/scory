@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-cogs"></i>
+  <i class="fa fa-cogs"></i>
   Всички потребители
 @endsection
 
@@ -34,7 +34,7 @@
           <td>
             <div class='text-right'>
               <a class='btn btn-success btn-xs' href='/admin/settings/users/{{$user->id}}/edit'>
-                <i class='icon-edit'></i>
+                <i class='fa fa-edit'></i>
                 <span>Редактирай</span>
               </a>
             </div>

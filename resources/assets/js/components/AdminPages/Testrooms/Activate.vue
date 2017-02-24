@@ -2,14 +2,14 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-group"></i>
+        <i class="fa fa-group"></i>
         Всички ученици в стая {{ code }}
       </h1>
 
       <div class='pull-right'>
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ name: 'StartTestroom', params: {code:code} }">
-            <i class='icon-play'></i>
+            <i class='fa fa-play'></i>
             Стартирай теста
           </router-link>
         </div>
@@ -68,14 +68,8 @@ export default {
       (response) => {
         this.students = response.data.students
 
-        this.$nextTick(() => {
-          $(".table").dataTable({
-            sPaginationType: "bootstrap",
-            fnDrawCallback () {
-              return $(".dataTables_wrapper").addClass("scrollable-area");
-            }
-          })
-        })
+        this.$parent.setDataTable()
+
         this.$parent.isLoading = false
       }, console.error
     )
@@ -91,9 +85,7 @@ export default {
         }
 
         this.students.push(student)
-
-        $(".table").dataTable()._fnDraw()
-        // $(".table").dataTable().draw()
+        this.$parent.redrawTable()
       })
   }
 }

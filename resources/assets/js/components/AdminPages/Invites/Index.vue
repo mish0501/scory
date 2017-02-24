@@ -2,14 +2,14 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-envelope"></i>
+        <i class="fa fa-envelope"></i>
         Всички покани
       </h1>
 
       <div class='pull-right' v-if="isAdmin">
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'invite/create' }">
-            <i class='icon-plus'></i>
+            <i class='fa fa-plus'></i>
             Създай покана
           </router-link>
         </div>
@@ -42,7 +42,7 @@
                 <td v-if="isAdmin">
                   <div class='text-right'>
                       <button class="btn btn-danger btn-xs" @click="DeleteInvite(invite.id)">
-                        <i class="icon-remove"></i>
+                        <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>
                       <router-link
@@ -51,7 +51,7 @@
                         :to="{ name:'CreateInvite', params:{ id: invite.id }}"
                         v-if="!hasInvite(invite)"
                       >
-                        <i class='icon-mail-forward'></i>
+                        <i class='fa fa-mail-forward'></i>
                         <span>Изпрати покана</span>
                       </router-link>
                   </div>
@@ -87,16 +87,10 @@ export default {
       (response) => {
         this.invites = response.data
         this.invitesIds = response.data.map(el => el.id)
-        this.$parent.isLoading = false
 
-        this.$nextTick(() => {
-          $(".table").dataTable({
-            sPaginationType: "bootstrap",
-            fnDrawCallback () {
-              return $(".dataTables_wrapper").addClass("scrollable-area");
-            }
-          })
-        })
+        this.$parent.setDataTable()
+
+        this.$parent.isLoading = false
       }, (error) => {
         console.log(error);
       }
@@ -123,8 +117,13 @@ export default {
         }
 
         const index = this.invitesIds.indexOf(id)
+        this.$parent.table.fnDestroy()
+
         this.invites.splice(index, 1)
         this.invitesIds.splice(index, 1)
+
+        this.$parent.setDataTable()
+
         this.$parent.isLoading = false
       }, console.error)
     },

@@ -55,7 +55,7 @@
         <div class='form-actions form-actions-padding' style='margin-bottom: 0;'>
           <div class='text-right'>
             <button type="submit" class='btn btn-primary btn-lg'>
-              <i class='icon-save'></i>
+              <i class='fa fa-save'></i>
               Запази
             </button>
           </div>
@@ -93,7 +93,7 @@
                 <div class='form-actions form-actions-padding' style='margin-bottom: 0;'>
                   <div class='text-right'>
                     <button type="submit" class='btn btn-primary btn-lg'>
-                      <i class='icon-save'></i>
+                      <i class='fa fa-save'></i>
                       Запази
                     </button>
                   </div>

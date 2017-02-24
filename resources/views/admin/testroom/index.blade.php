@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-group"></i>
+  <i class="fa fa-group"></i>
   Всички стаи
 @endsection
 
@@ -9,7 +9,7 @@
 <div class='pull-right'>
   <div class='btn-group'>
     <a class="btn btn-success" href="/admin/testroom/create">
-      <i class='icon-plus'></i>
+      <i class='fa fa-plus'></i>
       Нова стая
     </a>
   </div>
@@ -58,35 +58,35 @@
                 ]) !!}
                     @if($testroom->status == 0)
                       <a class='btn btn-success btn-xs' href='/admin/testroom/{{ $testroom->code }}/active'>
-                        <i class='icon-play'></i>
+                        <i class='fa fa-play'></i>
                         <span>Активирай стаята</span>
                       </a>
                     @elseif($testroom->status == 1)
                       <a class='btn btn-success btn-xs' href='/admin/testroom/{{ $testroom->code }}/start'>
-                        <i class='icon-play'></i>
+                        <i class='fa fa-play'></i>
                         <span>Стартирай тест</span>
                       </a>
                       <a class='btn btn-primary btn-xs' href='/admin/testroom/{{ $testroom->code }}/active'>
-                        <i class='icon-group'></i>
+                        <i class='fa fa-group'></i>
                         <span>Покажи учениците в стаята</span>
                       </a>
                     @elseif($testroom->status == 2)
                       <a class='btn btn-success btn-xs' href='/admin/testroom/{{ $testroom->code }}/end'>
-                        <i class='icon-stop'></i>
+                        <i class='fa fa-stop'></i>
                         <span>Спри теста</span>
                       </a>
                       <a class='btn btn-primary btn-xs' href='/admin/testroom/{{ $testroom->code }}/start'>
-                        <i class='icon-group'></i>
+                        <i class='fa fa-group'></i>
                         <span>Покажи резултатите на учениците</span>
                       </a>
                     @elseif($testroom->status == 3)
                       <a class='btn btn-primary btn-xs' href='/admin/testroom/{{ $testroom->code }}/results'>
-                        <i class='icon-group'></i>
+                        <i class='fa fa-group'></i>
                         <span>Покажи резултатите на учениците</span>
                       </a>
                     @endif
                     <button type="submit" class='btn btn-danger btn-xs'>
-                      <i class='icon-remove'></i>
+                      <i class='fa fa-remove'></i>
                       <span>Изтрий</span>
                     </button>
                 {!! Form::close() !!}

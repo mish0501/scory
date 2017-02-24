@@ -2,7 +2,7 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-trash"></i>
+        <i class="fa fa-trash"></i>
         Кошче
       </h1>
     </div>
@@ -10,7 +10,7 @@
     <div class='box bordered-box purple-border' :class="[(subjects.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="isAdmin">
       <div class='box-header purple-background'>
         <div class='title'>
-          <i class="icon-book"></i>
+          <i class="fa fa-book"></i>
           <span v-if="subjects.length <= 0">
             Няма предмети в кошчето
           </span>
@@ -47,10 +47,10 @@
                   <td>
                     <div class='text-right'>
                       <button class='btn btn-success btn-xs' @click="RenewSubject(subject.id)">
-                        <i class='icon-check'></i> Възтанови
+                        <i class='fa fa-check'></i> Възтанови
                       </button>
                       <button class="btn btn-danger btn-xs" @click="DeleteSubject(subject.id)">
-                        <i class="icon-remove"></i>
+                        <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>
                     </div>
@@ -67,7 +67,7 @@
     <div class='box bordered-box blue-border' :class="[(partitions.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="isAdmin">
       <div class='box-header blue-background'>
         <div class='title'>
-          <i class="icon-folder-open"></i>
+          <i class="fa fa-folder-open"></i>
           <span v-if="partitions.length <= 0">
            Няма раздели в кошчето
           </span>
@@ -108,10 +108,10 @@
                   <td>
                     <div class='text-right'>
                       <button class='btn btn-success btn-xs' @click="RenewPartition(partition.id)">
-                        <i class='icon-check'></i> Възтанови
+                        <i class='fa fa-check'></i> Възтанови
                       </button>
                       <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)">
-                        <i class="icon-remove"></i>
+                        <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>
                     </div>
@@ -128,7 +128,7 @@
     <div class='box bordered-box green-border' :class="[(questions.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="isAdmin">
       <div class='box-header green-background'>
         <div class='title'>
-          <i class="icon-question"></i>
+          <i class="fa fa-question"></i>
           <span v-if="questions.length <= 0">
            Няма въпроси в кошчето
           </span>
@@ -173,10 +173,10 @@
                   <td>
                     <div class='text-right'>
                       <button class='btn btn-success btn-xs' @click="RenewQuestion(question.id)">
-                        <i class='icon-check'></i> Възтанови
+                        <i class='fa fa-check'></i> Възтанови
                       </button>
                       <button class="btn btn-danger btn-xs" @click="DeleteQuestion(question.id)">
-                        <i class="icon-remove"></i>
+                        <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>
                     </div>
@@ -193,7 +193,7 @@
     <div class='box bordered-box red-border' :class="[(testrooms.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;'>
       <div class='box-header red-background'>
         <div class='title'>
-          <i class="icon-group"></i>
+          <i class="fa fa-group"></i>
           <span v-if="testrooms.length <= 0">
            Няма стаи в кошчето
           </span>
@@ -237,10 +237,10 @@
                   <td>
                     <div class='text-right'>
                       <button class='btn btn-success btn-xs' @click="RenewTestroom(room.id, room.code)">
-                        <i class='icon-check'></i> Възтанови
+                        <i class='fa fa-check'></i> Възтанови
                       </button>
                       <button class="btn btn-danger btn-xs" @click="DeleteTestroom(room.id, room.code)">
-                        <i class="icon-remove"></i>
+                        <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>
                     </div>
@@ -257,7 +257,7 @@
     <div class='box bordered-box orange-border' :class="[(mail.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="isAdmin">
       <div class='box-header orange-background'>
         <div class='title'>
-          <i class="icon-group"></i>
+          <i class="fa fa-group"></i>
           <span v-if="questions.length <= 0">
            Няма съобщения в кошчето
           </span>
@@ -305,10 +305,10 @@
                   <td>
                     <div class='text-right'>
                       <button class='btn btn-success btn-xs' @click="RenewMail(message.id)">
-                        <i class='icon-check'></i> Възтанови
+                        <i class='fa fa-check'></i> Възтанови
                       </button>
                       <button class="btn btn-danger btn-xs" @click="DeleteMail(message.id)">
-                        <i class="icon-remove"></i>
+                        <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>
                     </div>

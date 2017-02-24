@@ -2,14 +2,14 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-book"></i>
+        <i class="fa fa-book"></i>
         Всички стаи
       </h1>
 
       <div class='pull-right'>
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'testroom/create' }">
-            <i class='icon-plus'></i>
+            <i class='fa fa-plus'></i>
             Нова стая
           </router-link>
         </div>
@@ -54,35 +54,35 @@
                 <td>
                   <div class='text-right'>
                       <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ActivateTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 0">
-                        <i class="icon-ok"></i>
+                        <i class="fa fa-check"></i>
                         <span>Активирай</span>
                       </router-link>
 
                       <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StartTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 1">
-                        <i class="icon-play"></i>
+                        <i class="fa fa-play"></i>
                         <span>Старт</span>
                       </router-link>
                       <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ActivateTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 1">
-                        <i class="icon-group"></i>
+                        <i class="fa fa-group"></i>
                         <span>Ученици</span>
                       </router-link>
 
                       <a class="btn btn-success btn-xs" @click="StopTest(testroom.code)" v-if="testroom.status == 2">
-                        <i class="icon-stop"></i>
+                        <i class="fa fa-stop"></i>
                         <span>Стоп</span>
                       </a>
                       <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'StartTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 2">
-                        <i class="icon-group"></i>
+                        <i class="fa fa-group"></i>
                         <span>Резултати</span>
                       </router-link>
 
                       <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ResultsTestroom', params:{ code: testroom.code }}" v-if="testroom.status == 3">
-                        <i class="icon-group"></i>
+                        <i class="fa fa-group"></i>
                         <span>Резултати</span>
                       </router-link>
 
                       <button class="btn btn-danger btn-xs" @click="DeleteTestroom(testroom.code, testroom.id)">
-                        <i class="icon-remove"></i>
+                        <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>
                   </div>
@@ -153,16 +153,10 @@ export default {
         (response) => {
           this.testrooms = response.data
           this.testroomsIds = response.data.map(el => el.id)
-          this.$parent.isLoading = false
 
-          this.$nextTick(() => {
-            $(".table").dataTable({
-              sPaginationType: "bootstrap",
-              fnDrawCallback () {
-                return $(".dataTables_wrapper").addClass("scrollable-area");
-              }
-            })
-          })
+          this.$parent.setDataTable()
+
+          this.$parent.isLoading = false
         }, (error) => {
           console.log(error);
         }
@@ -203,8 +197,14 @@ export default {
         }
 
         const index = this.testroomsIds.indexOf(id)
+
+        this.$parent.table.fnDestroy()
+
         this.testrooms.splice(index, 1)
         this.testroomsIds.splice(index, 1)
+
+        this.$parent.setDataTable()
+
         this.$parent.isLoading = false
       }, (error) => {
         console.error(error);

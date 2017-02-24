@@ -2,7 +2,7 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-user"></i>
+        <i class="fa fa-user"></i>
           Настройки на профила
       </h1>
     </div>
@@ -36,7 +36,7 @@
               <div class='form-actions form-actions-padding' style='margin-bottom: 0;' v-if="edit">
                 <div class='text-right'>
                   <router-link :tag="a" :to="{ name: 'UserEdit' }" class='btn btn-success btn-lg'>
-                    <i class='icon-edit'></i>
+                    <i class='fa fa-edit'></i>
                     Редактирай
                   </router-link>
                 </div>

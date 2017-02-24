@@ -2,14 +2,18 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-group"></i>
+        <i class="fa fa-group"></i>
         Всички готови ученици в стая {{ code }}
       </h1>
 
       <div class='pull-right'>
         <div class='btn-group'>
+          <span class="btn" v-if="timer">
+            <i class='fa fa-clock-o'></i>
+            {{ timer }}
+          </span>
           <a class="btn btn-success" @click.prevent="StopTest">
-            <i class='icon-play'></i>
+            <i class='fa fa-play'></i>
             Стоп на теста
           </a>
         </div>
@@ -48,7 +52,7 @@
                 <td>
                   <div class="text-right">
                     <router-link class='btn btn-success btn-xs' :to="{ name: 'StudentResultsTestroom', params: { code: code, number: student.number}}">
-                      <i class='icon-question'></i>
+                      <i class='fa fa-question'></i>
                       <span>Покажи отговорите на ученика</span>
                     </router-link>
                   </div>
@@ -64,9 +68,12 @@
 
 <script>
 export default {
+  name: "TestRoomStart",
   data(){
     return{
-      students: []
+      students: [],
+      timer: '',
+      table: {}
     }
   },
 
@@ -78,18 +85,14 @@ export default {
 
   mounted(){
     this.$parent.isLoading = true
+
     this.$http.post('/api/testroom/start', {code: this.code}).then(
       (response) => {
         this.students = response.data.students
 
-        this.$nextTick(() => {
-          $(".table").dataTable({
-            sPaginationType: "bootstrap",
-            fnDrawCallback () {
-              return $(".dataTables_wrapper").addClass("scrollable-area");
-            }
-          })
-        })
+        this.$parent.setDataTable()
+
+        this.getTime()
 
         this.$parent.isLoading = false
       },console.error
@@ -104,8 +107,9 @@ export default {
           correct: e.correct
         }
 
+        this.$parent.table.fnDestroy()
         this.students.push(student)
-        $(".table").dataTable()._fnDraw()
+        this.$parent.setDataTable()
       })
   },
 
@@ -119,6 +123,43 @@ export default {
         },(error) => {
           console.error(error);
         }
+      )
+    },
+
+    startTimer(duration) {
+      var timer = duration, minutes, seconds, interval;
+      var vm = this
+      var func = function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        if(--timer < 0){
+          clearInterval(interval);
+          vm.StopTest()
+        }
+
+        vm.timer = minutes + ":" + seconds
+      }
+      interval = setInterval(func, 1000);
+    },
+    getTime() {
+      this.$http.post('/api/testroom/getTime', { code: this.code }).then(
+        (response) => {
+          let data = response.data
+          let now = new Date()
+          let testStarted = new Date(data.testStarted)
+
+          let elapsedT = Math.floor((now - testStarted) / 1000)
+
+          let timer = data.duration - elapsedT
+
+          if(timer > 0){
+            this.startTimer(timer)
+          }
+        }, console.error
       )
     }
   }

@@ -2,14 +2,14 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-cogs"></i>
+        <i class="fa fa-cogs"></i>
         Всички права
       </h1>
 
       <div class='pull-right' v-if="isAdmin">
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'permissions/create' }">
-            <i class='icon-plus'></i>
+            <i class='fa fa-plus'></i>
             Добави право
           </router-link>
         </div>
@@ -47,7 +47,7 @@
                 <td>
                   <div class='text-right'>
                     <router-link tag="a" :to="{ name: 'SettingsEditPermission', params: {id: permission.id } }" class='btn btn-success btn-xs'>
-                      <i class='icon-edit'></i>
+                      <i class='fa fa-edit'></i>
                       <span>Редактирай</span>
                     </router-link>
                   </div>
@@ -87,16 +87,10 @@ export default {
     this.$http.get('/api/settings/permissions').then(
       (response) => {
         this.permissions = response.data
-        this.$parent.isLoading = false
 
-        this.$nextTick(() => {
-          $(".table").dataTable({
-            sPaginationType: "bootstrap",
-            fnDrawCallback () {
-              return $(".dataTables_wrapper").addClass("scrollable-area");
-            }
-          })
-        })
+        this.$parent.setDataTable()
+        
+        this.$parent.isLoading = false
       }, console.error
     )
   }

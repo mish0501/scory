@@ -2,14 +2,14 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-book"></i>
+        <i class="fa fa-book"></i>
         Всички въпроси
       </h1>
 
       <div class='pull-right' v-if="isAdmin">
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'question/create' }">
-            <i class='icon-plus'></i>
+            <i class='fa fa-plus'></i>
             Добави въпрос
           </router-link>
         </div>
@@ -55,11 +55,11 @@
                 <td v-if="isAdmin || isTeacher">
                   <div class='text-right'>
                       <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditQuestion', params:{ id: question.id }}">
-                        <i class="icon-edit"></i>
+                        <i class="fa fa-edit"></i>
                         <span>Редактирай</span>
                       </router-link>
                       <button class="btn btn-danger btn-xs" @click="DeleteQuestion(question.id)" v-if="!isTeacher">
-                        <i class="icon-remove"></i>
+                        <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>
                   </div>
@@ -95,16 +95,10 @@ export default {
       (response) => {
         this.questions = response.data
         this.questionsIds = response.data.map(el => el.id)
-        this.$parent.isLoading = false
 
-        this.$nextTick(() => {
-          $(".table").dataTable({
-            sPaginationType: "bootstrap",
-            fnDrawCallback () {
-              return $(".dataTables_wrapper").addClass("scrollable-area");
-            }
-          })
-        })
+        this.$parent.setDataTable()
+
+        this.$parent.isLoading = false
       }, (error) => {
         console.log(error);
       }
@@ -137,8 +131,14 @@ export default {
         }
 
         const index = this.questionsIds.indexOf(id)
+
+        this.$parent.table.fnDestroy()
+        
         this.questions.splice(index, 1)
         this.questionsIds.splice(index, 1)
+
+        this.$parent.setDataTable()
+
         this.$parent.isLoading = false
       }, (error) => {
         console.error(error);

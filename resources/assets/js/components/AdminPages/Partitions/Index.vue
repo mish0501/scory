@@ -2,14 +2,14 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-book"></i>
+        <i class="fa fa-book"></i>
         Всички раздели
       </h1>
 
       <div class='pull-right' v-if="isAdmin">
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'partition/create' }">
-            <i class='icon-plus'></i>
+            <i class='fa fa-plus'></i>
             Добави предмет
           </router-link>
         </div>
@@ -46,11 +46,11 @@
                 <td v-if="isAdmin || isTeacher">
                   <div class='text-right'>
                       <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditPartition', params:{ id: partition.id }}">
-                        <i class="icon-edit"></i>
+                        <i class="fa fa-edit"></i>
                         <span>Редактирай</span>
                       </router-link>
                       <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)" v-if="!isTeacher">
-                        <i class="icon-remove"></i>
+                        <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>
                   </div>
@@ -82,16 +82,10 @@ export default {
       (response) => {
         this.partitions = response.data
         this.subjectsIds = response.data.map(el => el.id)
-        this.$parent.isLoading = false
 
-        this.$nextTick(() => {
-          $(".table").dataTable({
-            sPaginationType: "bootstrap",
-            fnDrawCallback () {
-              return $(".dataTables_wrapper").addClass("scrollable-area");
-            }
-          })
-        })
+        this.$parent.setDataTable()
+
+        this.$parent.isLoading = false
       }, (error) => {
         console.log(error);
       }
@@ -130,8 +124,13 @@ export default {
         }
 
         const index = this.partitionsIds.indexOf(id)
+        this.$parent.table.fnDestroy()
+
         this.partitions.splice(index, 1)
         this.partitionsIds.splice(index, 1)
+        
+        this.$parent.setDataTable()
+
         this.$parent.isLoading = false
       }, (error) => {
         console.error(error);

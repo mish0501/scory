@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-question"></i>
+  <i class="fa fa-question"></i>
   Добавяне на въпрос
 @endsection
 
@@ -52,7 +52,7 @@
       <div class='col-md-5 col-sm-1 col-xs-1'>
         <div class="checkmark">
           <label>
-            <i class="icon-ok"></i>
+            <i class="fa fa-ok"></i>
             <input type="checkbox" class="hide" value="0" name='correct[]'>
           </label>
         </div>
@@ -65,7 +65,7 @@
       <div class='col-md-5 col-sm-1 col-xs-1'>
         <div class="checkmark">
           <label>
-            <i class="icon-ok"></i>
+            <i class="fa fa-ok"></i>
             <input type="checkbox" class="hide" value="1" name='correct[]'>
           </label>
         </div>
@@ -78,7 +78,7 @@
       <div class='col-md-5 col-sm-1 col-xs-1'>
         <div class="checkmark">
           <label>
-            <i class="icon-ok"></i>
+            <i class="fa fa-ok"></i>
             <input type="checkbox" class="hide" value="2" name='correct[]'>
           </label>
         </div>
@@ -91,7 +91,7 @@
       <div class='col-md-5 col-sm-1 col-xs-1'>
         <div class="checkmark">
           <label>
-            <i class="icon-ok"></i>
+            <i class="fa fa-ok"></i>
             <input type="checkbox" class="hide" value="3" name='correct[]'>
           </label>
         </div>
@@ -100,13 +100,13 @@
     <div class='form-group'>
       <div class='col-md-5 col-md-offset-2'>
         <button class='btn btn-success add-answer'>
-          <i class='icon-plus'></i>
+          <i class='fa fa-plus'></i>
           Добави още един отговор
         </button>
         <br class="hidden-lg hidden-sm">
         <br class="hidden-lg hidden-sm">
         <button class='btn btn-danger remove-answer' disabled>
-          <i class='icon-remove'></i>
+          <i class='fa fa-remove'></i>
           Изтрий последния въпрос
         </button>
       </div>
@@ -115,7 +115,7 @@
       <div class='row'>
         <div class='col-md-10 col-md-offset-2'>
           <button class='btn btn-primary' type='submit'>
-            <i class='icon-save'></i>
+            <i class='fa fa-save'></i>
             Запази
           </button>
         </div>
@@ -240,7 +240,7 @@
           +"<div class='col-md-5 col-sm-1 col-xs-1'>"
             +'<div class="checkmark">'
               +"<label>"
-                +"<i class='icon-ok'></i>"
+                +"<i class='fa fa-ok'></i>"
                 +"<input type='checkbox' class='hide' value='"+ newRadioN +"' name='correct[]'>"
               +"</label>"
             +"</div>"

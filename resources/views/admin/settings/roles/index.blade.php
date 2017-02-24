@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-  <i class="icon-cogs"></i>
+  <i class="fa fa-cogs"></i>
   Всички роли
 @endsection
 
@@ -10,7 +10,7 @@
   <div class='pull-right'>
     <div class='btn-group'>
       <a class="btn btn-success" href="{{ route('admin.settings.roles.create') }}">
-        <i class='icon-plus'></i>
+        <i class='fa fa-plus'></i>
         Добави роля
       </a>
     </div>
@@ -48,7 +48,7 @@
             <td>
               <div class='text-right'>
                 <a class='btn btn-success btn-xs' href='/admin/settings/roles/{{$role->id}}/edit'>
-                  <i class='icon-edit'></i>
+                  <i class='fa fa-edit'></i>
                   <span>Редактирай</span>
                 </a>
               </div>

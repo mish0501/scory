@@ -2,7 +2,7 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-cogs"></i>
+        <i class="fa fa-cogs"></i>
         Всички потребители
       </h1>
     </div>
@@ -38,7 +38,7 @@
                 <td>
                   <div class='text-right'>
                     <router-link tag="a" :to="{ name: 'SettingsEditUser', params: {id: user.id } }" class='btn btn-success btn-xs'>
-                      <i class='icon-edit'></i>
+                      <i class='fa fa-edit'></i>
                       <span>Редактирай</span>
                     </router-link>
                   </div>
@@ -72,16 +72,10 @@ export default {
     this.$http.get('/api/settings/users').then(
       (response) => {
         this.users = response.data
-        this.$parent.isLoading = false
 
-        this.$nextTick(() => {
-          $(".table").dataTable({
-            sPaginationType: "bootstrap",
-            fnDrawCallback () {
-              return $(".dataTables_wrapper").addClass("scrollable-area");
-            }
-          })
-        })
+        this.$parent.setDataTable()
+        
+        this.$parent.isLoading = false
       }, console.error
     )
   }

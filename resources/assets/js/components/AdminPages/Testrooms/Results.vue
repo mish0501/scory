@@ -2,7 +2,7 @@
   <div class='col-xs-12'>
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
-        <i class="icon-group"></i>
+        <i class="fa fa-group"></i>
         Всички готови ученици в стая {{ code }}
       </h1>
     </div>
@@ -39,7 +39,7 @@
                 <td>
                   <div class="text-right">
                     <router-link class='btn btn-success btn-xs' :to="{ name: 'StudentResultsTestroom', params: { code: code, number: student.number}}">
-                      <i class='icon-question'></i>
+                      <i class='fa fa-question'></i>
                       <span>Покажи отговорите на ученика</span>
                     </router-link>
                   </div>
@@ -73,14 +73,7 @@ export default {
       (response) => {
         this.students = response.data.students
 
-        this.$nextTick(() => {
-          $(".table").dataTable({
-            sPaginationType: "bootstrap",
-            fnDrawCallback () {
-              return $(".dataTables_wrapper").addClass("scrollable-area");
-            }
-          })
-        })
+        this.$parent.setDataTable()
 
         this.$parent.isLoading = false
       }, console.error
