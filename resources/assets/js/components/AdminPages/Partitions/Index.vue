@@ -8,7 +8,7 @@
 
       <div class='pull-right' v-if="isAdmin || isTeacher">
         <div class='btn-group'>
-          <router-link class="btn btn-warning" :to="{ path: 'partition/create' }">
+          <router-link class="btn btn-success" :to="{ path: 'partition/create' }">
             <i class='fa fa-plus'></i>
             Добави предмет
           </router-link>
@@ -45,14 +45,14 @@
                 <td class="class-col">{{ partition.class }}. Клас</td>
                 <td v-if="isAdmin || isTeacher">
                   <div class='text-right'>
-                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditPartition', params:{ id: partition.id }}">
-                        <i class="fa fa-edit"></i>
-                        <span>Редактирай</span>
-                      </router-link>
-                      <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)" v-if="!isTeacher">
-                        <i class="fa fa-remove"></i>
-                        <span>Изтрий</span>
-                      </button>
+                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditPartition', params:{ id: partition.id }}">
+                      <i class="fa fa-edit"></i>
+                      <span>Редактирай</span>
+                    </router-link>
+                    <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)" v-if="!isTeacher">
+                      <i class="fa fa-remove"></i>
+                      <span>Изтрий</span>
+                    </button>
                   </div>
                 </td>
               </tr>

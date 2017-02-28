@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::resource('subject', 'SubjectController', ['except' => ['show', 'create']]);
   Route::resource('partition', 'PartitionController', ['except' => ['show', 'create']]);
   Route::resource('question', 'QuestionController', ['except' => ['show', 'create']]);
+  Route::resource('lesson', 'QuestionController', ['except' => ['show', 'create']]);
 
   // Trash
   Route::group(['prefix' => 'trash'], function () {

@@ -8,7 +8,7 @@
 
       <div class='pull-right' v-if="isAdmin || isTeacher">
         <div class='btn-group'>
-          <router-link class="btn btn-warning" :to="{ path: 'question/create' }">
+          <router-link class="btn btn-success" :to="{ path: 'question/create' }">
             <i class='fa fa-plus'></i>
             Добави въпрос
           </router-link>
@@ -50,7 +50,11 @@
                 <td class="name"><span>{{ question.name }}</span></td>
                 <td>{{ question.subject.name }}</td>
                 <td>{{ question.partition.name }}</td>
-                <td>{{ question.user.name }}</td>
+                <td>
+                  <router-link tag="a" :to="{ name:'UserURL', params:{ id: question.user.id }}">
+                    {{ question.user.name }}
+                  </router-link>
+                </td>
                 <td class="class-col">{{ question.class }}. Клас</td>
                 <td v-if="isAdmin || isTeacher">
                   <div class='text-right'>

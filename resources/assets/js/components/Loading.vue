@@ -34,7 +34,6 @@ export default {
   .spinner{
     width: 100px;
     height: 100px;
-    background: #eee;
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -56,14 +55,14 @@ export default {
   }
 
   .spinner:after{
-    border-top-color: #0ad03e;
-    border-bottom-color: #0ad03e;
+    border-top-color: #fcd052;
+    border-bottom-color: #fcd052;
     animation: spinny 1s linear infinite;
   }
 
   .spinner:before{
-    border-top-color: #08c33a;
-    border-bottom-color: #08c33a;
+    border-top-color: #f7bf43;
+    border-bottom-color: #f7bf43;
     animation: spinny2 1s linear 0.08s infinite;
   }
 

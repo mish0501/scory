@@ -29,7 +29,7 @@
       <script src="/admin/assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
   </head>
-  <body class='contrast-banana'>
+  <body class='contrast-orange'>
     <div id="app">
       <header>
         <nav class='navbar navbar-default'>
@@ -119,6 +119,13 @@
                 <a>
                   <i class='fa fa-group'></i>
                   <span>Стая за тестове</span>
+                </a>
+              </router-link>
+
+              <router-link to="/admin/lessons" tag="li">
+                <a>
+                  <i class='fa fa-file'></i>
+                  <span>Уроци</span>
                 </a>
               </router-link>
 
