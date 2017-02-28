@@ -29,7 +29,7 @@
       <script src="/admin/assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
   </head>
-  <body class='contrast-grass-green'>
+  <body class='contrast-banana'>
     <div id="app">
       <header>
         <nav class='navbar navbar-default'>

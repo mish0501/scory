@@ -10,12 +10,12 @@
       </p>
     </div>
 
-    <form accept-charset="UTF-8" autocomplete="off" v-on:submit.prevent="inviteEmailSubmit">
-      <div class="form-group">
-        <input type="email" class="form-control input-lg" name="invite-email"  v-model="inviteEmail" placeholder="E-mail">
-      </div>
-      <div class="form-group">
-          <button type="submit" v-on:click.prevent="inviteEmailSubmit" class="btn btn-success btn-lg btn-block">Изпрати</button>
+    <form accept-charset="UTF-8" autocomplete="off" class="col-md-12" v-on:submit.prevent="inviteEmailSubmit">
+      <div class="input-group">
+        <input type="email" class="form-control input-lg" name="invite-email" v-model="inviteEmail" placeholder="E-mail">
+        <div class="input-group-btn">
+          <button type="submit" v-on:click.prevent="inviteEmailSubmit" class="btn btn-danger btn-lg btn-block">Изпрати</button>
+        </div>
       </div>
     </form>
   </div>

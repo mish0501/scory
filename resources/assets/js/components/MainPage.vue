@@ -5,9 +5,7 @@
         <div class="navbar-header">
           <button type="button" id="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Меню</span>
-            <span class="fa fa-bar"></span>
-            <span class="fa fa-bar"></span>
-            <span class="fa fa-bar"></span>
+            <i class="fa fa-bars fa-4" aria-hidden="true"></i>
           </button>
           <a class="navbar-brand scroll-effect" data-scroll="top">
             <span id="logo"></span> Scory
@@ -27,6 +25,7 @@
 
     <!-- Top -->
     <div class="jumbotron" id="top">
+      <div class="color-overlay"></div>
       <div class="container">
         <h1>Добре дошли!</h1>
       </div>
@@ -38,11 +37,26 @@
       <div class="row" id="about">
         <div class="col-md-10 col-md-offset-1">
           <h2 class="text-center">За проекта</h2>
-          <p class="text-justify">Чрез „Scory“ можете лесно и бързо да генерирате най-различни тестове във всяка една образователна област, за всеки един клас по раздели.</p>
+          <br>
+          <p class="text-center aboutTitle">За учениците.</p>
+          <p class="text-center">
+            Подготви се за тестове. Бъди крача напред пред останалите. Упражнявай се, преглеждай уроци.
+            <br>
+            Бъди най добрия.
+          </p>
+
+          <hr>
+
+          <p class="text-center aboutTitle">За учителите.</p>
+          <p class="text-center">
+            „Scory“ е вашият най-добър помощник с подготовката на тестове и уроци.
+          </p>
         </div>
       </div>
 
-      <hr>
+      <div class="col-md-10 col-md-offset-1">
+        <hr>
+      </div>
 
       <!-- Student -->
       <div class="row" id="student">
@@ -51,18 +65,25 @@
           <p>Ако си ученик можеш да си избереш една от тези опции.</p>
         </header>
         <div class="col-md-4 col-md-offset-1 text-center">
-          <h2>Избери си тест</h2>
-          <p class="text-justify">Избери класа си, предмета и раздела, който искаш да се упражняваш.</p>
-          <p><a class="btn btn-success btn-lg btn-block" href="/test/select" role="button">Избери си тест</a></p>
-        </div>
-        <div class="col-md-4 col-md-offset-2 text-center">
           <h2>Влез в стая за тестове</h2>
 
-          <test-room-form></test-room-form>
+          <test-room-form :start="false"></test-room-form>
+        </div>
+        <div class="col-md-4 col-md-offset-2 text-center">
+          <h2>Избери си тест</h2>
+          <p class="text-center">Избери класа си, предмета и раздела, по който искаш да се упражняваш.</p>
+          <p><a class="btn btn-danger btn-lg btn-block" href="/test/select" role="button">Избери си тест</a></p>
+        </div>
+        <div class="col-md-4 col-md-offset-4 text-center">
+          <h2>Прегледай урок</h2>
+          <p class="text-center">Избери класа си, предмета и раздела, по който искаш да прегледаш уроците.</p>
+          <p><a class="btn btn-danger btn-lg btn-block" href="#" role="button" disabled>Прегледай урок</a></p>
         </div>
       </div>
 
-      <hr>
+      <div class="col-md-10 col-md-offset-1">
+        <hr>
+      </div>
 
       <!-- Teacher -->
       <div class="row" id="teacher">
@@ -70,12 +91,14 @@
           <h2>Учител?</h2>
           <p class="text-center">За да можете да използвате сайта, трябва да получите покана. За тази цел въведете e-mail си и ще я изпратим.</p>
         </header>
-        <div class="col-md-10 col-md-offset-1 text-center">
+        <div class="col-md-6 col-md-offset-3 text-center">
           <invite-email-form></invite-email-form>
         </div>
       </div>
 
-      <hr>
+      <div class="col-md-10 col-md-offset-1">
+        <hr>
+      </div>
 
       <!-- Contact -->
       <div class="row" id="contact">

@@ -1,3 +1,7 @@
+hr{
+  border-top: 1px solid #954120;
+}
+
 #menu{
   border: none;
   background: transparent;
@@ -36,12 +40,26 @@
 #top{
   display: -webkit-box;  display: -webkit-flex;  display: -moz-flex;  display: -ms-flexbox;  display: flex;  -webkit-box-direction: normal;  -webkit-box-orient: vertical;  webkit-flex-direction: column;  -moz-flex-direction: column;  -ms-flex-direction: column;  flex-direction: column;  -webkit-box-pack: center;  -ms-flex-pack: center;  -webkit-justify-content: center;  -moz-justify-content: center;  justify-content: center;  -webkit-box-align: center;  -ms-flex-align: center;  -webkit-align-items: center;  -moz-align-items: center;  align-items: center;
   height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(/assets/images/top.jpg);
+  background: url(/assets/images/people-woman-coffee-meeting.jpg);
   background-position: center center;
   background-size: cover;
   color: #fff;
   text-align: center;
   position: relative;
+}
+
+#top .container{
+  z-index: 3;
+}
+
+#top .color-overlay {
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 }
 
 /*About*/
@@ -50,10 +68,19 @@
   font-size: 14pt;
 }
 
+#about p.aboutTitle{
+  font-size: 16pt;
+  font-style: italic;
+}
+
 /*Student*/
 
 #student header > p{
   font-size: 14pt;
+}
+
+#student p.text-center{
+  font-size: 12pt;
 }
 
 /*Contact*/
@@ -110,7 +137,7 @@
   }
 
   #menu.bg #navbar > ul > li.active > a{
-    color: #27b6ff;
+    color: #FF7F00;
     background: none;
   }
 }

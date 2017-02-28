@@ -6,9 +6,9 @@
         Всички раздели
       </h1>
 
-      <div class='pull-right' v-if="isAdmin">
+      <div class='pull-right' v-if="isAdmin || isTeacher">
         <div class='btn-group'>
-          <router-link class="btn btn-success" :to="{ path: 'partition/create' }">
+          <router-link class="btn btn-warning" :to="{ path: 'partition/create' }">
             <i class='fa fa-plus'></i>
             Добави предмет
           </router-link>
@@ -128,7 +128,7 @@ export default {
 
         this.partitions.splice(index, 1)
         this.partitionsIds.splice(index, 1)
-        
+
         this.$parent.setDataTable()
 
         this.$parent.isLoading = false

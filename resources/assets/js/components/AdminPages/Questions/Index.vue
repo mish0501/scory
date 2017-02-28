@@ -6,9 +6,9 @@
         Всички въпроси
       </h1>
 
-      <div class='pull-right' v-if="isAdmin">
+      <div class='pull-right' v-if="isAdmin || isTeacher">
         <div class='btn-group'>
-          <router-link class="btn btn-success" :to="{ path: 'question/create' }">
+          <router-link class="btn btn-warning" :to="{ path: 'question/create' }">
             <i class='fa fa-plus'></i>
             Добави въпрос
           </router-link>
@@ -133,7 +133,7 @@ export default {
         const index = this.questionsIds.indexOf(id)
 
         this.$parent.table.fnDestroy()
-        
+
         this.questions.splice(index, 1)
         this.questionsIds.splice(index, 1)
 

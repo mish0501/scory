@@ -9,7 +9,7 @@
         <div class='col-md-5 col-sm-1 col-xs-1'>
           <div class="checkmark" :class="[(answer.correct) ? 'checked' : '']">
             <label>
-              <i class="fa fa-ok"></i>
+              <i class="fa fa-check"></i>
               <input type="checkbox" class="hide" @change="CheckAnswer(index)">
             </label>
           </div>
@@ -22,7 +22,7 @@
         <div class='col-md-5 col-sm-1 col-xs-1'>
           <div class="checkmark" :class="[(answer.correct == 1) ? 'checked' : '']">
             <label>
-              <i class="fa fa-ok"></i>
+              <i class="fa fa-check"></i>
               <input type="checkbox" class="hide" @change="CheckAnswer(index)">
             </label>
           </div>

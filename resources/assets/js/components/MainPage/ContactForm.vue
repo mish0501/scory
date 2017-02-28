@@ -38,7 +38,7 @@
       </div>
       <div class="form-group">
         <div class="col-md-2">
-          <button type="submit" v-on:click.prevent="messegeSend" class="btn btn-success btn-lg btn-block">Изпрати</button>
+          <button type="submit" v-on:click.prevent="messegeSend" class="btn btn-danger btn-lg btn-block">Изпрати</button>
         </div>
       </div>
     </form>
