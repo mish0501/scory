@@ -8,7 +8,7 @@
 
       <div class='pull-right' v-if="isAdmin || isTeacher">
         <div class='btn-group'>
-          <router-link class="btn btn-success" :to="{ path: 'lessons/create' }">
+          <router-link class="btn btn-success" :to="{ path: 'lesson/create' }">
             <i class='fa fa-plus'></i>
             Добави урок
           </router-link>
@@ -43,7 +43,7 @@
             </thead>
             <tbody>
               <tr v-for="lesson in lessons">
-                <td class="name"><span>{{ lesson.name }}</span></td>
+                <td>{{ lesson.name }}</td>
                 <td>{{ lesson.subject.name }}</td>
                 <td>{{ lesson.partition.name }}</td>
                 <td class="class-col">{{ lesson.class }}. Клас</td>

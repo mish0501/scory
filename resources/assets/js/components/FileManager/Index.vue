@@ -110,6 +110,19 @@ export default {
       const selectBtn = fileEl.find('.dz-select-btn')
       const vm = this
 
+      if(window.files){
+        var files = window.files
+
+        for(var i = 0; i < files.length; i++){
+          let id = files[i].id
+
+          if(file.id == id){
+            $("div").find("[data-id='" + id + "']").addClass('dz-selected')
+            this.selecteds.push(id)
+          }
+        }
+      }
+
       selectBtn.on('click', function () {
         const preview = $(this).parent('[data-id]')
         const id = preview.attr('data-id')
@@ -145,8 +158,17 @@ export default {
 
     selectFiles () {
       const selecteds = this.selecteds
+      let files = []
 
-      window.opener.postMessage({ selecteds }, '*')
+      for(var i = 0; i < selecteds.length; i++){
+        let name = $("div").find("[data-id='" + selecteds[i] + "']").find("[data-dz-name]").html()
+        files.push({
+          id: selecteds[i],
+          name: name
+        })
+      }
+
+      window.opener.postMessage({ files }, '*')
 
       window.close()
     }

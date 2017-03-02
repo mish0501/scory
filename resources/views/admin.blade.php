@@ -42,7 +42,7 @@
           </a>
           <ul class='nav'>
             @if(Auth::user()->can('list-mail'))
-              <messeges-widget></messeges-widget>
+              <messages-widget></messages-widget>
             @endif
             <li class='dropdown dark user-menu'>
               <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
@@ -122,7 +122,7 @@
                 </a>
               </router-link>
 
-              <router-link to="/admin/lessons" tag="li">
+              <router-link to="/admin/lesson" tag="li">
                 <a>
                   <i class='fa fa-file'></i>
                   <span>Уроци</span>
