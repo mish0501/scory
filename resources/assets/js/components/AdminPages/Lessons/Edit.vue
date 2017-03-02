@@ -10,7 +10,7 @@
     <alert :alert="alert" v-if="hasAlert"></alert>
 
     <div class='box-content'>
-      <form class="form form-horizontal" @submit.prevent="CreateLesson">
+      <form class="form form-horizontal" @submit.prevent="EditLesson">
         <div class='form-group'>
           <label class='col-md-2 control-label' for='name'>Име на урока</label>
           <div class='col-md-5'>
@@ -75,7 +75,7 @@
         <div class='form-actions form-actions-padding-sm'>
           <div class='row'>
             <div class='col-md-10 col-md-offset-2'>
-              <button class='btn btn-primary' @click.prevent="CreateLesson">
+              <button class='btn btn-primary' @click.prevent="EditLesson">
                 <i class='fa fa-save'></i>
                 Запази
               </button>
@@ -187,7 +187,7 @@ export default {
       this.files.splice(index, 1)
     },
 
-    CreateLesson() {
+    EditLesson() {
       var data = {
         name: this.name,
         subject_id: this.subject,
@@ -203,7 +203,7 @@ export default {
       this.hasAlert=false
       this.$parent.isLoading = true
 
-      this.$http.post('/api/lesson', data).then( (response) => {
+      this.$http.put('/api/lesson/'+this.id, data).then( (response) => {
         data = response.data
 
         if(data.success){

@@ -53,10 +53,10 @@
                       <i class="fa fa-edit"></i>
                       <span>Редактирай</span>
                     </router-link>
-                    <button class="btn btn-danger btn-xs" @click="DeleteLesson(lesson.id)" v-if="!isTeacher">
+                    <!-- <button class="btn btn-danger btn-xs" @click="DeleteLesson(lesson.id)" v-if="!isTeacher">
                       <i class="fa fa-remove"></i>
                       <span>Изтрий</span>
-                    </button>
+                    </button> -->
                   </div>
                 </td>
               </tr>
