@@ -29,8 +29,9 @@ class UserController extends Controller
       }
 
       $questionCount = $user->questions->count();
+      $lessonCount = $user->lessons->count();
 
-      return ['name' => $user->name, 'email' => $user->email, 'edit' => $editable, 'avatar' => $avatar, 'questions' => $questionCount];
+      return ['name' => $user->name, 'email' => $user->email, 'edit' => $editable, 'avatar' => $avatar, 'questions' => $questionCount, 'lessons' => $lessonCount];
     }
 
     public function edit()
