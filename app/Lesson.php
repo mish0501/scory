@@ -11,6 +11,7 @@ class Lesson extends Model
     'class',
     'subject_id',
     'partition_id',
+    'user_id',
     'text',
     'trash'
   ];
@@ -18,6 +19,11 @@ class Lesson extends Model
   public function subject()
   {
     return $this->belongsTo('App\Subject', 'subject_id');
+  }
+
+  public function user()
+  {
+    return $this->belongsTo('App\User', 'user_id');
   }
 
   public function partition()

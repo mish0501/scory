@@ -36,6 +36,9 @@
                 <th>
                   Клас
                 </th>
+                <th>
+                  Създадено от
+                </th>
                 <th v-if="isAdmin || isTeacher">
                   Опции
                 </th>
@@ -47,6 +50,11 @@
                 <td>{{ lesson.subject.name }}</td>
                 <td>{{ lesson.partition.name }}</td>
                 <td class="class-col">{{ lesson.class }}. Клас</td>
+                <td>
+                  <router-link tag="a" :to="{ name:'UserURL', params:{ id: lesson.user.id }}">
+                    {{ lesson.user.name }}
+                  </router-link>
+                </td>
                 <td v-if="isAdmin || isTeacher">
                   <div class='text-right'>
                     <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditLesson', params:{ id: lesson.id }}">

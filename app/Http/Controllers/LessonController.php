@@ -9,7 +9,7 @@ class LessonController extends Controller
 {
   public function index()
   {
-    return Lesson::where('trash', false)->with('subject', 'partition')->get();
+    return Lesson::where('trash', false)->with('subject', 'partition', 'user')->get();
   }
 
   public function store(Request $request)
@@ -34,6 +34,8 @@ class LessonController extends Controller
     }
 
     $input = $request->all();
+
+    $input['user_id'] = \Auth::user()->id;
 
     $lesson = Lesson::create($input);
 

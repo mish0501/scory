@@ -19,12 +19,14 @@ class CreateLessonsTable extends Migration
             $table->integer('class');
             $table->integer('subject_id');
             $table->integer('partition_id');
+            $table->integer('user_id')->unsigned();
             $table->longText('text');
             $table->boolean('trash')->default(false);
             $table->timestamps();
 
             $table->foreign('subject_id')->references('id')->on('subjects');
             $table->foreign('partition_id')->references('id')->on('partitions');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
