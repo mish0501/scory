@@ -46,7 +46,7 @@
               </form>
               <div class='text-center'>
                 <hr class='hr-normal'>
-                <a href='/password/email'>Забравил си си паролата?</a>
+                <a href='/password/reset'>Забравил си си паролата?</a>
               </div>
             </div>
           </div>
