@@ -234,7 +234,7 @@ export default {
       }
 
       this.$parent.isLoading = true
-      this.$http.post('/api/user/changeavatar', { id: data.files.id }).then(
+      this.$http.post('/api/user/changeavatar', { id: data.files }).then(
        (response) => {
          this.avatar = response.data
 

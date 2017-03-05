@@ -157,15 +157,18 @@ export default {
     },
 
     selectFiles () {
-      const selecteds = this.selecteds
-      let files = []
+      let files
 
-      for(var i = 0; i < selecteds.length; i++){
-        let name = $("div").find("[data-id='" + selecteds[i] + "']").find("[data-dz-name]").html()
-        files.push({
-          id: selecteds[i],
-          name: name
-        })
+      if(window.fileCount == 'one'){
+        files = this.selecteds
+      }else if(window.fileCount == 'many'){
+        for(var i = 0; i < selecteds.length; i++){
+          let name = $("div").find("[data-id='" + selecteds[i] + "']").find("[data-dz-name]").html()
+          files.push({
+            id: selecteds[i],
+            name: name
+          })
+        }
       }
 
       window.opener.postMessage({ files }, '*')
