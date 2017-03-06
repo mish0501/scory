@@ -25,7 +25,7 @@ import AdminEditQuestionsPage from './components/AdminPages/Questions/Edit.vue'
 
 import AdminLessonsPage from './components/AdminPages/Lessons/Index.vue'
 import AdminCreateLessonsPage from './components/AdminPages/Lessons/Create.vue'
-import AdminEditLessonsPage from './components/AdminPages/Questions/Edit.vue'
+import AdminEditLessonsPage from './components/AdminPages/Lessons/Edit.vue'
 
 import AdminTestroomsPage from './components/AdminPages/Testrooms/Index.vue'
 import AdminTestroomCreatePage from './components/AdminPages/Testrooms/Create.vue'
@@ -132,9 +132,9 @@ const routes = [
       { path: 'user/:id', component: AdminUsersPage, name: 'UserURL' },
 
       // Lessons
-      { path: 'lessons', component: AdminLessonsPage },
-      { path: 'lessons/create', component: AdminCreateLessonsPage },
-      { path: 'lessons/:id/edit', component: AdminEditLessonsPage, name:'EditLesson' }
+      { path: 'lesson', component: AdminLessonsPage },
+      { path: 'lesson/create', component: AdminCreateLessonsPage },
+      { path: 'lesson/:id/edit', component: AdminEditLessonsPage, name:'EditLesson' }
     ]
   }
 ]

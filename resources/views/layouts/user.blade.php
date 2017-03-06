@@ -55,13 +55,13 @@
                 <div class='col-sm-12'>
                   <div class='text-center'>
                     @if(Route::currentRouteName() == 'login')
-                      <a href='/auth/register'>
+                      <a href='/register'>
                         <i class='fa fa-user'></i>
                         Нов за Scory?
                         <strong>Регистрирай се</strong>
                       </a>
                     @elseif(Route::currentRouteName() == 'register')
-                      <a href="password/email">
+                      <a href="password/reset">
                         <i class="fa fa-lock"></i>
                         Забравил си си паролата?
                       </a>

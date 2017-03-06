@@ -9,7 +9,9 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Notifications\Notifiable;
 
+use App\Notifications\ResetPasswordNotification;
 
 use Laravel\Passport\HasApiTokens;
 
@@ -21,7 +23,7 @@ class User extends Model implements AuthenticatableContract,
 {
     use Authenticatable, CanResetPassword;
 
-    use EntrustUserTrait, HasApiTokens;
+    use EntrustUserTrait, HasApiTokens, Notifiable;
 
     /**
      * The database table used by the model.
@@ -52,5 +54,15 @@ class User extends Model implements AuthenticatableContract,
     public function files()
     {
       return $this->hasMany('App\FileManager', 'user_id');
+    }
+
+    public function lessons()
+    {
+      return $this->hasMany('App\Lesson', 'user_id');
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 }

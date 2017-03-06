@@ -12,9 +12,9 @@
     <div class='box-content'>
       <form class="form form-horizontal" @submit.prevent="CreateLesson">
         <div class='form-group'>
-          <label class='col-md-2 control-label' for='name'>Името на урока</label>
+          <label class='col-md-2 control-label' for='name'>Име на урока</label>
           <div class='col-md-5'>
-            <input class='form-control' placeholder='Името на урока' type='text' v-model="name">
+            <input class='form-control' placeholder='Въведете името на урока' type='text' v-model="name">
           </div>
         </div>
         <div class='form-group'>
@@ -35,22 +35,47 @@
             <select-partition :partition-id="partition" @partitionSelected="partitionSelected"></select-partition>
           </div>
         </div>
-        <div class='form-group' v-if="partition != null">
+        <div class='form-group'>
           <label class='col-md-2 control-label'>Текст</label>
           <div class='col-md-5'>
-            <textarea class="form-control" placeholder="Текст" v-model="text" rows="8" cols="80"></textarea>
+            <textarea class="form-control" placeholder="Въведете текста на урока(не е задължително)" v-model="text" rows="8" cols="80"></textarea>
           </div>
         </div>
+
         <div class='form-group'>
-          <div class="col-md-4 col-md-offset-7">
-            <h1>test</h1>
+          <label class='col-md-2 control-label'>Файлове към урока</label>
+          <div class='col-md-2'>
+            <button type="button" class="btn btn-info" @click="openFileManager">
+              <i class='fa fa-files-o'></i>
+              Избери файлове
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group" v-if="files.length > 0">
+          <div class="col-md-12">
+            <div class="row" v-for="(file, index) in files">
+              <div class="col-md-5 col-md-offset-2">
+                <div>
+                  <div class="col-md-8 col-sm-8 col-xs-10 name">
+                    <span>
+                      {{ file.name }}
+                    </span>
+                  </div>
+                  <button type="button" class="btn btn-danger col-md-4 col-sm-4 col-xs-2" @click="removeFile(index)">
+                    <i class='fa fa-remove'></i>
+                    <span class="hidden-xs">Премахни</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class='form-actions form-actions-padding-sm'>
           <div class='row'>
             <div class='col-md-10 col-md-offset-2'>
-              <button class='btn btn-primary' @click.prevent="CreateQuestion">
+              <button class='btn btn-primary' @click.prevent="CreateLesson">
                 <i class='fa fa-save'></i>
                 Запази
               </button>
@@ -69,6 +94,7 @@ import SelectSubject from "../../SelectInputs/SelectSubject.vue"
 import SelectPartition from "../../SelectInputs/SelectPartition.vue"
 
 export default {
+  name: "LessonsCreate",
   data () {
     return {
       name: "",
@@ -77,7 +103,8 @@ export default {
       partition: null,
       hasAlert: false,
       isLoading: false,
-      text: ""
+      text: "",
+      files: []
     }
   },
 
@@ -100,6 +127,14 @@ export default {
     "select-partition": SelectPartition
   },
 
+  mounted() {
+    $(window).on('message', this.onMessage)
+  },
+
+  destroyed () {
+    $(window).off('message', this.onMessage)
+  },
+
   methods: {
     classSelected(data){
       this.subject = data.subject
@@ -115,13 +150,17 @@ export default {
       this.partition = data.partition
     },
 
+    removeFile (index) {
+      this.files.splice(index, 1)
+    },
+
     CreateLesson() {
       var data = {
         name: this.name,
         subject_id: this.subject,
         partition_id: this.partition,
-        answers: this.answers,
-        type: this.type,
+        text: this.text,
+        files: this.files,
       }
 
       if(this.classes != 0){
@@ -131,7 +170,7 @@ export default {
       this.hasAlert=false
       this.$parent.isLoading = true
 
-      this.$http.post('/api/question', data).then( (response) => {
+      this.$http.post('/api/lesson', data).then( (response) => {
         data = response.data
 
         if(data.success){
@@ -160,10 +199,51 @@ export default {
         }
         this.$parent.isLoading = false
       }, console.error)
+    },
+
+    onMessage (e) {
+      const data = e.originalEvent.data
+
+      if (!data.files) {
+        return
+      }
+
+      this.files = data.files
+    },
+
+    openFileManager () {
+      let width = parseInt((window.screen.width * 80) / 100, 10)
+      let height = parseInt((window.screen.height * 70) / 100, 10)
+
+      if (width < 640) {
+        width = 640
+      }
+
+      if (height < 420) {
+        height = 420
+      }
+
+      const top = parseInt((window.screen.height - height) / 2, 10)
+      const left = parseInt((window.screen.width - width) / 2, 10)
+
+      const options = `location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes,width=${width},height=${height},top=${top},left=${left}`
+      let FileManager = window.open('/file/manager', null, options)
+
+      FileManager.fileCount = 'many'
+      FileManager.files = this.files
     }
   }
 }
 </script>
 
 <style lang="css">
+div.name span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+  line-height: 30px;
+  margin-bottom: 10px
+}
 </style>

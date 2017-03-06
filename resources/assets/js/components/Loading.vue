@@ -61,8 +61,8 @@ export default {
   }
 
   .spinner:before{
-    border-top-color: #f7bf43;
-    border-bottom-color: #f7bf43;
+    border-top-color: #ffc26b;
+    border-bottom-color: #ffc26b;
     animation: spinny2 1s linear 0.08s infinite;
   }
 

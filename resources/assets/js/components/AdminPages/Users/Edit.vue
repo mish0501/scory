@@ -229,12 +229,12 @@ export default {
     onMessage (e) {
       const data = e.originalEvent.data
 
-      if (!data.selecteds) {
+      if (!data.files) {
         return
       }
 
       this.$parent.isLoading = true
-      this.$http.post('/api/user/changeavatar', { id: data.selecteds }).then(
+      this.$http.post('/api/user/changeavatar', { id: data.files }).then(
        (response) => {
          this.avatar = response.data
 

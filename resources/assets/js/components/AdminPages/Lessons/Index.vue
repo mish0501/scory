@@ -8,7 +8,7 @@
 
       <div class='pull-right' v-if="isAdmin || isTeacher">
         <div class='btn-group'>
-          <router-link class="btn btn-success" :to="{ path: 'lessons/create' }">
+          <router-link class="btn btn-success" :to="{ path: 'lesson/create' }">
             <i class='fa fa-plus'></i>
             Добави урок
           </router-link>
@@ -36,6 +36,9 @@
                 <th>
                   Клас
                 </th>
+                <th>
+                  Създадено от
+                </th>
                 <th v-if="isAdmin || isTeacher">
                   Опции
                 </th>
@@ -43,20 +46,25 @@
             </thead>
             <tbody>
               <tr v-for="lesson in lessons">
-                <td class="name"><span>{{ lesson.name }}</span></td>
+                <td>{{ lesson.name }}</td>
                 <td>{{ lesson.subject.name }}</td>
                 <td>{{ lesson.partition.name }}</td>
                 <td class="class-col">{{ lesson.class }}. Клас</td>
+                <td>
+                  <router-link tag="a" :to="{ name:'UserURL', params:{ id: lesson.user.id }}">
+                    {{ lesson.user.name }}
+                  </router-link>
+                </td>
                 <td v-if="isAdmin || isTeacher">
                   <div class='text-right'>
                     <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditLesson', params:{ id: lesson.id }}">
                       <i class="fa fa-edit"></i>
                       <span>Редактирай</span>
                     </router-link>
-                    <button class="btn btn-danger btn-xs" @click="DeleteLesson(lesson.id)" v-if="!isTeacher">
+                    <!-- <button class="btn btn-danger btn-xs" @click="DeleteLesson(lesson.id)" v-if="!isTeacher">
                       <i class="fa fa-remove"></i>
                       <span>Изтрий</span>
-                    </button>
+                    </button> -->
                   </div>
                 </td>
               </tr>

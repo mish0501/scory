@@ -6,7 +6,7 @@ use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Http\Requests;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -67,7 +67,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-        ])->attachRole('2');
+        ]);
     }
 
     public function showRegistrationForm($invite = null)
@@ -75,12 +75,8 @@ class RegisterController extends Controller
         return view('auth.register', ['invite' => $invite]);
     }
 
-    public function register(Request $request)
-    {
-        $this->validator($request->all())->validate();
-
-        $this->guard()->login($this->create($request->all()));
-
-        return redirect($this->redirectPath());
-    }
+   protected function registered(Request $request, $user)
+   {
+       $user->attachRole('2');
+   }
 }
