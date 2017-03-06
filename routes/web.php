@@ -25,9 +25,9 @@ Route::group(['prefix' => 'file', 'middleware' => ['auth']],function() {
   Route::get('/all', 'FileManagerController@getFiles');
 
   Route::delete('/{id}', 'FileManagerController@delete');
-
-  Route::get('/{filename?}', ['as' => 'file', 'uses' => 'FileManagerController@getFile'])->where('filename', '[\/\w\.-]*');
 });
+
+Route::get('/file/{filename?}', ['as' => 'file', 'uses' => 'FileManagerController@getFile'])->where('filename', '[\/\w\.-]*');
 
 Route::get('/home', function() {
     return redirect(url("/admin/home"));
