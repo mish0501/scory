@@ -162,10 +162,11 @@ export default {
       if(window.fileCount == 'one'){
         files = this.selecteds
       }else if(window.fileCount == 'many'){
-        for(var i = 0; i < selecteds.length; i++){
-          let name = $("div").find("[data-id='" + selecteds[i] + "']").find("[data-dz-name]").html()
+        files = []
+        for(var i = 0; i < this.selecteds.length; i++){
+          let name = $("div").find("[data-id='" + this.selecteds[i] + "']").find("[data-dz-name]").html()
           files.push({
-            id: selecteds[i],
+            id: this.selecteds[i],
             name: name
           })
         }
