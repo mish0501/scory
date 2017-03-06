@@ -5,7 +5,7 @@
         <div class="navbar-header">
           <button type="button" id="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Меню</span>
-            <i class="fa fa-bars fa-4" aria-hidden="true"></i>
+            <i class="fa fa-bars fa-4" aria-hidden="true" style="color: white"></i>
           </button>
           <a class="navbar-brand scroll-effect" data-scroll="top">
             <span id="logo"></span> Scory
