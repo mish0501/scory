@@ -17,7 +17,7 @@
 
 
       <li class="widget-footer">
-        <router-link tag="a" :to="{ path: '/admin/mail' }">Всички съобщения</a>
+        <router-link tag="a" :to="{ path: '/admin/mail' }">Всички съобщения</router-link>
       </li>
     </ul>
   </li>
