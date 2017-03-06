@@ -12,9 +12,8 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#49bf67",
-    "background_color": "#49bf67",
-    "start_url": "http://scoryapp.ml",
-    "display": "standalone",
-    "orientation": "portrait"
+    "theme_color": "#f8a025",
+    "background_color": "#f8a025",
+    "start_url": "http://scoryapp.com",
+    "display": "standalone"
 }

@@ -32,7 +32,7 @@
       <script src="/admin/assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
   </head>
-  <body class='contrast-banana login contrast-background'>
+  <body class='contrast-orange login contrast-background'>
     <div class='middle-container'>
       <div class='middle-row'>
         <div class='middle-wrapper'>
