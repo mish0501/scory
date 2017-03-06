@@ -3,6 +3,9 @@ import SelectTestPage from './components/SelectTestPage.vue'
 import TestPage from './components/TestPage.vue'
 import CheckTestPage from './components/CheckTestPage.vue'
 
+import SelectLesson from './components/Lesson/SelectLesson.vue'
+import LessonPage from './components/Lesson/LessonPage.vue'
+
 import JoinTestroomPage from './components/Testroom/Join.vue'
 import TestroomPage from './components/Testroom/Index.vue'
 import TestroomFinishPage from './components/Testroom/Finish.vue'
@@ -64,12 +67,18 @@ Vue.use(VueRouter)
 const routes = [
   { path: '/', name: 'MainPage', component: MainPage },
 
+  // Test - student
   { path: '/test', name: 'TestPage', component: TestPage },
 
   { path: '/test/select', component: SelectTestPage },
 
   { path: '/test/check', component: CheckTestPage },
 
+  // Lesson - student
+  { path: '/lesson/select', component: SelectLesson },
+  { path: '/lesson/:id', component: LessonPage, name: "LessonPage" },
+
+  // Testroom - student
   { path: '/testroom/finish', component: TestroomFinishPage },
   { path: '/testroom/:code/join', component: JoinTestroomPage, name:'JoinTestroom' },
   { path: '/testroom/:code', component: TestroomPage, name:'Testroom' },

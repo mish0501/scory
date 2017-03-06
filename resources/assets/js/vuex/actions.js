@@ -20,3 +20,7 @@ export const reset_test = ({ commit }) => {
 export const set_user = ({commit}, data) => {
   commit(types.SET_AUTH_USER, data)
 }
+
+export const set_lessons = ({ commit }, data) => {
+  commit(types.SET_LESSONS, data)
+}

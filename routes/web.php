@@ -20,10 +20,6 @@ Route::group(['prefix' => 'file', 'middleware' => ['auth']],function() {
       return view('file-manager');
   });
 
-  Route::get('/test', function() {
-      return view('file-manager');
-  });
-
   Route::post('/upload', 'FileManagerController@upload');
 
   Route::get('/all', 'FileManagerController@getFiles');
@@ -47,6 +43,20 @@ Route::group(['prefix' => 'test'],function() {
   });
 
   Route::get('/check', function() {
+    return view('test');
+  });
+});
+
+Route::group(['prefix' => 'lesson'],function() {
+  Route::get('/', function() {
+    return view('test');
+  });
+
+  Route::get('/select', function() {
+    return view('test');
+  });
+
+  Route::get('/{id}', function() {
     return view('test');
   });
 });

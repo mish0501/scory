@@ -77,7 +77,7 @@
         <div class="col-md-4 col-md-offset-4 text-center">
           <h2>Прегледай урок</h2>
           <p class="text-center">Избери класа си, предмета и раздела, по който искаш да прегледаш уроците.</p>
-          <p><a class="btn btn-danger btn-lg btn-block" href="#" role="button" disabled>Прегледай урок</a></p>
+          <p><router-link tag="a" :to="{path: '/lesson/select'}" class="btn btn-danger btn-lg btn-block" role="button">Прегледай урок</a></p>
         </div>
       </div>
 

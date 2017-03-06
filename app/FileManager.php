@@ -42,6 +42,7 @@ class FileManager extends Model
   public function getDataAttribute()
   {
     $url = $this->attributes['url'];
+
     $filename = str_replace(route('file'), '', $url);
     $path = storage_path() . '/app/public/uploads' . $filename;
 

@@ -129,3 +129,7 @@ Route::post('/join' , 'TestRoomController@join');
 Route::post('/connect' , 'TestRoomController@connect');
 Route::post('/testroom/getQuestions' , 'TestRoomController@getQuestions');
 Route::post('/testroom/getTime' , 'TestRoomController@getTime');
+
+// Lessons
+Route::post('/selectLessons', 'LessonController@selectLessons');
+Route::get('/lesson/{id}', 'LessonController@show');

@@ -27,3 +27,9 @@ export const User = state => {
 
   return user
 }
+
+export const Lessons = state => {
+  var lessons = state.lesson.lessons
+
+  return lessons
+}

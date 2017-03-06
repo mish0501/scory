@@ -86,6 +86,22 @@ class LessonController extends Controller
     $partitions = \App\Partition::where('subject_id', '=', $lesson['subject_id'])->get();
 
     return ['lesson' => $lesson, 'subjects' => $subjects, 'partitions' => $partitions];
+  }
 
+  public function selectLessons(Request $request)
+  {
+    $lessons = Lesson::where('class', $request->get('class'))
+                      ->where('subject_id', $request->get('subject_id'))
+                      ->where('partition_id', $request->get('partition_id'))
+                      ->orderBy('created_at', "asc")
+                      ->get();
+    return $lessons;
+  }
+
+  public function show($id)
+  {
+    $lesson = Lesson::where('id', $id)->with('files')->first();
+
+    return $lesson;
   }
 }
