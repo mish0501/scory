@@ -13,9 +13,9 @@
 
       <form class="form form-horizontal" @submit.prevent="CreatePartition">
         <div class='form-group'>
-          <label class='col-md-2 control-label' for='name'>Името на предмета</label>
+          <label class='col-md-2 control-label' for='name'>Името на раздела</label>
           <div class='col-md-5'>
-            <input class='form-control' placeholder='Името на предмета' type='text' v-model="name">
+            <input class='form-control' placeholder='Въведете името на предмета' type='text' v-model="name">
           </div>
         </div>
         <div class='form-group'>
