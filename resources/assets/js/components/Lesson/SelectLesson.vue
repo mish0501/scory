@@ -32,18 +32,14 @@
           <select-subject class="tabs input-lg" :subject-id="subject" v-if="subject != null" @subjectSelected="subjectSelected"></select-subject>
         </div>
 
-        <div class="form-group">
-          <select-partition class="tabs input-lg" :partition-id="partition" v-if="partition != null" @partitionSelected="partitionSelected"></select-partition>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-lg btn-block" v-on:click.prevent="selectLessons" v-if="partition != null">Продължи напред</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" v-on:click.prevent="selectLessons" v-if="subject != null">Продължи напред</button>
       </form>
     </div>
 
     <div class="container" v-else>
       <div class="row">
         <div class="col-md-6" style="margin-bottom: 5px" v-for="lesson in lessons">
-          <router-link tag="span" :to="{ name:'LessonPage', params:{ id: lesson.id }}" class="tabs">{{ lesson.name }}</router-link>
+          <router-link :to="{ name:'LessonPage', params:{ id: lesson.id }}" class="tabs">{{ lesson.name }}</router-link>
         </div>
       </div>
     </div>
@@ -53,13 +49,11 @@
 <script>
   import SelectClass from "../SelectInputs/SelectClass.vue"
   import SelectSubject from "../SelectInputs/SelectSubject.vue"
-  import SelectPartition from "../SelectInputs/SelectPartition.vue"
 
   export default {
     data() {
       return {
         subject: null,
-        partition: null,
         questionCount: null,
         title: "Избери си клас",
         isLoading: false
@@ -68,8 +62,7 @@
 
     components: {
       'select-class': SelectClass,
-      'select-subject': SelectSubject,
-      'select-partition': SelectPartition
+      'select-subject': SelectSubject
     },
 
     computed:{
@@ -85,7 +78,6 @@
     methods: {
       classSelected(data){
         this.subject = null
-        this.partition = data.partition
         this.title = data.title
         this.questionCount = null
         this.subject = data.subject
@@ -94,23 +86,14 @@
       subjectSelected(data){
         this.subject = data.subject
         this.partition = data.partition
-        this.title = data.title
-        this.questionCount = null
-      },
-
-      partitionSelected(data){
-        this.partition = data.partition
-      },
-
-      ChangeTitle() {
         this.title = "Продължи напред"
+        this.questionCount = null
       },
 
       selectLessons () {
         var data = {
           'class': this.class,
-          'subject_id': this.subject,
-          'partition_id': this.partition
+          'subject_id': this.subject
         }
 
         this.$http.post("/api/selectLessons", data).then((response) => {

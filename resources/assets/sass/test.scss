@@ -27,6 +27,10 @@ body{
   color: #337ab7;
 }
 
+.tabs > span {
+  cursor: pointer;
+}
+
 h1.tabs{
   font-size: 2em;
 }
@@ -35,7 +39,7 @@ label.tabs{
   text-align: left;
 }
 
-span.tabs{
+a.tabs, span.tabs{
   margin-bottom: 10px;
   text-align: left;
 }

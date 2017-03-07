@@ -85,7 +85,6 @@
 import Alert from "../../Alert.vue"
 import SelectClass from "../../SelectInputs/SelectClass.vue"
 import SelectSubject from "../../SelectInputs/SelectSubject.vue"
-import SelectPartition from "../../SelectInputs/SelectPartition.vue"
 
 export default {
   name: "LessonsCreate",
@@ -117,8 +116,7 @@ export default {
   components: {
     "alert": Alert,
     "select-class": SelectClass,
-    "select-subject": SelectSubject,
-    "select-partition": SelectPartition
+    "select-subject": SelectSubject
   },
 
   mounted() {

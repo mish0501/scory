@@ -89,7 +89,6 @@ class LessonController extends Controller
   {
     $lessons = Lesson::where('class', $request->get('class'))
                       ->where('subject_id', $request->get('subject_id'))
-                      ->where('partition_id', $request->get('partition_id'))
                       ->orderBy('created_at', "asc")
                       ->get();
     return $lessons;

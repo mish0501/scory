@@ -9,6 +9,11 @@
     <br><br>
 
     <div class="row" v-if="downloads.length > 0">
+      <div class="col-md-12">
+        <span class="tabs">Изтеглете материалите към урока:</span>
+      </div>
+      <br>
+      <br>
       <div class="col-md-3" v-for="download in downloads">
         <div class="tabs word-wrap">
           <span @click="openFile(download.url)"> {{ download.data.name }} </span>
