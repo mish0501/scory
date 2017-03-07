@@ -29,12 +29,6 @@
             <select-subject :subject-id="subject" @subjectSelected="subjectSelected"></select-subject>
           </div>
         </div>
-        <div class='form-group' v-if="partition != null">
-          <label class='col-md-2 control-label'>Раздел</label>
-          <div class='col-md-5'>
-            <select-partition :partition-id="partition" @partitionSelected="partitionSelected"></select-partition>
-          </div>
-        </div>
         <div class='form-group'>
           <label class='col-md-2 control-label'>Текст</label>
           <div class='col-md-5'>

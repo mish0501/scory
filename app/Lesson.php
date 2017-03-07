@@ -10,7 +10,6 @@ class Lesson extends Model
     'name',
     'class',
     'subject_id',
-    'partition_id',
     'user_id',
     'text',
     'trash'
@@ -24,11 +23,6 @@ class Lesson extends Model
   public function user()
   {
     return $this->belongsTo('App\User', 'user_id');
-  }
-
-  public function partition()
-  {
-    return $this->belongsTo('App\Partition', 'partition_id');
   }
 
   public function files() {
