@@ -3,7 +3,7 @@
     <dropzone
     id="file-manager"
     url="/file/upload"
-    @vdropzone-removedFile="removeFile"
+    @vdropzone-removed-file="removeFile"
     @vdropzone-success="success"
     :useFontAwesome="true"
     :useCustomDropzoneOptions="true"
