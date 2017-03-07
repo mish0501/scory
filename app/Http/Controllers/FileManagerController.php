@@ -29,6 +29,7 @@ class FileManagerController extends Controller
 
     $file = new FileManager();
     $file->url = $url;
+    $file->path = $path;
 
     if (strpos($request->file('file')->getMimeType(), 'image/') === 0) {
       $file->type = 'image';

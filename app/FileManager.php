@@ -20,7 +20,9 @@ class FileManager extends Model
    *
    * @var array
    */
-  protected $fillable = ['url', 'user_id', 'type'];
+  protected $fillable = ['url', 'user_id', 'type', 'path'];
+
+  protected $hidden = ['path'];
 
   public static function boot()
   {
@@ -44,7 +46,8 @@ class FileManager extends Model
     $url = $this->attributes['url'];
 
     $filename = str_replace(route('file'), '', $url);
-    $path = storage_path() . '/app/public/uploads' . $filename;
+    
+    $path = storage_path() . '/app/' . $this->attributes['path'];
 
     if (!\File::exists($path)) {
       return '';
