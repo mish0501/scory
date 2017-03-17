@@ -31,9 +31,6 @@
                   Име на предмета
                 </th>
                 <th>
-                  Име на раздела
-                </th>
-                <th>
                   Клас
                 </th>
                 <th>
@@ -48,7 +45,6 @@
               <tr v-for="lesson in lessons">
                 <td>{{ lesson.name }}</td>
                 <td>{{ lesson.subject.name }}</td>
-                <td>{{ lesson.partition.name }}</td>
                 <td class="class-col">{{ lesson.class }}. Клас</td>
                 <td>
                   <router-link tag="a" :to="{ name:'UserURL', params:{ id: lesson.user.id }}">
@@ -151,6 +147,3 @@ export default {
   }
 }
 </script>
-
-<style lang="css">
-</style>

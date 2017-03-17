@@ -4,7 +4,7 @@
       <div class='form-group' v-if="index == 0">
         <label class='col-md-2 control-label'>Отговори</label>
         <div class='col-md-5'>
-          <input class='form-control' placeholder='Името на отговора' type='text' v-model="answer.name">
+          <input class='form-control' placeholder='Въведете отговора' type='text' v-model="answer.name">
         </div>
         <div class='col-md-5 col-sm-1 col-xs-1'>
           <div class="checkmark" :class="[(answer.correct) ? 'checked' : '']">
@@ -17,7 +17,7 @@
       </div>
       <div class='form-group' v-else>
         <div class='col-md-5 col-md-offset-2'>
-          <input class='form-control' placeholder='Името на отговора' type='text' v-model="answer.name">
+          <input class='form-control' placeholder='Въведете отговора' type='text' v-model="answer.name">
         </div>
         <div class='col-md-5 col-sm-1 col-xs-1'>
           <div class="checkmark" :class="[(answer.correct == 1) ? 'checked' : '']">

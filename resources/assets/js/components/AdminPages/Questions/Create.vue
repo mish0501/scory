@@ -3,7 +3,7 @@
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
         <i class="fa fa-book"></i>
-        Добави предмет
+        Добави въпрос
       </h1>
     </div>
 
@@ -12,9 +12,9 @@
     <div class='box-content'>
       <form class="form form-horizontal" @submit.prevent="CreateQuestion">
         <div class='form-group'>
-          <label class='col-md-2 control-label' for='name'>Името на предмета</label>
+          <label class='col-md-2 control-label' for='name'>Въпрос</label>
           <div class='col-md-5'>
-            <input class='form-control' placeholder='Името на предмета' type='text' v-model="name">
+            <input class='form-control' placeholder='Въведете въпроса' type='text' v-model="name">
           </div>
         </div>
         <div class='form-group'>
@@ -214,6 +214,3 @@ export default {
   }
 }
 </script>
-
-<style lang="css">
-</style>

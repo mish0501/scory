@@ -10,7 +10,7 @@
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'partition/create' }">
             <i class='fa fa-plus'></i>
-            Добави предмет
+            Добави раздел
           </router-link>
         </div>
       </div>
@@ -139,6 +139,3 @@ export default {
   }
 }
 </script>
-
-<style lang="css">
-</style>

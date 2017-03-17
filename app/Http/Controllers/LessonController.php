@@ -9,7 +9,7 @@ class LessonController extends Controller
 {
   public function index()
   {
-    return Lesson::where('trash', false)->with('subject', 'partition', 'user')->get();
+    return Lesson::where('trash', false)->with('subject', 'user')->get();
   }
 
   public function store(Request $request)
@@ -18,7 +18,6 @@ class LessonController extends Controller
       'name' => 'required|min:5',
       'class' => 'required',
       'subject_id' => 'required',
-      'partition_id' => 'required',
 
     ]);
 
@@ -52,7 +51,6 @@ class LessonController extends Controller
       'name' => 'required|min:5',
       'class' => 'required',
       'subject_id' => 'required',
-      'partition_id' => 'required',
 
     ]);
 
@@ -83,16 +81,14 @@ class LessonController extends Controller
   {
     $lesson = Lesson::where('id', $id)->with('files')->get()[0];
     $subjects = \App\Subject::where('class', '=', $lesson['class'])->get();
-    $partitions = \App\Partition::where('subject_id', '=', $lesson['subject_id'])->get();
 
-    return ['lesson' => $lesson, 'subjects' => $subjects, 'partitions' => $partitions];
+    return ['lesson' => $lesson, 'subjects' => $subjects];
   }
 
   public function selectLessons(Request $request)
   {
     $lessons = Lesson::where('class', $request->get('class'))
                       ->where('subject_id', $request->get('subject_id'))
-                      ->where('partition_id', $request->get('partition_id'))
                       ->orderBy('created_at', "asc")
                       ->get();
     return $lessons;

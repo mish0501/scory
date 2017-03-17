@@ -29,12 +29,6 @@
             <select-subject :subject-id="subject" @subjectSelected="subjectSelected"></select-subject>
           </div>
         </div>
-        <div class='form-group' v-if="partition != null">
-          <label class='col-md-2 control-label'>Раздел</label>
-          <div class='col-md-5'>
-            <select-partition :partition-id="partition" @partitionSelected="partitionSelected"></select-partition>
-          </div>
-        </div>
         <div class='form-group'>
           <label class='col-md-2 control-label'>Текст</label>
           <div class='col-md-5'>
@@ -91,7 +85,6 @@
 import Alert from "../../Alert.vue"
 import SelectClass from "../../SelectInputs/SelectClass.vue"
 import SelectSubject from "../../SelectInputs/SelectSubject.vue"
-import SelectPartition from "../../SelectInputs/SelectPartition.vue"
 
 export default {
   name: "LessonsCreate",
@@ -127,8 +120,7 @@ export default {
   components: {
     "alert": Alert,
     "select-class": SelectClass,
-    "select-subject": SelectSubject,
-    "select-partition": SelectPartition
+    "select-subject": SelectSubject
   },
 
   created() {

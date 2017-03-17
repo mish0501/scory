@@ -74,13 +74,10 @@ export default {
         this.users = response.data
 
         this.$parent.setDataTable()
-        
+
         this.$parent.isLoading = false
       }, console.error
     )
   }
 }
 </script>
-
-<style lang="css">
-</style>

@@ -8,7 +8,22 @@
 
     <br><br>
 
+    <div class="row" v-if="videos.length > 0">
+      <div class="col-md-6 col-md-offset-3" v-for="video in videos">
+        <video width="100%" height="100%" preload="metadata" controls>
+          <source :src="video.url" :type="video.data.type">
+        </video>
+      </div>
+    </div>
+
+    <br><br>
+
     <div class="row" v-if="downloads.length > 0">
+      <div class="col-md-12">
+        <span class="tabs">Изтеглете материалите към урока:</span>
+      </div>
+      <br>
+      <br>
       <div class="col-md-3" v-for="download in downloads">
         <div class="tabs word-wrap">
           <span @click="openFile(download.url)"> {{ download.data.name }} </span>
@@ -27,6 +42,7 @@ export default {
   data() {
     return {
       images: [],
+      videos: [],
       downloads: []
     }
   },
@@ -38,6 +54,8 @@ export default {
         this.images.push(files[i])
       }else if (files[i].type == "download") {
         this.downloads.push(files[i])
+      }else if (files[i].type == "video") {
+        this.videos.push(files[i])
       }
     }
   },

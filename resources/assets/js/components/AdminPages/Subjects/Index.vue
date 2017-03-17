@@ -116,7 +116,7 @@ export default {
         const index = this.subjectsIds.indexOf(id)
 
         this.$parent.table.fnDestroy()
-        
+
         this.subjects.splice(index, 1)
         this.subjectsIds.splice(index, 1)
 
@@ -130,6 +130,3 @@ export default {
   }
 }
 </script>
-
-<style lang="css">
-</style>
