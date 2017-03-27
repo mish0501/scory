@@ -6,7 +6,7 @@
         Всички въпроси
       </h1>
 
-      <div class='pull-right' v-if="isAdmin || isTeacher">
+      <div class='pull-right' v-if="can('create-question')">
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'question/create' }">
             <i class='fa fa-plus'></i>
@@ -40,7 +40,7 @@
                   Клас
                 </th>
 
-                <th v-if="isAdmin || isTeacher">
+                <th v-if="can('edit-question') || can('delete-question')">
                   Опции
                 </th>
               </tr>
@@ -56,13 +56,13 @@
                   </router-link>
                 </td>
                 <td class="class-col">{{ question.class }}. Клас</td>
-                <td v-if="isAdmin || isTeacher">
+                <td v-if="can('edit-question') || can('delete-question')">
                   <div class='text-right'>
-                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditQuestion', params:{ id: question.id }}">
+                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditQuestion', params:{ id: question.id }}" v-if="can('edit-question')">
                         <i class="fa fa-edit"></i>
                         <span>Редактирай</span>
                       </router-link>
-                      <button class="btn btn-danger btn-xs" @click="DeleteQuestion(question.id)" v-if="!isTeacher">
+                      <button class="btn btn-danger btn-xs" @click="DeleteQuestion(question.id)" v-if="can('delete-question')">
                         <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>

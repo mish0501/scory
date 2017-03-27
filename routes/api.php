@@ -16,6 +16,16 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     $user = $request->user();
 
+    $perms = [];
+
+    foreach($user->roles()->get() as $role){
+      foreach($role->perms()->get() as $perm){
+        array_push($perms, $perm->name);
+      }
+    }
+
+    $user->permissions = $perms;
+
     if($user->hasRole('admin')){
       $user->role='admin';
     }elseif ($user->hasRole('teacher')) {
@@ -92,9 +102,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // Permission
     Route::get('/permissions' , 'SettingsController@permissions');
-    Route::post('/permissions/create' , 'SettingsController@storePermissions');
-    Route::get('/permissions/{id}/edit' , 'SettingsController@editPermissions');
-    Route::post('/permissions/{id}/edit' , 'SettingsController@updatePermissions');
+    Route::post('/permissions/create' , 'SettingsController@storepermissions');
+    Route::get('/permissions/{id}/edit' , 'SettingsController@editpermissions');
+    Route::post('/permissions/{id}/edit' , 'SettingsController@updatepermissions');
 
     // Roles
     Route::get('/roles' , 'SettingsController@roles');

@@ -6,7 +6,7 @@
         Всички раздели
       </h1>
 
-      <div class='pull-right' v-if="isAdmin || isTeacher">
+      <div class='pull-right' v-if="can('create-partition')">
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'partition/create' }">
             <i class='fa fa-plus'></i>
@@ -33,7 +33,7 @@
                 <th>
                   Клас
                 </th>
-                <th v-if="isAdmin || isTeacher">
+                <th v-if="can('edit-partition') || can('delete-partition')">
                   Опции
                 </th>
               </tr>
@@ -43,13 +43,13 @@
                 <td>{{ partition.name }}</td>
                 <td>{{ partition.subject.name }}</td>
                 <td class="class-col">{{ partition.class }}. Клас</td>
-                <td v-if="isAdmin || isTeacher">
+                <td v-if="can('edit-partition') || can('delete-partition')">
                   <div class='text-right'>
-                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditPartition', params:{ id: partition.id }}">
+                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditPartition', params:{ id: partition.id }}" v-if="can('edit-partition')">
                       <i class="fa fa-edit"></i>
                       <span>Редактирай</span>
                     </router-link>
-                    <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)" v-if="!isTeacher">
+                    <button class="btn btn-danger btn-xs" @click="DeletePartition(partition.id)" v-if="can('delete-partition')">
                       <i class="fa fa-remove"></i>
                       <span>Изтрий</span>
                     </button>

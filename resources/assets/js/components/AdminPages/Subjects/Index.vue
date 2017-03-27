@@ -6,7 +6,7 @@
         Всички предмети
       </h1>
 
-      <div class='pull-right' v-if="isAdmin">
+      <div class='pull-right' v-if="can('create-subject')">
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'subject/create' }">
             <i class='fa fa-plus'></i>
@@ -21,7 +21,7 @@
     <div class='box bordered-box' style='margin-bottom:0;'>
       <div class='box-content'>
         <div class="responsive-table">
-          <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+          <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;' v-data-table>
             <thead>
               <tr>
                 <th>
@@ -30,8 +30,8 @@
                 <th>
                   Клас
                 </th>
-
-                <th v-if="isAdmin">
+                
+                <th v-if="can('edit-subject') || can('delete-subject')">
                   Опции
                 </th>
               </tr>
@@ -40,13 +40,13 @@
               <tr v-for="subject in subjects">
                 <td>{{ subject.name }}</td>
                 <td class="class-col">{{ subject.class }}. Клас</td>
-                <td v-if="isAdmin">
+                <td v-if="can('edit-subject') || can('delete-subject')">
                   <div class='text-right'>
-                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditSubject', params:{ id: subject.id }}">
+                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditSubject', params:{ id: subject.id }}" v-if="can('edit-subject')">
                         <i class="fa fa-edit"></i>
                         <span>Редактирай</span>
                       </router-link>
-                      <button class="btn btn-danger btn-xs" @click="DeleteSubject(subject.id)">
+                      <button class="btn btn-danger btn-xs" @click="DeleteSubject(subject.id)" v-if="can('delete-subject')">
                         <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>
@@ -78,7 +78,7 @@ export default {
     "alert": Alert
   },
 
-  beforeCreate () {
+  created () {
     this.$parent.isLoading = true
     this.$http.get('/api/subject').then(
       (response) => {
@@ -86,18 +86,11 @@ export default {
         this.subjectsIds = response.data.map(el => el.id)
 
         this.$parent.setDataTable()
-
         this.$parent.isLoading = false
       }, (error) => {
         console.log(error);
       }
     )
-  },
-
-  computed:{
-    isAdmin(){
-      return this.$store.getters.User.role == 'admin'
-    }
   },
 
   methods: {

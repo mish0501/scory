@@ -30,7 +30,7 @@
                 <th>
                   Получено
                 </th>
-                <th>
+                <th v-if="can('show-mail') || can('delete-mail')">
                   Опции
                 </th>
               </tr>
@@ -42,13 +42,13 @@
                 <td>{{ message.message }}</td>
                 <td>{{ (message.read == true)? 'Прочетено' : 'Непрочетено' }}</td>
                 <td>{{ message.time }}</td>
-                <td v-if="isAdmin">
+                <td v-if="can('show-mail') || can('delete-mail')">
                   <div class='text-right'>
-                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ShowMail', params:{ id: message.id }}">
+                      <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'ShowMail', params:{ id: message.id }}" v-if="can('show-mail')">
                         <i class="fa fa-edit"></i>
                         <span>Отвори</span>
                       </router-link>
-                      <button class="btn btn-danger btn-xs" @click="DeleteMail(message.id)">
+                      <button class="btn btn-danger btn-xs" @click="DeleteMail(message.id)" v-if="can('delete-mail')">
                         <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>

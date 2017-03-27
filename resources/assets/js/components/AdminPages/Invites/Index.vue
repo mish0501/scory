@@ -6,7 +6,7 @@
         Всички покани
       </h1>
 
-      <div class='pull-right' v-if="isAdmin">
+      <div class='pull-right' v-if="can('create-invitation')">
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'invite/create' }">
             <i class='fa fa-plus'></i>
@@ -30,7 +30,7 @@
                 <th>
                   E-mail
                 </th>
-                <th v-if="isAdmin">
+                <th v-if="can('delete-invitation')">
                   Опции
                 </th>
               </tr>
@@ -39,9 +39,9 @@
               <tr v-for="invite in invites">
                 <td>{{ hasInvite(invite) }}</td>
                 <td>{{ invite.email }}</td>
-                <td v-if="isAdmin">
+                <td v-if="can('delete-invitation')">
                   <div class='text-right'>
-                      <button class="btn btn-danger btn-xs" @click="DeleteInvite(invite.id)">
+                      <button class="btn btn-danger btn-xs" @click="DeleteInvite(invite.id)" v-if="can('delete-invitation')">
                         <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
                       </button>
@@ -49,7 +49,7 @@
                         tag="a"
                         class="btn btn-success btn-xs"
                         :to="{ name:'CreateInvite', params:{ id: invite.id }}"
-                        v-if="!hasInvite(invite)"
+                        v-if="!hasInvite(invite) && can('send-invitation')"
                       >
                         <i class='fa fa-mail-forward'></i>
                         <span>Изпрати покана</span>

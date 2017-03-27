@@ -6,7 +6,7 @@
         Всички уроци
       </h1>
 
-      <div class='pull-right' v-if="isAdmin || isTeacher">
+      <div class='pull-right' v-if="can('create-lesson')">
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'lesson/create' }">
             <i class='fa fa-plus'></i>
@@ -36,7 +36,7 @@
                 <th>
                   Създадено от
                 </th>
-                <th v-if="isAdmin || isTeacher">
+                <th v-if="can('edit-lesson') || can('delete-lesson')">
                   Опции
                 </th>
               </tr>
@@ -51,16 +51,16 @@
                     {{ lesson.user.name }}
                   </router-link>
                 </td>
-                <td v-if="isAdmin || isTeacher">
+                <td v-if="can('edit-lesson') || can('delete-lesson')">
                   <div class='text-right'>
-                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditLesson', params:{ id: lesson.id }}">
+                    <router-link tag="a" class="btn btn-success btn-xs" :to="{ name:'EditLesson', params:{ id: lesson.id }}" v-if="can('edit-lesson')">
                       <i class="fa fa-edit"></i>
                       <span>Редактирай</span>
                     </router-link>
-                    <!-- <button class="btn btn-danger btn-xs" @click="DeleteLesson(lesson.id)" v-if="!isTeacher">
+                    <button class="btn btn-danger btn-xs" @click="DeleteLesson(lesson.id)" v-if="can('delete-lesson')">
                       <i class="fa fa-remove"></i>
                       <span>Изтрий</span>
-                    </button> -->
+                    </button>
                   </div>
                 </td>
               </tr>

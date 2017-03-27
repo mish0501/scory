@@ -6,7 +6,7 @@
         Всички права
       </h1>
 
-      <div class='pull-right' v-if="isAdmin">
+      <div class='pull-right' v-if="can('create-permission')">
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'permissions/create' }">
             <i class='fa fa-plus'></i>
@@ -34,7 +34,7 @@
                   Описание
                 </th>
                 </th>
-                <th>
+                <th v-if="can('edit-permission')">
                   Опции
                 </th>
               </tr>
@@ -44,7 +44,7 @@
                 <td>{{ permission.display_name }}</td>
                 <td>{{ permission.name }}</td>
                 <td>{{ permission.description }}</td>
-                <td>
+                <td v-if="can('edit-permission')">
                   <div class='text-right'>
                     <router-link tag="a" :to="{ name: 'SettingsEditPermission', params: {id: permission.id } }" class='btn btn-success btn-xs'>
                       <i class='fa fa-edit'></i>

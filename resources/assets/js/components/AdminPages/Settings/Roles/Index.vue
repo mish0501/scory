@@ -6,7 +6,7 @@
         Всички роли
       </h1>
 
-      <div class='pull-right' v-if="isAdmin">
+      <div class='pull-right' v-if="can('create-roles')">
         <div class='btn-group'>
           <router-link class="btn btn-success" :to="{ path: 'roles/create' }">
             <i class='fa fa-plus'></i>

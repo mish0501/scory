@@ -4,7 +4,8 @@ const state = {
   id: null,
   name: '',
   email: '',
-  role: ''
+  role: '',
+  permissions: []
 };
 
 const mutations = {
@@ -12,7 +13,8 @@ const mutations = {
     state.id = user.id;
     state.name = user.name;
     state.email = user.email;
-    state.role = user.role
+    state.role = user.role;
+    state.permissions = user.permissions
   }
 };
 

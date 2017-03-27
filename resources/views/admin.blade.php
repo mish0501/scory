@@ -121,13 +121,15 @@
                   <span>Стая за тестове</span>
                 </a>
               </router-link>
-
-              <router-link to="/admin/lesson" tag="li">
-                <a>
-                  <i class='fa fa-file'></i>
-                  <span>Уроци</span>
-                </a>
-              </router-link>
+              
+              @if(Entrust::can('list-lesson'))
+                <router-link to="/admin/lesson" tag="li">
+                  <a>
+                    <i class='fa fa-file'></i>
+                    <span>Уроци</span>
+                  </a>
+                </router-link>
+              @endif
 
               @if(Entrust::can('list-invitation') && Entrust::hasRole('admin'))
                 <router-link to="/admin/invite" tag="li">

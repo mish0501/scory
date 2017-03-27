@@ -7,7 +7,7 @@
       </h1>
     </div>
 
-    <div class='box bordered-box purple-border' :class="[(subjects.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="isAdmin">
+    <div class='box bordered-box purple-border' :class="[(subjects.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="can('delete-subject')">
       <div class='box-header purple-background'>
         <div class='title'>
           <i class="fa fa-book"></i>
@@ -64,7 +64,7 @@
       <br>
     </div>
 
-    <div class='box bordered-box blue-border' :class="[(partitions.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="isAdmin">
+    <div class='box bordered-box blue-border' :class="[(partitions.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="can('delete-partition')">
       <div class='box-header blue-background'>
         <div class='title'>
           <i class="fa fa-folder-open"></i>
@@ -125,7 +125,7 @@
       <br>
     </div>
 
-    <div class='box bordered-box green-border' :class="[(questions.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="isAdmin">
+    <div class='box bordered-box green-border' :class="[(questions.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="can('delete-question')">
       <div class='box-header green-background'>
         <div class='title'>
           <i class="fa fa-question"></i>
@@ -254,7 +254,7 @@
       <br>
     </div>
 
-    <div class='box bordered-box orange-border' :class="[(mail.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="isAdmin">
+    <div class='box bordered-box orange-border' :class="[(mail.length <= 0) ? 'box-collapsed' : '']" style='margin-bottom:0;' v-if="can('delete-mail')">
       <div class='box-header orange-background'>
         <div class='title'>
           <i class="fa fa-group"></i>
