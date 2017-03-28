@@ -14,32 +14,22 @@ const mixin = {
       return this.$store.getters.User.permissions.find((perm) => {
         return perm == permission
       }) === permission
+    },
+
+    logout(){
+      this.$store.dispatch('clear_store')
+
+      this.$http.post('/logout').then(
+        (response) => {
+          let url = response.data.url
+          window.location = url
+        }, console.error
+      )
     }
   }
 }
 
 Vue.mixin(mixin)
-
-let dataTable;
-
-Vue.directive('data-table', {
-  // componentUpdated(el) {
-
-  //   if(dataTable){
-  //     console.log(dataTable)
-  //     dataTable.fnDestroy()
-  //   }
-
-  //   if(!dataTable){
-  //     dataTable = $(el).dataTable({
-  //       sPaginationType: "bootstrap",
-  //       fnDrawCallback () {
-  //         return $(".dataTables_wrapper").addClass("scrollable-area");
-  //       }
-  //     })
-  //   }
-  // }
-})
 
 var App = new Vue({
   store,

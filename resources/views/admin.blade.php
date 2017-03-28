@@ -63,10 +63,7 @@
                 </li>
                 <li class='divider'></li>
                 <li>
-                  <form method="POST" action="{{ url('/logout') }}" accept-charset="UTF-8" id="logout-form">
-                    {{ csrf_field() }}
-                  </form>
-                  <a href="#" onclick="document.getElementById('logout-form').submit();">
+                  <a href="#" @click="logout()">
                     <i class="fa fa-signout"></i>
                     Изход
                   </a>

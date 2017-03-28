@@ -15,6 +15,14 @@ const mutations = {
     state.email = user.email;
     state.role = user.role;
     state.permissions = user.permissions
+  },
+
+  [types.RESET_AUTH_USER] (state) {
+    state.id = null;
+    state.name = '';
+    state.email = '';
+    state.role = '';
+    state.permissions = []
   }
 };
 
