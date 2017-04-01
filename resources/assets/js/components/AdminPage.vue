@@ -8,6 +8,7 @@
 <script>
 export default {
   name: 'AdminWrapper',
+
   beforeCreate () {
     this.$http.get('/api/user').then((response) => {
       this.$store.dispatch('set_user', response.data)
@@ -15,12 +16,22 @@ export default {
       console.error(error);
     })
   },
+
   data () {
     return {
       isLoading: false,
       table: {}
     }
   },
+
+  watch: {
+    isLoading(loading){
+      if(!loading){
+        this.setToggles()
+      }
+    }
+  },
+
   methods: {
     setDataTable() {
       this.$nextTick(() => {
@@ -38,6 +49,16 @@ export default {
     redrawTable() {
       this.table.fnDestroy()
       this.setDataTable()
+    },
+
+    setToggles(){
+      $(".box .box-collapse").on("click", function(e) {
+        var box;
+        box = $(this).parents(".box").first();
+        box.toggleClass("box-collapsed");
+        e.preventDefault();
+        return false;
+      });
     }
   }
 }

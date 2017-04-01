@@ -157,7 +157,7 @@
 
               @if(Entrust::hasRole('admin'))
                 <li>
-                  <a class="dropdown-collapse">
+                  <a class="dropdown-collapse" style="cursor: pointer">
                     <i class='fa fa-cogs'></i>
                     <span>Настройки на сайта</span>
                     <i class='fa fa-angle-down angle-down'></i>
