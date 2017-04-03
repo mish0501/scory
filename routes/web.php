@@ -100,6 +100,9 @@ Route::get('/register/{invite?}', 'Auth\RegisterController@showRegistrationForm'
 // Admin Routes
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin|teacher']], function () {
 
+  Route::get('/{code}/download' , 'TestRoomController@downloadStudentsResults');
+  Route::get('/{code}/download/{user}' , 'TestRoomController@downloadStudentResult');
+
   Route::get('/{vue_capture?}', function () {
       return view('admin');
   })->where('vue_capture', '[\/\w\.-]*');

@@ -11,7 +11,8 @@
         "zizaco/entrust": "5.2.x-dev",
         "laravel/passport": "^1.0",
         "pusher/pusher-php-server": "^2.6",
-        "webpatser/laravel-uuid": "2.*"
+        "webpatser/laravel-uuid": "2.*",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

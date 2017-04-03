@@ -170,6 +170,7 @@ return [
          Collective\Html\HtmlServiceProvider::class,
          Zizaco\Entrust\EntrustServiceProvider::class,
          Laravel\Passport\PassportServiceProvider::class,
+         Maatwebsite\Excel\ExcelServiceProvider::class,
 
 
         //
@@ -233,6 +234,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Entrust' => Zizaco\Entrust\EntrustFacade::class,
         'Uuid' => Webpatser\Uuid\Uuid::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

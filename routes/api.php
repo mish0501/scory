@@ -83,6 +83,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/{code}/end' , 'TestRoomController@endTest');
     Route::post('/results' , 'TestRoomController@getResults');
     Route::get('/{code}/student/{user}' , 'TestRoomController@getStudentResults');
+    Route::get('/{code}/download' , 'TestRoomController@downloadStudentResults');
     Route::delete('/{code}' , 'TestRoomController@destroy');
   });
 

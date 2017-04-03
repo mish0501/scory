@@ -81,6 +81,11 @@
                         <span>Резултати</span>
                       </router-link>
 
+                      <a class="btn btn-primary btn-xs" @click="Download(testroom.code)" v-if="testroom.status == 3">
+                        <i class="fa fa-download"></i>
+                        <span>Изтегли</span>
+                      </a>
+
                       <button class="btn btn-danger btn-xs" @click="DeleteTestroom(testroom.code, testroom.id)">
                         <i class="fa fa-remove"></i>
                         <span>Изтрий</span>
@@ -181,6 +186,14 @@ export default {
         },(error) => {
           console.error(error);
         }
+      )
+    },
+
+    Download(code) {
+      this.$http.get('/api/testroom/' + code + '/download').then(
+        (response) => {
+          console.log(response);
+        }, console.error
       )
     },
 

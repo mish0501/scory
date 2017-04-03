@@ -15,6 +15,8 @@ use App\Question;
 use App\Answer;
 use Session;
 use File;
+use View;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Events\StudentConnected;
 use App\Events\TestStart;
@@ -308,6 +310,25 @@ class TestRoomController extends Controller
       }
 
       return ['student' => $student, 'questions' => $questions];
+    }
+
+    public function downloadStudentsResults($code){
+
+      $students = TestRoomStudents::where('code', $code)->get();
+
+
+      Excel::create('Резултати за стая №'.$code, function($excel) use($students, $code) {
+
+          $excel->sheet('Всички резултати', function($sheet) use($students, $code) {
+              $sheet->loadView('download.results', [ 'students' => $students, 'code' => $code ]);
+          });
+
+          foreach($students as $student) {
+            $excel->sheet('Всички резултати', function($sheet) use($student, $code) {
+                $sheet->loadView('download.student-results', $this->getStudentResults($code, $student->number));
+            });
+          }
+      })->export('xls');
     }
 
     public function destroy($code)
