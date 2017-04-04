@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Резултати за стая №{{ $code }}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ $student->name }} {{ $student->lastname }}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <style>
             table td{
                 padding: 5px;
                 text-align: center;
+                border: 2px solid #000;
+                wrap-text: true;
+                vertical-align: middle;
             }
 
             .correct {
-                background-color: green;
+                background-color: #00FF00;
             }
 
             .correct_checked {
-                background-color: cyan;
+                background-color: #0FF;
             }
 
             .wrong_checked {
-                background-color: red;
+                background-color: #F00;
             }
         </style>
     </head>
     <body>
-        <table border="1">
-            <thead>
-                <tr>
-                    <td colspan="3">Име: {{ $student->name }} {{ $student->lastname }}</td>
-                    <td colspan="3">Номер в стаята: {{ $student->number }}</td>
-                    <td colspan="3">Брой точки: {{ $student->correct }}</td>
-                </tr>
-                <tr>
-                    <td>Въпрос</td>
-                    <td colspan="8">Отговори</td>
-                </tr>
-            </thead>
+    
+        @if(!empty($questions))
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td colspan="3" width="90">Име: {{ $student->name }} {{ $student->lastname }}</td>
+                        <td colspan="3" width="90">Номер в стаята: {{ $student->number }}</td>
+                        <td colspan="3" width="90">Брой точки: {{ $student->correct }}</td>
+                    </tr>
+                    <tr>
+                        <td width="50">Въпрос</td>
+                        <td colspan="8" width="240">Отговори</td>
+                    </tr>
+                </thead>
 
-            <tbody>
-                @if($questions != "")
+                <tbody>
                     @foreach($questions as $question)
                         <tr>
-                            <td>
+                            <td width="30">
                                 {{ $question->name }}
                             </td>
 
@@ -55,19 +58,24 @@
                                     @elseif($question->answers[$i]->correct)
                                         class="correct"
                                     @endif
+                                    width="30"
                                 >
                                     {{ $question->answers[$i]->name }}
                                 </td>  
                                 @else
-                                    <td></td>
+                                    <td width="10"></td>
                                 @endif
                             @endfor
                         </tr>
                     @endforeach
-                @else
-                    <td colspan="9">Няма намери данни за този ученик.</td>
-                @endif
-            </tbody>           
-        </table>
+                </tbody>           
+            </table>
+        @else
+            <table>
+                <tr>
+                    <td width="50">Няма намери данни за този ученик.</td>
+                </tr>
+            </table>
+        @endif
     </body>
 </html>

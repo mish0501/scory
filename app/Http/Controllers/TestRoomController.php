@@ -282,7 +282,7 @@ class TestRoomController extends Controller
     public function getStudentResults($code, $user)
     {
       $student = TestRoomStudents::where('code', '=', $code)->where('number', '=' , $user)->get()[0];
-      $questions = '';
+      $questions = [];
 
       if($student->checked_answers != ""){
         $userAnswers = json_decode($student->checked_answers);
@@ -316,18 +316,23 @@ class TestRoomController extends Controller
 
       $students = TestRoomStudents::where('code', $code)->get();
 
-
       Excel::create('Резултати за стая №'.$code, function($excel) use($students, $code) {
 
           $excel->sheet('Всички резултати', function($sheet) use($students, $code) {
               $sheet->loadView('download.results', [ 'students' => $students, 'code' => $code ]);
           });
 
+          $excel->getActiveSheet()->setTitle('Всички резултати');
+
           foreach($students as $student) {
-            $excel->sheet('Всички резултати', function($sheet) use($student, $code) {
+            $excel->sheet('asdasdasd', function($sheet) use($student, $code) {
                 $sheet->loadView('download.student-results', $this->getStudentResults($code, $student->number));
             });
+            
+            $excel->getActiveSheet()->setTitle($student->name.' '.$student->lastname);
           }
+
+          $excel->setActiveSheetIndex(0);
       })->export('xls');
     }
 

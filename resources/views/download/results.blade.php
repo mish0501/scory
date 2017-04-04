@@ -8,22 +8,7 @@
             table td{
                 padding: 5px;
                 text-align: center;
-            }
-
-            .correct {
-                background-color: green;
-            }
-
-            .correct_checked {
-                background-color: cyan;
-            }
-
-            .wrong_checked {
-                background-color: red;
-            }
-
-            .page-break {
-                page-break-after: always;
+                border: 2px solid #000;
             }
         </style>
     </head>
