@@ -81,7 +81,7 @@
                         <span>Резултати</span>
                       </router-link>
 
-                      <a class="btn btn-primary btn-xs" @click="Download(testroom.code)" v-if="testroom.status == 3">
+                      <a class="btn btn-primary btn-xs" :href="'/admin/testroom/' + testroom.code + '/download'" target="_blank" v-if="testroom.status == 3">
                         <i class="fa fa-download"></i>
                         <span>Изтегли</span>
                       </a>
@@ -186,14 +186,6 @@ export default {
         },(error) => {
           console.error(error);
         }
-      )
-    },
-
-    Download(code) {
-      this.$http.get('/api/testroom/' + code + '/download').then(
-        (response) => {
-          console.log(response);
-        }, console.error
       )
     },
 
