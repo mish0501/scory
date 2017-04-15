@@ -66,8 +66,15 @@
         </header>
         <div class="col-md-4 col-md-offset-1 text-center">
           <h2>Влез в стая за тестове</h2>
+          
+          <p class="text-center">Влез в акаунта си, за да можеш да влезеш в стая за тестове.</p>
+          <p>
+            <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#LoginModal">
+              Вход
+            </button>
+          </p>
 
-          <test-room-form :start="false"></test-room-form>
+          <login-modal></login-modal>
         </div>
         <div class="col-md-4 col-md-offset-2 text-center">
           <h2>Избери си тест</h2>
@@ -123,12 +130,14 @@
   import JoinTestRoomForm from "./MainPage/JoinTestRoomForm.vue"
   import InviteEmailForm from "./MainPage/InviteEmailForm.vue"
   import ContactForm from "./MainPage/ContactForm.vue"
+  import LoginModal from "./MainPage/LoginModal.vue"
 
   export default {
     components: {
       'test-room-form': JoinTestRoomForm,
       'invite-email-form': InviteEmailForm,
-      'contact-form': ContactForm
+      'contact-form': ContactForm,
+      'login-modal': LoginModal
     }
   }
 </script>

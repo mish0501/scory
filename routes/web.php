@@ -97,6 +97,10 @@ Route::get('/finish' , ['as' => 'testroom.finish', function() {
 Auth::routes();
 Route::get('/register/{invite?}', 'Auth\RegisterController@showRegistrationForm');
 
+Route::get('/auth/{driver}/redirect', 'SocialAuthController@redirect');
+Route::get('/auth/{driver}/callback', 'SocialAuthController@callback');
+
+
 // Admin Routes
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin|teacher']], function () {
 
