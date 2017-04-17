@@ -97,8 +97,8 @@ Route::get('/finish' , ['as' => 'testroom.finish', function() {
 Auth::routes();
 Route::get('/register/{invite?}', 'Auth\RegisterController@showRegistrationForm');
 
-Route::get('/auth/{driver}/redirect', 'SocialAuthController@redirect');
-Route::get('/auth/{driver}/callback', 'SocialAuthController@callback');
+Route::get('/auth/{provider}/redirect', 'SocialAuthController@redirect');
+Route::get('/auth/{provider}/callback', 'SocialAuthController@callback');
 
 
 // Admin Routes

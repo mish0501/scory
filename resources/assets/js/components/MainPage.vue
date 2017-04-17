@@ -73,8 +73,6 @@
               Вход
             </button>
           </p>
-
-          <login-modal></login-modal>
         </div>
         <div class="col-md-4 col-md-offset-2 text-center">
           <h2>Избери си тест</h2>
@@ -123,6 +121,9 @@
         <p>&copy; Scory 2017</p>
       </footer>
     </div>
+
+    
+    <login-modal></login-modal>
   </div>
 </template>
 
@@ -138,6 +139,12 @@
       'invite-email-form': InviteEmailForm,
       'contact-form': ContactForm,
       'login-modal': LoginModal
+    },
+
+    mounted() {
+      this.$http.get('/api/user').then((response) => {
+        this.$store.dispatch('set_user', response.data)
+      }, console.error)
     }
   }
 </script>
