@@ -67,12 +67,16 @@
         <div class="col-md-4 col-md-offset-1 text-center">
           <h2>Влез в стая за тестове</h2>
           
-          <p class="text-center">Влез в акаунта си, за да можеш да влезеш в стая за тестове.</p>
-          <p>
-            <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#LoginModal">
-              Вход
-            </button>
-          </p>
+          <test-room-form :start="false" v-if="isLogged"></test-room-form>
+
+          <div v-else>
+            <p class="text-center">Влез в акаунта си, за да можеш да влезеш в стая за тестове.</p>
+            <p>
+              <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#LoginModal">
+                Вход
+              </button>
+            </p>
+          </div>
         </div>
         <div class="col-md-4 col-md-offset-2 text-center">
           <h2>Избери си тест</h2>
@@ -145,6 +149,12 @@
       this.$http.get('/api/user').then((response) => {
         this.$store.dispatch('set_user', response.data)
       }, console.error)
+    },
+
+    computed: {
+      isLogged() {
+        return this.$store.getters.User.id !== null;
+      }
     }
   }
 </script>
