@@ -22,6 +22,6 @@ class SocialAuthController extends Controller
 
         auth()->login($user);
 
-        return redirect(url('/'));
+        return view('social_login', ['user' => $user]);
     }
 }

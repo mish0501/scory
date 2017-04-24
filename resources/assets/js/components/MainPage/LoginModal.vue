@@ -26,8 +26,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <a href="/auth/facebook/redirect" role="button" class="btn btn-block facebook">Влез с Facebook</a>
-                                        <a href="/auth/google/redirect" role="button" class="btn btn-block google">Влез с Google+</a>
+                                        <button class="btn btn-block facebook" @click.prevent="openLink('facebook')">Влез с Facebook</button>
+                                        <button class="btn btn-block google" @click.prevent="openLink('google')">Влез с Google+</button>
                                     </div>
                                 </form>
                             </div>
@@ -84,19 +84,58 @@
 </template>
 
 <script>
-   export default {
-    methods: {
-        OpenLogin() {
-            $('#RegisterModal').modal('hide');
-            $('#LoginModal').modal('show');
+    export default {       
+        mounted() {
+            $(window).on('message', this.onMessage)
         },
 
-        OpenRegister() {
-            $('#LoginModal').modal('hide');
-            $('#RegisterModal').modal('show');
+        destroyed () {
+            $(window).off('message', this.onMessage)
+        },
+
+        methods: {
+            OpenLogin() {
+                $('#RegisterModal').modal('hide');
+                $('#LoginModal').modal('show');
+            },
+
+            OpenRegister() {
+                $('#LoginModal').modal('hide');
+                $('#RegisterModal').modal('show');
+            },
+            
+            onMessage (e) {
+                const data = e.originalEvent.data
+
+                if (!data.user) {
+                    return
+                }
+                
+                this.$store.dispatch('set_user', data.user)
+
+                $('#LoginModal').modal('hide');
+            },
+
+            openLink (provider) {
+                let width = parseInt((window.screen.width * 80) / 100, 10)
+                let height = parseInt((window.screen.height * 70) / 100, 10)
+
+                if (width < 640) {
+                    width = 640
+                }
+
+                if (height < 420) {
+                    height = 420
+                }
+
+                const top = parseInt((window.screen.height - height) / 2, 10)
+                const left = parseInt((window.screen.width - width) / 2, 10)
+
+                const options = `location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes,width=${width},height=${height},top=${top},left=${left}`
+                let popup = window.open('/auth/'+ provider +'/redirect', null, options)
+            }
         }
     }
-  }
 </script>
 
 <style lang="css">

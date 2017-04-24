@@ -93,6 +93,22 @@ export default {
               )
             }
           }
+        }else {
+          let testroom = {
+            'code': this.code
+          }
+
+          this.$http.post('/api/testroom/getQuestions', {code:this.code}).then(
+            (response) => {
+              this.$store.dispatch('set_questions', response.data.questions)
+              testroom.questions = response.data.questions
+              this.gotQuestions = true
+
+              localStorage.testroom = JSON.stringify(testroom)
+            }, (error) => {
+              console.error(error);
+            }
+          )
         }
     } else {
         alert("Съжаляваме, но браузърът ви не подържа уеб хранилище");
@@ -105,6 +121,10 @@ export default {
         clearInterval(this.interval)
         this.postTest(true)
       });
+      
+    this.$http.get('/api/user').then((response) => {
+      this.$store.dispatch('set_user', response.data)
+    }, console.error)
   },
 
   computed: {
@@ -114,6 +134,10 @@ export default {
 
     questions() {
       return this.$store.getters.Questions
+    },
+
+    user() {
+      return this.$store.getters.User
     }
   },
 
@@ -158,8 +182,7 @@ export default {
         if (localStorage.testroom) {
           const testroom = JSON.parse(localStorage.testroom)
           if(testroom.code == this.code){
-            data.name= testroom.name
-            data.lastname = testroom.lastname
+            data.user= this.user.id
             data.questions = testroom.questions
           }
         }

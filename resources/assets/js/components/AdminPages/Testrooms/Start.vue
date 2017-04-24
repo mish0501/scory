@@ -46,8 +46,8 @@
             <tbody>
               <tr v-for="student in students" v-if="students">
                 <td>{{student.number}}</td>
-                <td>{{student.name}}</td>
-                <td>{{student.lastname}}</td>
+                <td>{{ student.user.name.split(' ')[0] }}</td>
+                <td>{{ student.user.name.split(' ')[1] }}</td>
                 <td>{{student.correct}}</td>
                 <td>
                   <div class="text-right">

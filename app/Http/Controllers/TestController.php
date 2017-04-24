@@ -124,8 +124,7 @@ class TestController extends Controller
 
       if($request->get('testroom') && $request->get('code') !== NULL){
         $code = $request->get('code');
-        $name = $request->get('name');
-        $lastname = $request->get('lastname');
+        $user = $request->get('user');
 
         $correctAnswers = 0;
         $userAnswers = json_encode($request->get('answers'));
@@ -136,7 +135,7 @@ class TestController extends Controller
           }
         }
 
-        return app('App\Http\Controllers\TestRoomController')->finishTest($correctAnswers, $userAnswers, $code, $name, $lastname);
+        return app('App\Http\Controllers\TestRoomController')->finishTest($correctAnswers, $userAnswers, $code, $user);
       }
 
       return response()->json([

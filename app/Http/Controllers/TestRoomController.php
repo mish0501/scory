@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Auth;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -96,7 +97,7 @@ class TestRoomController extends Controller
 
       $testroom = TestRoom::where('code', '=', $code)->update(['status' => true]);
 
-      $students = TestRoomStudents::where('code', '=', $code)->get();
+      $students = TestRoomStudents::where('code', '=', $code)->with('user')->get();
 
       return ['students' => $students];
     }
@@ -120,8 +121,7 @@ class TestRoomController extends Controller
       $testroom = TestRoom::where('code', '=', $code)->where('status', '=', 1)->orWhere('status', '=', 2)->count();
 
       if($testroom == 1){
-        $url = url('testroom/'.$code.'/join');
-        return ['redirect' => true, 'url' => $url];
+        return $this->connect($code);
       }
 
       return [
@@ -134,32 +134,27 @@ class TestRoomController extends Controller
       ];
     }
 
-    public function connect(Request $request)
+    public function connect($code)
     {
-      $this->validate($request, [
-         'code' => 'required|digits:5|exists:testroom,code',
-         'name' => 'required',
-         'lastname' => 'required'
-      ]);
-
-      $code = $request->get('code');
-      $name = $request->get('name');
-      $lastname = $request->get('lastname');
-
       $students = TestRoomStudents::where('code', '=', $code);
 
       $testroom = TestRoom::where('code', '=', $code)->get()[0];
+      
+      $user = Auth::user();
+      $name = explode(" ", $user->name);
 
       if ($students->count() >= 1) {
-        if($students->where('name', '=', $name)->where('lastname', '=', $lastname)->count() != 0){
+        if($students->where('user_id', '=', $user->id)->count() != 0){
           if($testroom->status == 2){
-            return response()->json([
-              'testStarted' => true
-            ]);
+            return [
+              'redirect' => true,
+              'url' => url('/testroom/'.$code)
+            ] ;
           }elseif($testroom->status == 1){
-            return response()->json([
-              'testStarted' => false
-            ]);
+            return [
+              'redirect' => true,
+              'url' => url('/testroom/'.$code.'/join')
+            ] ;
           }
         }else{
           $number = TestRoomStudents::where('code', '=', $code)->orderBy('id', 'desc')->first()->number + 1;
@@ -169,24 +164,25 @@ class TestRoomController extends Controller
       }
 
       $newStudent = new TestRoomStudents;
-      $newStudent->name = $name;
-      $newStudent->lastname = $lastname;
       $newStudent->code = $code;
       $newStudent->number = $number;
+      $newStudent->user()->associate($user);
 
       $newStudent->save();
 
-      $data = array('code' => $code, 'name' => $name, 'lastname' => $lastname, 'number' => $number);
+      $data = array('code' => $code, 'name' => $name[0], 'lastname' => $name[1], 'number' => $number);
       event(new StudentConnected($data));
 
       if($testroom->status == 2){
-        return response()->json([
-          'testStarted' => true
-        ]);
+        return [
+          'redirect' => true,
+          'url' => url('/testroom/'.$code)
+        ] ;
       }elseif($testroom->status == 1){
-        return response()->json([
-          'testStarted' => false
-        ]);
+        return [
+          'redirect' => true,
+          'url' => url('/testroom/'.$code.'/join')
+        ] ;
       }
     }
 
@@ -206,7 +202,7 @@ class TestRoomController extends Controller
         event(new TestStart($data));
       }
 
-      $students = TestRoomStudents::where('code', '=', $code)->where('correct', '>', '0')->get();
+      $students = TestRoomStudents::where('code', '=', $code)->with('user')->where('correct', '>=', '0')->get();
 
       return ['code' => $code, 'students' => $students];
     }
@@ -243,17 +239,21 @@ class TestRoomController extends Controller
       ];
     }
 
-    public function finishTest($correctAnswers, $userAnswers, $code, $name, $lastname)
+    public function finishTest($correctAnswers, $userAnswers, $code, $user)
     {
       $student = TestRoomStudents::where('code', '=', $code)
-                                  ->where('name', '=', $name)
-                                  ->where('lastname', '=', $lastname);
+                                  ->where('user_id', '=', $user)
+                                  ->with('user');
 
       $update = $student->update(['correct' => $correctAnswers, 'checked_answers' => $userAnswers]);
 
-      $number = $student->get()[0]->number;
+      $student = $student->first();
 
-      event(new FinishTest(array('name' => $name, 'lastname' => $lastname, 'code' => $code, 'number' => $number, 'correct' => $correctAnswers)));
+      $number = $student->number;
+
+      $name = explode(' ' ,$student->user->name);
+
+      event(new FinishTest(array('name' => $name[0], 'lastname' => $name[1], 'code' => $code, 'number' => $number, 'correct' => $correctAnswers)));
 
       return response()->json([
         'success' => true
@@ -275,13 +275,13 @@ class TestRoomController extends Controller
     {
       $code = $request->get('code');
 
-      $students = TestRoomStudents::where('code', '=', $code)->get();
+      $students = TestRoomStudents::where('code', '=', $code)->with('user')->get();
       return ['students' => $students];
     }
 
     public function getStudentResults($code, $user)
     {
-      $student = TestRoomStudents::where('code', '=', $code)->where('number', '=' , $user)->get()[0];
+      $student = TestRoomStudents::where('code', '=', $code)->where('number', '=' , $user)->with('user')->get()[0];
       $questions = [];
 
       if($student->checked_answers != ""){
@@ -314,7 +314,7 @@ class TestRoomController extends Controller
 
     public function downloadStudentsResults($code){
 
-      $students = TestRoomStudents::where('code', $code)->get();
+      $students = TestRoomStudents::where('code', $code)->with('user')->get();
 
       Excel::create('Резултати за стая №'.$code, function($excel) use($students, $code) {
 
@@ -329,7 +329,7 @@ class TestRoomController extends Controller
                 $sheet->loadView('download.student-results', $this->getStudentResults($code, $student->number));
             });
             
-            $excel->getActiveSheet()->setTitle($student->name.' '.$student->lastname);
+            $excel->getActiveSheet()->setTitle($student->user()->name);
           }
 
           $excel->setActiveSheetIndex(0);

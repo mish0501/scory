@@ -8,7 +8,12 @@ class TestRoomStudents extends Model
 {
   protected $table = 'testroom_students';
 
-  protected $fillable = ['code', 'name', 'lastname', 'number', 'correct', 'checked_answers', 'trash'];
+  protected $fillable = ['code', 'number', 'correct', 'checked_answers', 'trash'];
 
   public $timestamps = false;
+
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
 }

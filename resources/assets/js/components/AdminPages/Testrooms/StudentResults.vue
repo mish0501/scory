@@ -3,14 +3,14 @@
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
         <i class="fa fa-group"></i>
-        Резултати на ученикът/чката {{student.name}} {{student.lastname}}
+        Резултати на ученикът/чката {{ name }}
       </h1>
     </div>
 
     <div class="alert alert-info alert-dismissable" v-if="questions.length-1 >= 0">
       <a class="close" data-dismiss="alert" href="#">×</a>
       <h4>
-        <i class="fa fa-info-sign"></i>
+        <i class="fa fa-info-circle"></i>
         Информация
       </h4>
       Натиснете върху въпроса, за да видите какви са отговорите на ученикът/чката.<br>
@@ -73,6 +73,10 @@ export default {
 
     number() {
       return this.$route.params.number
+    },
+
+    name() {
+      return this.student.user.name
     }
   },
 

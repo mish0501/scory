@@ -27,8 +27,8 @@
                 @foreach($students as $student)
                     <tr>
                         <td>{{ $student->number }}</td>
-                        <td>{{ $student->name }}</td>
-                        <td>{{ $student->lastname }}</td>
+                        <td>{{ explode(' ', $student->user()->name)[0] }}</td>
+                        <td>{{ explode(' ', $student->user()->name)[1] }}</td>
                         <td>{{ $student->correct }}</td>
                     </tr>
                 @endforeach

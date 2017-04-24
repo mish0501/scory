@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>
-      Влязъл си като: {{ user.name }} | <a href="#" @click="logout()">Изход</a>
+    <p class="text-center">
+      Влязъл си като: <b>{{ user.name }}</b> | <a href="#" @click="logout()">Изход</a>
     </p>
 
     <form accept-charset="UTF-8" autocomplete="off" v-on:submit.prevent="joinTest" v-if="start">
