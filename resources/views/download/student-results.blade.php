@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{{ $student->user()->name }}</title>
+        <title>{{ $student->user->name }}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <style>
             table td{
@@ -31,7 +31,7 @@
             <table border="1">
                 <thead>
                     <tr>
-                        <td colspan="3" width="90">Име: {{ $student->user()->name }}</td>
+                        <td colspan="3" width="90">Име: {{ $student->user->name }}</td>
                         <td colspan="3" width="90">Номер в стаята: {{ $student->number }}</td>
                         <td colspan="3" width="90">Брой точки: {{ $student->correct }}</td>
                     </tr>

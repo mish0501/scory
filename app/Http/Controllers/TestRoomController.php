@@ -329,7 +329,7 @@ class TestRoomController extends Controller
                 $sheet->loadView('download.student-results', $this->getStudentResults($code, $student->number));
             });
             
-            $excel->getActiveSheet()->setTitle($student->user()->name);
+            $excel->getActiveSheet()->setTitle($student->user->name);
           }
 
           $excel->setActiveSheetIndex(0);

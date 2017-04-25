@@ -3,7 +3,7 @@
     <div class='page-header page-header-with-buttons'>
       <h1 class='pull-left'>
         <i class="fa fa-group"></i>
-        Резултати на ученикът/чката {{ name }}
+        Резултати на ученикът/чката {{ student.user.name }}
       </h1>
     </div>
 
@@ -47,7 +47,11 @@
 export default {
   data() {
     return {
-      student: {},
+      student: {
+        user: {
+          name: ""
+        }
+      },
       questions: {}
     }
   },
@@ -73,10 +77,6 @@ export default {
 
     number() {
       return this.$route.params.number
-    },
-
-    name() {
-      return this.student.user.name
     }
   },
 
