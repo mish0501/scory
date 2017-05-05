@@ -148,7 +148,7 @@
     mounted() {
       this.$http.get('/api/user').then((response) => {
         this.$store.dispatch('set_user', response.data)
-      }, console.error)
+      }, () => {})
     },
 
     computed: {

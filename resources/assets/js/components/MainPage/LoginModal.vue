@@ -10,19 +10,19 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
-                                <form>
+                                <form @submit.prevent="Login()">
                                     <div class="form-group">
-                                        <label for="username">Email</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Email">
+                                        <label for="username">Потребителско име</label>
+                                        <input type="text" class="form-control" id="username" placeholder="Въведете потребителско си име" v-model="login">
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Парола</label>
-                                        <input type="password" class="form-control" id="password" placeholder="Парола">
+                                        <input type="password" class="form-control" id="password" placeholder="Въведете паролата си" v-model="password">
                                     </div>
 
 
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-success btn-block">Вход</button>
+                                        <button type="submit" class="btn btn-success btn-block" @click.prevent="Login()">Вход</button>
                                     </div>
 
                                     <div class="form-group">
@@ -50,25 +50,29 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
-                                <form>
+                                <form @submit.prevent="Register()">
                                     <div class="form-group">
-                                        <label for="username">Име</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Име">
+                                        <label for="name">Име</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Въведете двете си имена" v-model="name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="username">Email</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Email">
+                                        <label for="username">Потребителско име</label>
+                                        <input type="text" class="form-control" id="username" placeholder="Въведете потребитеското си име" v-model="login">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Е-mail</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Въведете E-mail си" v-model="email">
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Парола</label>
-                                        <input type="password" class="form-control" id="password" placeholder="Парола">
+                                        <input type="password" class="form-control" id="password" placeholder="Въведете паролата си" v-model="password">
                                     </div>
                                     <div class="form-group">
-                                        <label for="password">Повтори паролата</label>
-                                        <input type="password" class="form-control" id="password-confirmation" placeholder="Повтори паролата">
+                                        <label for="password-confirmation">Повтори паролата</label>
+                                        <input type="password" class="form-control" id="password-confirmation" placeholder="Повторете паролата си" v-model="confirmPassword">
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary btn-block">Регистрация</button>
+                                    <button type="submit" class="btn btn-primary btn-block" @click.prevent="Register()">Регистрация</button>
                                 </form>
                             </div>
                         </div>
@@ -84,7 +88,17 @@
 </template>
 
 <script>
-    export default {       
+    export default { 
+        data() {
+            return {
+                login: '',
+                email: '',
+                password: '',
+                name: '',
+                confirmPassword: ''
+            }
+        },
+
         mounted() {
             $(window).on('message', this.onMessage)
         },
@@ -95,13 +109,58 @@
 
         methods: {
             OpenLogin() {
+                this.reset()
                 $('#RegisterModal').modal('hide');
                 $('#LoginModal').modal('show');
             },
 
             OpenRegister() {
+                this.reset()
                 $('#LoginModal').modal('hide');
                 $('#RegisterModal').modal('show');
+            },
+
+            reset(){
+                this.login = ''
+                this.email = ''
+                this.password = ''
+                this.confirmPassword = ''
+                this.name = ''
+            },
+
+            Login(){
+                let data = {
+                    login: this.login,
+                    password: this.password,
+                    type: 'student'
+                }
+
+                this.$http.post('/login', data).then(
+                    (response) => {
+                        this.$store.dispatch('set_user', response.data)
+
+                        $('#LoginModal').modal('hide');
+                    }, console.error
+                )
+            },
+
+            Register(){
+                let data = {
+                    name: this.name,
+                    username: this.login,
+                    email: this.email,
+                    password: this.password,
+                    'password_confirmation': this.confirmPassword,
+                    type: 'student'
+                }
+
+                this.$http.post('/register', data).then(
+                    (response) => {                        
+                        this.$store.dispatch('set_user', response.data)
+
+                        $('#RegisterModal').modal('hide');
+                    }, console.error
+                )
             },
             
             onMessage (e) {

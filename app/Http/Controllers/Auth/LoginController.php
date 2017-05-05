@@ -40,6 +40,25 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
 
+    protected function authenticated(Request $request, $user)
+    {
+        if($request->get('type') == 'student'){
+            return $user;
+        }
+    }
+
+    protected function credentials(Request $request)
+    {
+        $field = filter_var($request->input($this->username()), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $request->merge([$field => $request->input($this->username())]);
+        return $request->only($field, 'password');
+    }
+
+    public function username()
+    {
+        return 'login';
+    }
+
     public function logout(Request $request)
     {
         $this->guard()->logout();

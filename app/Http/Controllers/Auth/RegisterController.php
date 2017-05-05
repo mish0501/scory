@@ -50,6 +50,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
+            'username' => 'required|max:255|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
@@ -75,8 +76,13 @@ class RegisterController extends Controller
         return view('auth.register', ['invite' => $invite]);
     }
 
-   protected function registered(Request $request, $user)
-   {
-       $user->attachRole('2');
-   }
+    protected function registered(Request $request, $user)
+    {   
+        if($request->get('type') == 'student'){
+            // $user->attachRole('3');
+            return $user;
+        }
+        
+        $user->attachRole('2');
+    }
 }
