@@ -10,10 +10,13 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
+                                
+                                <alert :alert="alert" v-if="hasAlert"></alert>
+
                                 <form @submit.prevent="Login()">
                                     <div class="form-group">
                                         <label for="username">Потребителско име</label>
-                                        <input type="text" class="form-control" id="username" placeholder="Въведете потребителско си име" v-model="login">
+                                        <input type="text" class="form-control" id="username" placeholder="Въведете потребителско си име" v-model="username">
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Парола</label>
@@ -35,7 +38,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" @click.parent="OpenRegister()">Нов за Scory?</button>
+                        <button type="button" class="btn btn-primary" @click.parent="OpenRegister()">Нямаш акаунт? Регистрирай се.</button>
                     </div>
                 </div>
             </div>
@@ -50,18 +53,17 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
+                                
+                                <alert :alert="alert" v-if="hasAlert"></alert>
+
                                 <form @submit.prevent="Register()">
                                     <div class="form-group">
                                         <label for="name">Име</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Въведете двете си имена" v-model="name">
+                                        <input type="text" class="form-control" id="name" placeholder="Въведете името и фамилията си" v-model="name">
                                     </div>
                                     <div class="form-group">
                                         <label for="username">Потребителско име</label>
-                                        <input type="text" class="form-control" id="username" placeholder="Въведете потребитеското си име" v-model="login">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Е-mail</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Въведете E-mail си" v-model="email">
+                                        <input type="text" class="form-control" id="username" placeholder="Въведете потребитеското си име" v-model="username">
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Парола</label>
@@ -88,15 +90,22 @@
 </template>
 
 <script>
+    import Alert from "../Alert.vue"
     export default { 
         data() {
             return {
-                login: '',
+                username: '',
                 email: '',
                 password: '',
                 name: '',
-                confirmPassword: ''
+                confirmPassword: '',
+                hasAlert: false,
+                alert: {}
             }
+        },
+
+        components: {
+            "alert": Alert
         },
 
         mounted() {
@@ -121,7 +130,7 @@
             },
 
             reset(){
-                this.login = ''
+                this.username = ''
                 this.email = ''
                 this.password = ''
                 this.confirmPassword = ''
@@ -130,36 +139,77 @@
 
             Login(){
                 let data = {
-                    login: this.login,
+                    username: this.username,
                     password: this.password,
                     type: 'student'
                 }
 
+                this.hasAlert = false
+
                 this.$http.post('/login', data).then(
                     (response) => {
-                        this.$store.dispatch('set_user', response.data)
+                        if(response.data.user) {
+                            this.$store.dispatch('set_user', response.data.user)
 
-                        $('#LoginModal').modal('hide');
-                    }, console.error
+                            $('#LoginModal').modal('hide');
+                        } else {
+                            this.alert.type = 'alert-danger'
+                            this.alert.messages = [
+                                response.data.username
+                            ]                            
+                            this.hasAlert = true
+                        }
+                    }, (error) => {
+                        this.alert.type = 'alert-danger'
+                        this.alert.messages = []
+                        if (Object.keys(error.data).length > 1) {
+                            for(var messages in error.data){
+                                for(var message in error.data[messages]){
+                                    this.alert.messages.push(error.data[messages][message])
+                                }
+                            }
+                        }else {
+                            for(var message in error.data){
+                                this.alert.messages = error.data[message][0]
+                            }
+                        }
+                        this.hasAlert = true
+                    }
                 )
             },
 
             Register(){
                 let data = {
                     name: this.name,
-                    username: this.login,
-                    email: this.email,
+                    username: this.username,
                     password: this.password,
                     'password_confirmation': this.confirmPassword,
                     type: 'student'
                 }
+
+                this.hasAlert = false
 
                 this.$http.post('/register', data).then(
                     (response) => {                        
                         this.$store.dispatch('set_user', response.data)
 
                         $('#RegisterModal').modal('hide');
-                    }, console.error
+                    }, (error) => {
+                        this.alert.type = 'alert-danger'
+                        this.alert.messages = []
+                        if (Object.keys(error.data).length > 1) {
+                            for(var messages in error.data){
+                                for(var message in error.data[messages]){
+                                    this.alert.messages.push(error.data[messages][message])
+                                }
+                            }
+                        }else {
+                            for(var message in error.data){
+                                this.alert.messages = error.data[message][0]
+                            }
+                        }
+                        this.hasAlert = true
+                    }
                 )
             },
             

@@ -24,7 +24,7 @@
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class='form-group'>
                   <div class='controls with-icon-over-input'>
-                    <input value="{{ old('login') }}" placeholder="E-mail" class="form-control" data-rule-required="true" name="login" type="text" />
+                    <input value="{{ old('username') }}" placeholder="Потребителско име" class="form-control" data-rule-required="true" name="username" type="text" />
                     <i class='fa fa-user text-muted'></i>
                   </div>
                 </div>

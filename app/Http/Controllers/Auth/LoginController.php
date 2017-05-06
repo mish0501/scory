@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use Illuminate\Support\Facades\Lang;
+
 class LoginController extends Controller
 {
     /*
@@ -42,21 +44,29 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        if($request->get('type') == 'student'){
-            return $user;
+        if($request->get('type') == 'student' && $user){
+            return [ 'user' => $user ];
         }
-    }
-
-    protected function credentials(Request $request)
-    {
-        $field = filter_var($request->input($this->username()), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        $request->merge([$field => $request->input($this->username())]);
-        return $request->only($field, 'password');
     }
 
     public function username()
     {
-        return 'login';
+        return 'username';
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {   
+        if($request->get('type') == 'student'){
+            return [
+                $this->username() => Lang::get('auth.failed'),
+            ];
+        }
+
+        return redirect()->back()
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors([
+                $this->username() => Lang::get('auth.failed'),
+            ]);
     }
 
     public function logout(Request $request)
