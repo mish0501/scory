@@ -66,8 +66,8 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
-            'email' => $data['email'],
-            'username' => $data['username'],
+            'email' => (array_key_exists('emial', $data)) ? $data['email'] : '',
+            'username' => (array_key_exists('username', $data)) ? $data['username'] : '',
             'password' => bcrypt($data['password']),
         ]);
     }
