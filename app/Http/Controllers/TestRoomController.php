@@ -118,7 +118,9 @@ class TestRoomController extends Controller
 
       $code = $request->get('roomcode');
 
-      $testroom = TestRoom::where('code', '=', $code)->where('status', '=', 1)->orWhere('status', '=', 2)->count();
+      $testroom = TestRoom::where('code', '=', $code)->where(function ($query) {
+        $query->where('status', 1)->orWhere('status', 2);
+      })->count();
 
       if($testroom == 1){
         return $this->connect($code);
