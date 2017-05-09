@@ -80,8 +80,9 @@ export default {
       .listen('StudentConnected', (e) => {
         const student = {
           number: e.number,
-          name: e.name,
-          lastname: e.lastname
+          user: {
+            name: e.name
+          }
         }
 
         this.students.push(student)

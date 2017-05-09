@@ -15,7 +15,6 @@ class StudentConnected implements ShouldBroadcast
 
     public $code;
     public $name;
-    public $lastname;
     public $number;
 
     /**
@@ -27,7 +26,6 @@ class StudentConnected implements ShouldBroadcast
     {
       $this->code = $data['code'];
       $this->name = $data['name'];
-      $this->lastname = $data['lastname'];
       $this->number = $data['number'];
     }
 

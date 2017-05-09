@@ -101,15 +101,15 @@ export default {
     Echo.private('testroom.'+this.code)
       .listen('FinishTest', (e) => {
         const student = {
-          name: e.name,
-          lastname: e.lastname,
+          user: {
+            name: e.name,
+          },
           number: e.number,
           correct: e.correct
         }
 
-        this.$parent.table.fnDestroy()
         this.students.push(student)
-        this.$parent.setDataTable()
+        this.$parent.redrawTable()
       })
   },
 
@@ -149,15 +149,18 @@ export default {
       this.$http.post('/api/testroom/getTime', { code: this.code }).then(
         (response) => {
           let data = response.data
-          let now = new Date()
-          let testStarted = new Date(data.testStarted)
 
-          let elapsedT = Math.floor((now - testStarted) / 1000)
+          if(data.duration > 0){
+            let now = new Date()
+            let testStarted = new Date(data.testStarted)
 
-          let timer = data.duration - elapsedT
+            let elapsedT = Math.floor((now - testStarted) / 1000)
 
-          if(timer > 0){
-            this.startTimer(timer)
+            let timer = data.duration - elapsedT
+
+            if(timer > 0){
+              this.startTimer(timer)
+            }
           }
         }, console.error
       )

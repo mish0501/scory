@@ -14,7 +14,6 @@ class FinishTest implements ShouldBroadcast
     use InteractsWithSockets, SerializesModels;
 
     public $name;
-    public $lastname;
     public $code;
     public $number;
     public $correct;
@@ -27,7 +26,6 @@ class FinishTest implements ShouldBroadcast
     public function __construct($data)
     {
       $this->name=$data['name'];
-      $this->lastname=$data['lastname'];
       $this->code=$data['code'];
       $this->number=$data['number'];
       $this->correct=$data['correct'];

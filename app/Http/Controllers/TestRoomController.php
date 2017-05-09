@@ -143,7 +143,6 @@ class TestRoomController extends Controller
       $testroom = TestRoom::where('code', '=', $code)->get()[0];
       
       $user = Auth::user();
-      $name = explode(" ", $user->name);
 
       if ($students->count() >= 1) {
         if($students->where('user_id', '=', $user->id)->count() != 0){
@@ -172,7 +171,7 @@ class TestRoomController extends Controller
 
       $newStudent->save();
 
-      $data = array('code' => $code, 'name' => $name[0], 'lastname' => $name[1], 'number' => $number);
+      $data = array('code' => $code, 'name' => $user->name, 'number' => $number);
       event(new StudentConnected($data));
 
       if($testroom->status == 2){
@@ -253,9 +252,7 @@ class TestRoomController extends Controller
 
       $number = $student->number;
 
-      $name = explode(' ' ,$student->user->name);
-
-      event(new FinishTest(array('name' => $name[0], 'lastname' => $name[1], 'code' => $code, 'number' => $number, 'correct' => $correctAnswers)));
+      event(new FinishTest(array('name' => $student->user->name, 'code' => $code, 'number' => $number, 'correct' => $correctAnswers)));
 
       return response()->json([
         'success' => true
